@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Scolastico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(135deg, #000000, #1A1A1A);
+            color: #FFFF00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            animation: fadeIn 0.7s ease-in;
+            position: relative;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 1.5em;
+            color: #FFFF00;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        h2.month-display {
+            font-size: 1.2em;
+            color: #FFD700;
+            text-align: center;
+            flex: 1;
+        }
+        .nav-buttons button {
+            background: none;
+            border: none;
+            font-size: 1em;
+            color: #FFFF00;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+        .nav-buttons button:hover {
+            color: #FFD700;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+            background: rgba(51, 51, 51, 0.8);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background: linear-gradient(45deg, #FFD700, #FFFF00);
+            color: #000000;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+        }
+        th.current-day, td.current-day {
+            background: rgba(255, 215, 0, 0.4);
+            border: 2px solid #FFFF00;
+        }
+        th.has-notes {
+            background: linear-gradient(45deg, #1E90FF, #00BFFF);
+            color: #FFFFFF;
+        }
+        th .note-icon {
+            cursor: pointer;
+            margin-left: 5px;
+            font-size: 0.8em;
+            background: #000000;
+            color: #FFFF00;
+            border-radius: 50%;
+            padding: 3px 7px;
+            transition: transform 0.3s;
+        }
+        th .note-icon:hover {
+            transform: scale(1.1);
+        }
+        th .day-number {
+            display: block;
+            font-size: 0.85em;
+            margin-bottom: 4px;
+            color: #000000;
+        }
+        th.has-notes .day-number {
+            color: #FFFFFF;
+        }
+        td {
+            background: rgba(51, 51, 51, 0.9);
+            cursor: pointer;
+            color: #FFFF00;
+        }
+        .time-column {
+            background: rgba(255, 215, 0, 0.25);
+            font-weight: 500;
+            width: 90px;
+        }
+        input[type="text"] {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #FFFF00;
+            text-align: center;
+            font-size: 0.95em;
+            padding: 5px;
+            transition: background 0.3s;
+        }
+        input[type="text"]:focus {
+            background: rgba(255, 215, 0, 0.5);
+            outline: none;
+            border-radius: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            background: rgba(51, 51, 51, 0.9);
+            color: #FFFF00;
+            font-size: 0.95em;
+        }
+        .subject-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .action-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #FFD700, #FFFF00);
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .action-button.subject {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.95em;
+        }
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        .action-button.grades {
+            background: linear-gradient(45deg, #FFFF00, #FFD700);
+        }
+        .action-button.add {
+            background: linear-gradient(45deg, #FFD700, #FFEA00);
+        }
+        .action-button.edit {
+            background: linear-gradient(45deg, #FFFF00, #FFD700);
+        }
+        .action-button.delete {
+            background: linear-gradient(45deg, #FF3333, #FF6666);
+        }
+        .stats-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .stats-buttons button {
+            flex: 1;
+            padding: 10px;
+            background: linear-gradient(45deg, #FFD700, #FFFF00);
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stats-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: modalFade 0.7s ease-in;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 360px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        .modal-content h2 {
+            font-size: 1.5em;
+            color: #FFFF00;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+            margin: 0 0 10px;
+        }
+        .modal-content h3 {
+            font-size: 1.1em;
+            color: #FFD700;
+            margin: 10px 0 5px;
+            text-align: center;
+        }
+        .note-input, .subject-input, .professor-input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            background: rgba(51, 51, 51, 0.9);
+            color: #FFFF00;
+            font-size: 0.95em;
+        }
+        .grade-input {
+            width: 40px;
+            padding: 6px;
+            margin: 3px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            background: rgba(51, 51, 51, 0.9);
+            color: #FFFF00;
+            font-size: 0.85em;
+            text-align: center;
+        }
+        .grade-input:focus {
+            border-color: #FFFF00;
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        .grade-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            margin: 5px 0;
+        }
+        .note-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .note-container input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #FFD700;
+        }
+        .note-container.completed input.note-input {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .stats-content {
+            font-size: 0.95em;
+            color: #FFFF00;
+            line-height: 1.5;
+        }
+        .stats-content p {
+            margin: 5px 0;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .modal-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        .save-note, .save-grades, .save-subject, .edit-subject, .delete-subject {
+            background: linear-gradient(45deg, #FFD700, #FFFF00);
+            color: #000000;
+        }
+        .close-modal {
+            background: linear-gradient(45deg, #FFFF00, #FFD700);
+            color: #000000;
+        }
+        .afternoon-section {
+            margin-top: 15px;
+        }
+        .language-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+        .language-flag {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #FFFF00;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+        .language-flag:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            padding: 5px;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 11;
+        }
+        .language-dropdown.show {
+            display: flex;
+        }
+        .language-dropdown img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .language-dropdown img:hover {
+            transform: scale(1.1);
+        }
+        @media (max-width: 400px) {
+            .container {
+                padding: 12px;
+            }
+            h1 {
+                font-size: 1.3em;
+            }
+            h2.month-display {
+                font-size: 1em;
+            }
+            h3 {
+                font-size: 1em;
+            }
+            table {
+                font-size: 0.85em;
+            }
+            th, td {
+                padding: 6px;
+            }
+            .time-column {
+                width: 80px;
+            }
+            .grade-input {
+                width: 36px;
+                font-size: 0.8em;
+            }
+            .stats-buttons {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .subject-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .nav-buttons button {
+                font-size: 0.9em;
+                padding: 5px;
+            }
+            .language-selector {
+                top: 5px;
+                left: 5px;
+            }
+            .language-flag {
+                width: 20px;
+                height: 20px;
+            }
+            .language-dropdown {
+                top: 25px;
+            }
+            .language-dropdown img {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <img src="https://flagcdn.com/w20/it.png" alt="Italiano" class="language-flag" id="current-flag" data-lang="it" title="Italiano">
+            <div class="language-dropdown" id="language-dropdown">
+                <img src="https://flagcdn.com/w20/it.png" alt="Italiano" data-lang="it" title="Italiano">
+                <img src="https://flagcdn.com/w20/gb.png" alt="English" data-lang="en" title="English">
+                <img src="https://flagcdn.com/w20/fr.png" alt="Français" data-lang="fr" title="Français">
+                <img src="https://flagcdn.com/w20/de.png" alt="Deutsch" data-lang="de" title="Deutsch">
+                <img src="https://flagcdn.com/w20/es.png" alt="Español" data-lang="es" title="Español">
+            </div>
+        </div>
+        <h1 id="calendar-title">Calendario Scolastico</h1>
+        <div class="month-nav">
+            <div class="nav-buttons">
+                <button onclick="prevWeek()">Precedente</button>
+            </div>
+            <h2 class="month-display" id="month-display"></h2>
+            <div class="nav-buttons">
+                <button onclick="nextWeek()">Successivo</button>
+            </div>
+        </div>
+        <table id="calendar-morning">
+            <thead>
+                <tr>
+                    <th>Orario</th>
+                    <th><span class="day-number" id="day-lun"></span>Lun<span class="note-icon" onclick="openNotes('Lunedì')">✍️</span></th>
+                    <th><span class="day-number" id="day-mar"></span>Mar<span class="note-icon" onclick="openNotes('Martedì')">✍️</span></th>
+                    <th><span class="day-number" id="day-mer"></span>Mer<span class="note-icon" onclick="openNotes('Mercoledì')">✍️</span></th>
+                    <th><span class="day-number" id="day-gio"></span>Gio<span class="note-icon" onclick="openNotes('Giovedì')">✍️</span></th>
+                    <th><span class="day-number" id="day-ven"></span>Ven<span class="note-icon" onclick="openNotes('Venerdì')">✍️</span></th>
+                    <th><span class="day-number" id="day-sab"></span>Sab<span class="note-icon" onclick="openNotes('Sabato')">✍️</span></th>
+                </tr>
+            </thead>
+            <tbody id="calendar-morning-body"></tbody>
+        </table>
+        <div class="afternoon-section">
+            <h3>Rientro</h3>
+            <table id="calendar-afternoon">
+                <thead>
+                    <tr>
+                        <th>Orario</th>
+                        <th><span class="day-number" id="day-lun-afternoon"></span>Lun</th>
+                        <th><span class="day-number" id="day-mar-afternoon"></span>Mar</th>
+                        <th><span class="day-number" id="day-mer-afternoon"></span>Mer</th>
+                        <th><span class="day-number" id="day-gio-afternoon"></span>Gio</th>
+                        <th><span class="day-number" id="day-ven-afternoon"></span>Ven</th>
+                        <th><span class="day-number" id="day-sab-afternoon"></span>Sab</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-afternoon-body"></tbody>
+            </table>
+        </div>
+        <div class="subject-actions">
+            <button class="action-button subject add" onclick="openAddSubject()">Aggiungi Materia</button>
+            <button class="action-button subject edit" onclick="openEditSubject()">Modifica Materia</button>
+            <button class="action-button subject delete" onclick="openDeleteSubject()">Elimina Materia</button>
+        </div>
+        <button class="action-button grades" onclick="openGrades()">Gestisci Voti</button>
+        <button class="action-button" onclick="showStats()">Statistiche</button>
+        <button class="action-button" onclick="resetData()">Reset Dati</button>
+    </div>
+
+    <div class="modal" id="notes-modal">
+        <div class="modal-content">
+            <h2>Note per <span id="notes-day"></span></h2>
+            <div id="notes-list"></div>
+            <div class="modal-buttons">
+                <button class="save-note" onclick="saveNotes()">Salva</button>
+                <button class="close-modal" onclick="closeNotes()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="stats-modal">
+        <div class="modal-content">
+            <h2>Statistiche</h2>
+            <div class="stats-buttons">
+                <button onclick="showFirstTerm()">Primo Quadrimestre</button>
+                <button onclick="showSecondTerm()">Secondo Quadrimestre</button>
+                <button onclick="showFinalGrades()">Voti Finali</button>
+            </div>
+            <div class="stats-content" id="stats-content"></div>
+            <div class="modal-buttons">
+                <button class="close-modal" onclick="closeStats()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="grades-modal">
+        <div class="modal-content">
+            <h2>Gestisci Voti</h2>
+            <div id="grades-list"></div>
+            <div class="modal-buttons">
+                <button class="save-grades" onclick="saveGrades()">Salva</button>
+                <button class="close-modal" onclick="closeGrades()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="final-grades-modal">
+        <div class="modal-content">
+            <h2>Voti Finali</h2>
+            <div class="stats-content" id="final-grades-content"></div>
+            <div class="modal-buttons">
+                <button class="close-modal" onclick="closeFinalGrades()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="add-subject-modal">
+        <div class="modal-content">
+            <h2>Aggiungi Materia</h2>
+            <input type="text" class="subject-input" id="new-subject" placeholder="Nome Materia">
+            <input type="text" class="professor-input" id="new-professor" placeholder="Nome Professore">
+            <div class="modal-buttons">
+                <button class="save-subject" onclick="saveSubject()">Salva</button>
+                <button class="close-modal" onclick="closeAddSubject()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="edit-subject-modal">
+        <div class="modal-content">
+            <h2>Modifica Materia</h2>
+            <select id="edit-subject-select"></select>
+            <input type="text" class="subject-input" id="edit-subject" placeholder="Nuovo Nome Materia">
+            <input type="text" class="professor-input" id="edit-professor" placeholder="Nuovo Nome Professore">
+            <div class="modal-buttons">
+                <button class="edit-subject" onclick="editSubject()">Salva</button>
+                <button class="close-modal" onclick="closeEditSubject()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-subject-modal">
+        <div class="modal-content">
+            <h2>Elimina Materia</h2>
+            <select id="delete-subject-select"></select>
+            <div class="modal-buttons">
+                <button class="delete-subject" onclick="deleteSubject()">Elimina</button>
+                <button class="close-modal" onclick="closeDeleteSubject()">Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Oggetto delle traduzioni
+        const translations = {
+            it: {
+                calendarTitle: "Calendario Scolastico",
+                prev: "Precedente",
+                next: "Successivo",
+                afternoon: "Rientro",
+                addSubject: "Aggiungi Materia",
+                editSubject: "Modifica Materia",
+                deleteSubject: "Elimina Materia",
+                manageGrades: "Gestisci Voti",
+                stats: "Statistiche",
+                resetData: "Reset Dati",
+                notesFor: "Note per",
+                save: "Salva",
+                close: "Chiudi",
+                firstTerm: "Primo Quadrimestre",
+                secondTerm: "Secondo Quadrimestre",
+                finalGrades: "Voti Finali",
+                addSubjectTitle: "Aggiungi Materia",
+                newSubject: "Nome Materia",
+                newProfessor: "Nome Professore",
+                editSubjectTitle: "Modifica Materia",
+                selectSubject: "Seleziona Materia",
+                newSubjectName: "Nuovo Nome Materia",
+                newProfessorName: "Nuovo Nome Professore",
+                deleteSubjectTitle: "Elimina Materia",
+                oralGrades: "Voti Orali",
+                writtenGrades: "Voti Scritti",
+                noSubjects: "Nessuna materia inserita.",
+                firstTermPeriod: "Primo Quadrimestre (Settembre-Dicembre 2024)",
+                secondTermPeriod: "Secondo Quadrimestre (Gennaio-Maggio 2025)",
+                finalGradesTitle: "Voti Finali",
+                note: "Nota",
+                subject: "Materia",
+                resetConfirm: "Vuoi resettare tutti i dati? Questa azione non può essere annullata.",
+                resetSuccess: "Dati resettati con successo!",
+                maxNotes: "Massimo 10 note per giorno!",
+                subjectRequired: "Inserisci il nome della materia!",
+                subjectExists: "Materia già esistente!",
+                selectSubjectError: "Seleziona una materia!"
+            },
+            en: {
+                calendarTitle: "School Calendar",
+                prev: "Previous",
+                next: "Next",
+                afternoon: "Afternoon",
+                addSubject: "Add Subject",
+                editSubject: "Edit Subject",
+                deleteSubject: "Delete Subject",
+                manageGrades: "Manage Grades",
+                stats: "Statistics",
+                resetData: "Reset Data",
+                notesFor: "Notes for",
+                save: "Save",
+                close: "Close",
+                firstTerm: "First Term",
+                secondTerm: "Second Term",
+                finalGrades: "Final Grades",
+                addSubjectTitle: "Add Subject",
+                newSubject: "Subject Name",
+                newProfessor: "Professor Name",
+                editSubjectTitle: "Edit Subject",
+                selectSubject: "Select Subject",
+                newSubjectName: "New Subject Name",
+                newProfessorName: "New Professor Name",
+                deleteSubjectTitle: "Delete Subject",
+                oralGrades: "Oral Grades",
+                writtenGrades: "Written Grades",
+                noSubjects: "No subjects added.",
+                firstTermPeriod: "First Term (September-December 2024)",
+                secondTermPeriod: "Second Term (January-May 2025)",
+                finalGradesTitle: "Final Grades",
+                note: "Note",
+                subject: "Subject",
+                resetConfirm: "Do you want to reset all data? This action cannot be undone.",
+                resetSuccess: "Data reset successfully!",
+                maxNotes: "Maximum 10 notes per day!",
+                subjectRequired: "Enter the subject name!",
+                subjectExists: "Subject already exists!",
+                selectSubjectError: "Select a subject!"
+            },
+            fr: {
+                calendarTitle: "Calendrier Scolaire",
+                prev: "Précédent",
+                next: "Suivant",
+                afternoon: "Après-midi",
+                addSubject: "Ajouter une Matière",
+                editSubject: "Modifier une Matière",
+                deleteSubject: "Supprimer une Matière",
+                manageGrades: "Gérer les Notes",
+                stats: "Statistiques",
+                resetData: "Réinitialiser les Données",
+                notesFor: "Notes pour",
+                save: "Enregistrer",
+                close: "Fermer",
+                firstTerm: "Premier Trimestre",
+                secondTerm: "Deuxième Trimestre",
+                finalGrades: "Notes Finales",
+                addSubjectTitle: "Ajouter une Matière",
+                newSubject: "Nom de la Matière",
+                newProfessor: "Nom du Professeur",
+                editSubjectTitle: "Modifier une Matière",
+                selectSubject: "Sélectionner une Matière",
+                newSubjectName: "Nouveau Nom de la Matière",
+                newProfessorName: "Nouveau Nom du Professeur",
+                deleteSubjectTitle: "Supprimer une Matière",
+                oralGrades: "Notes Orales",
+                writtenGrades: "Notes Écrites",
+                noSubjects: "Aucune matière ajoutée.",
+                firstTermPeriod: "Premier Trimestre (Septembre-Décembre 2024)",
+                secondTermPeriod: "Deuxième Trimestre (Janvier-Mai 2025)",
+                finalGradesTitle: "Notes Finales",
+                note: "Note",
+                subject: "Matière",
+                resetConfirm: "Voulez-vous réinitialiser toutes les données ? Cette action est irréversible.",
+                resetSuccess: "Données réinitialisées avec succès !",
+                maxNotes: "Maximum 10 notes par jour !",
+                subjectRequired: "Entrez le nom de la matière !",
+                subjectExists: "La matière existe déjà !",
+                selectSubjectError: "Sélectionnez une matière !"
+            },
+            de: {
+                calendarTitle: "Schulkalender",
+                prev: "Vorherige",
+                next: "Nächste",
+                afternoon: "Nachmittag",
+                addSubject: "Fach Hinzufügen",
+                editSubject: "Fach Bearbeiten",
+                deleteSubject: "Fach Löschen",
+                manageGrades: "Noten Verwalten",
+                stats: "Statistiken",
+                resetData: "Daten Zurücksetzen",
+                notesFor: "Notizen für",
+                save: "Speichern",
+                close: "Schließen",
+                firstTerm: "Erstes Trimester",
+                secondTerm: "Zweites Trimester",
+                finalGrades: "Endnoten",
+                addSubjectTitle: "Fach Hinzufügen",
+                newSubject: "Fachname",
+                newProfessor: "Name des Lehrers",
+                editSubjectTitle: "Fach Bearbeiten",
+                selectSubject: "Fach Auswählen",
+                newSubjectName: "Neuer Fachname",
+                newProfessorName: "Neuer Name des Lehrers",
+                deleteSubjectTitle: "Fach Löschen",
+                oralGrades: "Mündliche Noten",
+                writtenGrades: "Schriftliche Noten",
+                noSubjects: "Keine Fächer hinzugefügt.",
+                firstTermPeriod: "Erstes Trimester (September-Dezember 2024)",
+                secondTermPeriod: "Zweites Trimester (Januar-Mai 2025)",
+                finalGradesTitle: "Endnoten",
+                note: "Notiz",
+                subject: "Fach",
+                resetConfirm: "Möchten Sie alle Daten zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden.",
+                resetSuccess: "Daten erfolgreich zurückgesetzt!",
+                maxNotes: "Maximal 10 Notizen pro Tag!",
+                subjectRequired: "Geben Sie den Namen des Fachs ein!",
+                subjectExists: "Fach existiert bereits!",
+                selectSubjectError: "Wählen Sie ein Fach aus!"
+            },
+            es: {
+                calendarTitle: "Calendario Escolar",
+                prev: "Anterior",
+                next: "Siguiente",
+                afternoon: "Tarde",
+                addSubject: "Añadir Asignatura",
+                editSubject: "Editar Asignatura",
+                deleteSubject: "Eliminar Asignatura",
+                manageGrades: "Gestionar Notas",
+                stats: "Estadísticas",
+                resetData: "Restablecer Datos",
+                notesFor: "Notas para",
+                save: "Guardar",
+                close: "Cerrar",
+                firstTerm: "Primer Trimestre",
+                secondTerm: "Segundo Trimestre",
+                finalGrades: "Notas Finales",
+                addSubjectTitle: "Añadir Asignatura",
+                newSubject: "Nombre de la Asignatura",
+                newProfessor: "Nombre del Profesor",
+                editSubjectTitle: "Editar Asignatura",
+                selectSubject: "Seleccionar Asignatura",
+                newSubjectName: "Nuevo Nombre de la Asignatura",
+                newProfessorName: "Nuevo Nombre del Profesor",
+                deleteSubjectTitle: "Eliminar Asignatura",
+                oralGrades: "Notas Orales",
+                writtenGrades: "Notas Escritas",
+                noSubjects: "No hay asignaturas añadidas.",
+                firstTermPeriod: "Primer Trimestre (Septiembre-Diciembre 2024)",
+                secondTermPeriod: "Segundo Trimestre (Enero-Mayo 2025)",
+                finalGradesTitle: "Notas Finales",
+                note: "Nota",
+                subject: "Asignatura",
+                resetConfirm: "¿Quieres restablecer todos los datos? Esta acción no se puede deshacer.",
+                resetSuccess: "¡Datos restablecidos con éxito!",
+                maxNotes: "¡Máximo 10 notas por día!",
+                subjectRequired: "¡Ingresa el nombre de la asignatura!",
+                subjectExists: "¡La asignatura ya existe!",
+                selectSubjectError: "¡Selecciona una asignatura!"
+            }
+        };
+
+        // Lingua predefinita
+        let currentLang = localStorage.getItem("language") || "it";
+
+        // Funzione per aggiornare l'interfaccia con la lingua selezionata
+        function updateLanguage(lang) {
+            try {
+                currentLang = lang;
+                localStorage.setItem("language", lang);
+
+                // Aggiorna la bandiera corrente
+                const currentFlag = document.getElementById("current-flag");
+                currentFlag.src = `https://flagcdn.com/w20/${lang === "en" ? "gb" : lang}.png`;
+                currentFlag.dataset.lang = lang;
+                currentFlag.alt = translations[lang].calendarTitle;
+                currentFlag.title = translations[lang].calendarTitle;
+
+                // Chiudi il dropdown
+                document.getElementById("language-dropdown").classList.remove("show");
+
+                // Aggiorna i testi dell'interfaccia
+                document.getElementById("calendar-title").textContent = translations[lang].calendarTitle;
+                document.querySelector(".nav-buttons button[onclick='prevWeek()']").textContent = translations[lang].prev;
+                document.querySelector(".nav-buttons button[onclick='nextWeek()']").textContent = translations[lang].next;
+                document.querySelector(".afternoon-section h3").textContent = translations[lang].afternoon;
+                document.querySelector(".action-button.add").textContent = translations[lang].addSubject;
+                document.querySelector(".action-button.edit").textContent = translations[lang].editSubject;
+                document.querySelector(".action-button.delete").textContent = translations[lang].deleteSubject;
+                document.querySelector(".action-button.grades").textContent = translations[lang].manageGrades;
+                document.querySelector(".action-button[onclick='showStats()']").textContent = translations[lang].stats;
+                document.querySelector(".action-button[onclick='resetData()']").textContent = translations[lang].resetData;
+
+                document.querySelector("#notes-modal h2").innerHTML = `${translations[lang].notesFor} <span id="notes-day"></span>`;
+                document.querySelector("#notes-modal .save-note").textContent = translations[lang].save;
+                document.querySelector("#notes-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#stats-modal h2").textContent = translations[lang].stats;
+                document.querySelector("#stats-modal button[onclick='showFirstTerm()']").textContent = translations[lang].firstTerm;
+                document.querySelector("#stats-modal button[onclick='showSecondTerm()']").textContent = translations[lang].secondTerm;
+                document.querySelector("#stats-modal button[onclick='showFinalGrades()']").textContent = translations[lang].finalGrades;
+                document.querySelector("#stats-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#grades-modal h2").textContent = translations[lang].manageGrades;
+                document.querySelector("#grades-modal .save-grades").textContent = translations[lang].save;
+                document.querySelector("#grades-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#final-grades-modal h2").textContent = translations[lang].finalGradesTitle;
+                document.querySelector("#final-grades-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#add-subject-modal h2").textContent = translations[lang].addSubjectTitle;
+                document.querySelector("#add-subject-modal #new-subject").placeholder = translations[lang].newSubject;
+                document.querySelector("#add-subject-modal #new-professor").placeholder = translations[lang].newProfessor;
+                document.querySelector("#add-subject-modal .save-subject").textContent = translations[lang].save;
+                document.querySelector("#add-subject-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#edit-subject-modal h2").textContent = translations[lang].editSubjectTitle;
+                document.querySelector("#edit-subject-modal #edit-subject-select option[value='']").textContent = translations[lang].selectSubject;
+                document.querySelector("#edit-subject-modal #edit-subject").placeholder = translations[lang].newSubjectName;
+                document.querySelector("#edit-subject-modal #edit-professor").placeholder = translations[lang].newProfessorName;
+                document.querySelector("#edit-subject-modal .edit-subject").textContent = translations[lang].save;
+                document.querySelector("#edit-subject-modal .close-modal").textContent = translations[lang].close;
+
+                document.querySelector("#delete-subject-modal h2").textContent = translations[lang].deleteSubjectTitle;
+                document.querySelector("#delete-subject-modal #delete-subject-select option[value='']").textContent = translations[lang].selectSubject;
+                document.querySelector("#delete-subject-modal .delete-subject").textContent = translations[lang].deleteSubject;
+                document.querySelector("#delete-subject-modal .close-modal").textContent = translations[lang].close;
+
+                // Aggiorna i contenuti dinamici se aperti
+                if (document.getElementById("stats-modal").style.display === "flex") {
+                    showStats();
+                }
+                if (document.getElementById("grades-modal").style.display === "flex") {
+                    openGrades();
+                }
+                if (document.getElementById("final-grades-modal").style.display === "flex") {
+                    showFinalGrades();
+                }
+            } catch (error) {
+                console.error("Errore in updateLanguage:", error);
+            }
+        }
+
+        // Gestione del dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById("language-dropdown");
+            dropdown.classList.toggle("show");
+        }
+
+        // Chiudi il dropdown se si clicca fuori
+        document.addEventListener("click", (event) => {
+            const selector = document.querySelector(".language-selector");
+            if (!selector.contains(event.target)) {
+                document.getElementById("language-dropdown").classList.remove("show");
+            }
+        });
+
+        // Event listener per il cambio lingua
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentFlag = document.getElementById("current-flag");
+            currentFlag.addEventListener("click", toggleDropdown);
+
+            document.querySelectorAll(".language-dropdown img").forEach(flag => {
+                flag.addEventListener("click", () => {
+                    updateLanguage(flag.dataset.lang);
+                });
+            });
+
+            updateLanguage(currentLang);
+        });
+
+        const defaultHours = [
+            "1ª Ora",
+            "2ª Ora",
+            "3ª Ora",
+            "4ª Ora",
+            "5ª Ora",
+            "6ª Ora",
+            "7ª Ora",
+            "8ª Ora",
+            "9ª Ora"
+        ];
+        const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+        let hours = JSON.parse(localStorage.getItem("schoolHours")) || defaultHours;
+        let currentDayNotes = null;
+        let currentWeekStart = new Date(2025, 4, 12); // Inizio settimana: 12 Maggio 2025
+        const referenceWeek = new Date(2024, 8, 1).toISOString(); // Settimana di riferimento: 1 settembre 2024
+        const today = new Date(); // Data corrente reale
+
+        // Inizializza schoolSubjects se non esiste
+        if (!localStorage.getItem("schoolSubjects")) {
+            localStorage.setItem("schoolSubjects", JSON.stringify({}));
+        }
+
+        // Funzione per resettare i dati
+        function resetData() {
+            if (confirm(translations[currentLang].resetConfirm)) {
+                localStorage.removeItem("schoolHours");
+                localStorage.removeItem("schoolSubjects");
+                localStorage.removeItem("schoolSchedule");
+                localStorage.removeItem("schoolNotes");
+                localStorage.removeItem("schoolGrades");
+                hours = defaultHours;
+                localStorage.setItem("schoolHours", JSON.stringify(hours));
+                localStorage.setItem("schoolSubjects", JSON.stringify({}));
+                alert(translations[currentLang].resetSuccess);
+                updateWeekDisplay();
+            }
+        }
+
+        // Funzione per ottenere i giorni della settimana corrente
+        function getWeekDays(startDate) {
+            if (!(startDate instanceof Date) || isNaN(startDate)) {
+                console.error("Data non valida in getWeekDays");
+                return [];
+            }
+            const days = [];
+            for (let i = 0; i < 6; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                days.push({
+                    day: date.toLocaleString('it-IT', { weekday: 'long' }),
+                    date: date.getDate(),
+                    fullDate: date
+                });
+            }
+            return days;
+        }
+
+        // Funzione per aggiornare la visualizzazione dei giorni e del mese
+        function updateWeekDisplay() {
+            try {
+                const weekDays = getWeekDays(currentWeekStart);
+                if (!weekDays.length) {
+                    console.error("Nessun giorno valido generato");
+                    return;
+                }
+
+                document.getElementById("day-lun").textContent = weekDays[0].date;
+                document.getElementById("day-mar").textContent = weekDays[1].date;
+                document.getElementById("day-mer").textContent = weekDays[2].date;
+                document.getElementById("day-gio").textContent = weekDays[3].date;
+                document.getElementById("day-ven").textContent = weekDays[4].date;
+                document.getElementById("day-sab").textContent = weekDays[5].date;
+                document.getElementById("day-lun-afternoon").textContent = weekDays[0].date;
+                document.getElementById("day-mar-afternoon").textContent = weekDays[1].date;
+                document.getElementById("day-mer-afternoon").textContent = weekDays[2].date;
+                document.getElementById("day-gio-afternoon").textContent = weekDays[3].date;
+                document.getElementById("day-ven-afternoon").textContent = weekDays[4].date;
+                document.getElementById("day-sab-afternoon").textContent = weekDays[5].date;
+
+                document.getElementById("month-display").textContent = currentWeekStart.toLocaleString('it-IT', { month: 'long', year: 'numeric' });
+
+                const thElementsMorning = document.querySelectorAll("#calendar-morning th");
+                const tdElementsMorning = document.querySelectorAll("#calendar-morning td");
+                const thElementsAfternoon = document.querySelectorAll("#calendar-afternoon th");
+                const tdElementsAfternoon = document.querySelectorAll("#calendar-afternoon td");
+
+                thElementsMorning.forEach((th, index) => {
+                    th.classList.remove("current-day");
+                    if (index > 0 && weekDays[index - 1]) {
+                        const dayDate = weekDays[index - 1].fullDate;
+                        if (dayDate.toDateString() === today.toDateString()) {
+                            th.classList.add("current-day");
+                        }
+                    }
+                });
+                tdElementsMorning.forEach(td => {
+                    td.classList.remove("current-day");
+                    const rowCells = td.parentElement.children;
+                    for (let i = 1; i < rowCells.length; i++) {
+                        if (rowCells[i] === td && weekDays[i - 1]) {
+                            const dayDate = weekDays[i - 1].fullDate;
+                            if (dayDate.toDateString() === today.toDateString()) {
+                                td.classList.add("current-day");
+                            }
+                        }
+                    }
+                });
+
+                thElementsAfternoon.forEach((th, index) => {
+                    th.classList.remove("current-day");
+                    if (index > 0 && weekDays[index - 1]) {
+                        const dayDate = weekDays[index - 1].fullDate;
+                        if (dayDate.toDateString() === today.toDateString()) {
+                            th.classList.add("current-day");
+                        }
+                    }
+                });
+                tdElementsAfternoon.forEach(td => {
+                    td.classList.remove("current-day");
+                    const rowCells = td.parentElement.children;
+                    for (let i = 1; i < rowCells.length; i++) {
+                        if (rowCells[i] === td && weekDays[i - 1]) {
+                            const dayDate = weekDays[i - 1].fullDate;
+                            if (dayDate.toDateString() === today.toDateString()) {
+                                td.classList.add("current-day");
+                            }
+                        }
+                    }
+                });
+
+                generateCalendar();
+                updateNotesHighlight();
+            } catch (error) {
+                console.error("Errore in updateWeekDisplay:", error);
+                alert("Errore durante l'aggiornamento del calendario. Prova a resettare i dati.");
+            }
+        }
+
+        // Funzione per navigare alla settimana precedente
+        function prevWeek() {
+            try {
+                const newStart = new Date(currentWeekStart);
+                newStart.setDate(currentWeekStart.getDate() - 7);
+                if (isNaN(newStart)) throw new Error("Data non valida");
+                currentWeekStart = newStart;
+                updateWeekDisplay();
+            } catch (error) {
+                console.error("Errore in prevWeek:", error);
+            }
+        }
+
+        // Funzione per navigare alla settimana successiva
+        function nextWeek() {
+            try {
+                const newStart = new Date(currentWeekStart);
+                newStart.setDate(currentWeekStart.getDate() + 7);
+                if (isNaN(newStart)) throw new Error("Data non valida");
+                currentWeekStart = newStart;
+                updateWeekDisplay();
+            } catch (error) {
+                console.error("Errore in nextWeek:", error);
+            }
+        }
+
+        // Funzione per sincronizzare l'orario in tutte le settimane
+        function syncSchedule() {
+            try {
+                const schedule = JSON.parse(localStorage.getItem("schoolSchedule") || "{}");
+                const refSchedule = schedule[referenceWeek] || {};
+
+                Object.keys(schedule).forEach(week => {
+                    if (week !== referenceWeek) {
+                        schedule[week] = JSON.parse(JSON.stringify(refSchedule));
+                    }
+                });
+
+                localStorage.setItem("schoolSchedule", JSON.stringify(schedule));
+            } catch (error) {
+                console.error("Errore in syncSchedule:", error);
+            }
+        }
+
+        // Funzione per generare il calendario
+        function generateCalendar() {
+            try {
+                // Genera la tabella mattutina (1ª-7ª Ora)
+                const morningTbody = document.getElementById("calendar-morning-body");
+                morningTbody.innerHTML = "";
+                const morningHours = hours.slice(0, 7); // 1ª-7ª Ora
+
+                morningHours.forEach((hour, index) => {
+                    const row = document.createElement("tr");
+                    const timeCell = document.createElement("td");
+                    timeCell.classList.add("time-column");
+                    const timeInput = document.createElement("input");
+                    timeInput.type = "text";
+                    timeInput.value = hour;
+                    timeInput.dataset.index = index;
+                    timeInput.addEventListener("change", saveHours);
+                    timeCell.appendChild(timeInput);
+                    row.appendChild(timeCell);
+
+                    days.forEach(day => {
+                        const cell = document.createElement("td");
+                        const input = document.createElement("input");
+                        input.type = "text";
+                        input.placeholder = translations[currentLang].subject;
+                        input.dataset.hour = hour;
+                        input.dataset.day = day;
+                        input.dataset.week = currentWeekStart.toISOString();
+                        input.addEventListener("change", saveSchedule);
+                        cell.appendChild(input);
+                        row.appendChild(cell);
+                    });
+
+                    morningTbody.appendChild(row);
+                });
+
+                // Genera la tabella pomeridiana (8ª-9ª Ora)
+                const afternoonTbody = document.getElementById("calendar-afternoon-body");
+                afternoonTbody.innerHTML = "";
+                const afternoonHours = hours.slice(7, 9); // 8ª-9ª Ora
+
+                afternoonHours.forEach((hour, index) => {
+                    const row = document.createElement("tr");
+                    const timeCell = document.createElement("td");
+                    timeCell.classList.add("time-column");
+                    const timeInput = document.createElement("input");
+                    timeInput.type = "text";
+                    timeInput.value = hour;
+                    timeInput.dataset.index = parseInt(index) + 7;
+                    timeInput.addEventListener("change", saveHours);
+                    timeCell.appendChild(timeInput);
+                    row.appendChild(timeCell);
+
+                    days.forEach(day => {
+                        const cell = document.createElement("td");
+                        const input = document.createElement("input");
+                        input.type = "text";
+                        input.placeholder = translations[currentLang].subject;
+                        input.dataset.hour = hour;
+                        input.dataset.day = day;
+                        input.dataset.week = currentWeekStart.toISOString();
+                        input.addEventListener("change", saveSchedule);
+                        cell.appendChild(input);
+                        row.appendChild(cell);
+                    });
+
+                    afternoonTbody.appendChild(row);
+                });
+
+                loadSchedule();
+            } catch (error) {
+                console.error("Errore in generateCalendar:", error);
+                alert("Errore durante la generazione del calendario. Prova a resettare i dati.");
+            }
+        }
+
+        // Funzione per salvare gli orari
+        function saveHours(event) {
+            try {
+                const input = event.target;
+                const index = input.dataset.index;
+                hours[index] = input.value.trim() || defaultHours[index];
+                localStorage.setItem("schoolHours", JSON.stringify(hours));
+                generateCalendar();
+            } catch (error) {
+                console.error("Errore in saveHours:", error);
+            }
+        }
+
+        // Funzione per salvare l'orario e sincronizzare materie
+        function saveSchedule(event) {
+            try {
+                const input = event.target;
+                const hour = input.dataset.hour;
+                const day = input.dataset.day;
+                const week = input.dataset.week;
+                const subject = input.value.trim();
+
+                const schedule = JSON.parse(localStorage.getItem("schoolSchedule") || "{}");
+                if (!schedule[week]) schedule[week] = {};
+                if (!schedule[week][day]) schedule[week][day] = {};
+                schedule[week][day][hour] = subject;
+
+                if (!schedule[referenceWeek]) schedule[referenceWeek] = {};
+                if (!schedule[referenceWeek][day]) schedule[referenceWeek][day] = {};
+                schedule[referenceWeek][day][hour] = subject;
+
+                localStorage.setItem("schoolSchedule", JSON.stringify(schedule));
+
+                if (subject) {
+                    const subjects = JSON.parse(localStorage.getItem("schoolSubjects") || "{}");
+                    if (!subjects[subject]) {
+                        subjects[subject] = { professor: "" };
+                        localStorage.setItem("schoolSubjects", JSON.stringify(subjects));
+                    }
+                }
+
+                syncSchedule();
+            } catch (error) {
+                console.error("Errore in saveSchedule:", error);
+            }
+        }
+
+        // Funzione per caricare l'orario salvato
+        function loadSchedule() {
+            try {
+                const schedule = JSON.parse(localStorage.getItem("schoolSchedule") || "{}");
+                const week = currentWeekStart.toISOString();
+
+                if (!schedule[week] && schedule[referenceWeek]) {
+                    schedule[week] = JSON.parse(JSON.stringify(schedule[referenceWeek]));
+                    localStorage.setItem("schoolSchedule", JSON.stringify(schedule));
+                }
+
+                const inputs = document.querySelectorAll("input[type='text'][data-day]");
+                inputs.forEach(input => {
+                    const day = input.dataset.day;
+                    const hour = input.dataset.hour;
+                    input.value = (schedule[week] && schedule[week][day] && schedule[week][day][hour]) || "";
+                });
+            } catch (error) {
+                console.error("Errore in loadSchedule:", error);
+            }
+        }
+
+        // Funzione per aggiornare l'evidenziazione delle celle con note
+        function updateNotesHighlight() {
+            try {
+                const notes = JSON.parse(localStorage.getItem("schoolNotes") || "{}");
+                const week = currentWeekStart.toISOString();
+                const thElements = document.querySelectorAll("#calendar-morning th:not(:first-child)");
+
+                thElements.forEach((th, index) => {
+                    const day = days[index];
+                    const key = `${week}_${day}`;
+                    const notesForDay = notes[key] || [];
+                    const hasIncompleteNotes = notesForDay.length > 0 && notesForDay.some(note => !note.completed);
+                    th.classList.toggle("has-notes", hasIncompleteNotes);
+                });
+            } catch (error) {
+                console.error("Errore in updateNotesHighlight:", error);
+            }
+        }
+
+        // Funzione per aprire il pop-up delle note
+        function openNotes(day) {
+            try {
+                currentDayNotes = day;
+                const modal = document.getElementById("notes-modal");
+                const notesList = document.getElementById("notes-list");
+                const notesDay = document.getElementById("notes-day");
+                notesDay.textContent = day;
+
+                const notes = JSON.parse(localStorage.getItem("schoolNotes") || "{}")[`${currentWeekStart.toISOString()}_${day}`] || [];
+                notesList.innerHTML = "";
+
+                for (let i = 0; i < 10; i++) {
+                    const noteContainer = document.createElement("div");
+                    noteContainer.classList.add("note-container");
+
+                    const checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.dataset.index = i;
+                    checkbox.checked = notes[i]?.completed || false;
+                    checkbox.addEventListener("change", () => {
+                        noteContainer.classList.toggle("completed", checkbox.checked);
+                    });
+
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.classList.add("note-input");
+                    input.placeholder = `${translations[currentLang].note} ${i + 1}`;
+                    input.value = notes[i]?.text || "";
+                    if (notes[i]?.completed) {
+                        noteContainer.classList.add("completed");
+                    }
+
+                    noteContainer.appendChild(checkbox);
+                    noteContainer.appendChild(input);
+                    notesList.appendChild(noteContainer);
+                }
+
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in openNotes:", error);
+            }
+        }
+
+        // Funzione per salvare le note
+        function saveNotes() {
+            try {
+                const notesList = document.getElementById("notes-list");
+                const noteContainers = notesList.querySelectorAll(".note-container");
+                const notes = Array.from(noteContainers).map(container => {
+                    const input = container.querySelector("input.note-input");
+                    const checkbox = container.querySelector("input[type='checkbox']");
+                    return {
+                        text: input.value.trim(),
+                        completed: checkbox.checked
+                    };
+                }).filter(note => note.text);
+
+                if (notes.length > 10) {
+                    alert(translations[currentLang].maxNotes);
+                    return;
+                }
+
+                const allNotes = JSON.parse(localStorage.getItem("schoolNotes") || "{}");
+                allNotes[`${currentWeekStart.toISOString()}_${currentDayNotes}`] = notes;
+                localStorage.setItem("schoolNotes", JSON.stringify(allNotes));
+                updateNotesHighlight();
+                closeNotes();
+            } catch (error) {
+                console.error("Errore in saveNotes:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up delle note
+        function closeNotes() {
+            try {
+                document.getElementById("notes-modal").style.display = "none";
+                currentDayNotes = null;
+            } catch (error) {
+                console.error("Errore in closeNotes:", error);
+            }
+        }
+
+        // Funzione per ottenere tutte le materie uniche
+        function getUniqueSubjects() {
+            try {
+                const subjects = JSON.parse(localStorage.getItem("schoolSubjects") || "{}");
+                return Object.keys(subjects).sort();
+            } catch (error) {
+                console.error("Errore in getUniqueSubjects:", error);
+                return [];
+            }
+        }
+
+        // Funzione per aprire il pop-up per aggiungere materia
+        function openAddSubject() {
+            try {
+                const modal = document.getElementById("add-subject-modal");
+                document.getElementById("new-subject").value = "";
+                document.getElementById("new-professor").value = "";
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in openAddSubject:", error);
+            }
+        }
+
+        // Funzione per salvare una nuova materia
+        function saveSubject() {
+            try {
+                const subject = document.getElementById("new-subject").value.trim();
+                const professor = document.getElementById("new-professor").value.trim();
+                
+                if (!subject) {
+                    alert(translations[currentLang].subjectRequired);
+                    return;
+                }
+
+                const subjects = JSON.parse(localStorage.getItem("schoolSubjects") || "{}");
+                if (subjects[subject]) {
+                    alert(translations[currentLang].subjectExists);
+                    return;
+                }
+
+                subjects[subject] = { professor: professor };
+                localStorage.setItem("schoolSubjects", JSON.stringify(subjects));
+                closeAddSubject();
+                generateCalendar();
+            } catch (error) {
+                console.error("Errore in saveSubject:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up di aggiunta materia
+        function closeAddSubject() {
+            try {
+                document.getElementById("add-subject-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeAddSubject:", error);
+            }
+        }
+
+        // Funzione per aprire il pop-up per modificare materia
+        function openEditSubject() {
+            try {
+                const modal = document.getElementById("edit-subject-modal");
+                const select = document.getElementById("edit-subject-select");
+                const subjects = getUniqueSubjects();
+
+                select.innerHTML = `<option value="">${translations[currentLang].selectSubject}</option>`;
+                subjects.forEach(subject => {
+                    const option = document.createElement("option");
+                    option.value = subject;
+                    option.textContent = subject;
+                    select.appendChild(option);
+                });
+
+                document.getElementById("edit-subject").value = "";
+                document.getElementById("edit-professor").value = "";
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in openEditSubject:", error);
+            }
+        }
+
+        // Funzione per salvare le modifiche a una materia
+        function editSubject() {
+            try {
+                const oldSubject = document.getElementById("edit-subject-select").value;
+                const newSubject = document.getElementById("edit-subject").value.trim();
+                const newProfessor = document.getElementById("edit-professor").value.trim();
+
+                if (!oldSubject) {
+                    alert(translations[currentLang].selectSubjectError);
+                    return notably
+                }
+                if (!newSubject) {
+                    alert(translations[currentLang].subjectRequired);
+                    return;
+                }
+
+                const subjects = JSON.parse(localStorage.getItem("schoolSubjects") || "{}");
+                if (subjects[newSubject] && newSubject !== oldSubject) {
+                    alert(translations[currentLang].subjectExists);
+                    return;
+                }
+
+                subjects[newSubject] = { professor: newProfessor };
+                delete subjects[oldSubject];
+                localStorage.setItem("schoolSubjects", JSON.stringify(subjects));
+
+                const schedule = JSON.parse(localStorage.getItem("schoolSchedule") || "{}");
+                Object.keys(schedule).forEach(week => {
+                    days.forEach(day => {
+                        if (schedule[week]?.[day]) {
+                            Object.keys(schedule[week][day]).forEach(hour => {
+                                if (schedule[week][day][hour] === oldSubject) {
+                                    schedule[week][day][hour] = newSubject;
+                                }
+                            });
+                        }
+                    });
+                });
+                localStorage.setItem("schoolSchedule", JSON.stringify(schedule));
+
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}");
+                Object.keys(grades).forEach(week => {
+                    if (grades[week]?.[oldSubject]) {
+                        grades[week][newSubject] = grades[week][oldSubject];
+                        delete grades[week][oldSubject];
+                    }
+                });
+                localStorage.setItem("schoolGrades", JSON.stringify(grades));
+
+                closeEditSubject();
+                generateCalendar();
+            } catch (error) {
+                console.error("Errore in editSubject:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up di modifica materia
+        function closeEditSubject() {
+            try {
+                document.getElementById("edit-subject-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeEditSubject:", error);
+            }
+        }
+
+        // Funzione per aprire il pop-up per eliminare materia
+        function openDeleteSubject() {
+            try {
+                const modal = document.getElementById("delete-subject-modal");
+                const select = document.getElementById("delete-subject-select");
+                const subjects = getUniqueSubjects();
+
+                select.innerHTML = `<option value="">${translations[currentLang].selectSubject}</option>`;
+                subjects.forEach(subject => {
+                    const option = document.createElement("option");
+                    option.value = subject;
+                    option.textContent = subject;
+                    select.appendChild(option);
+                });
+
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in openDeleteSubject:", error);
+            }
+        }
+
+        // Funzione per eliminare una materia
+        function deleteSubject() {
+            try {
+                const subject = document.getElementById("delete-subject-select").value;
+
+                if (!subject) {
+                    alert(translations[currentLang].selectSubjectError);
+                    return;
+                }
+
+                const subjects = JSON.parse(localStorage.getItem("schoolSubjects") || "{}");
+                delete subjects[subject];
+                localStorage.setItem("schoolSubjects", JSON.stringify(subjects));
+
+                const schedule = JSON.parse(localStorage.getItem("schoolSchedule") || "{}");
+                Object.keys(schedule).forEach(week => {
+                    days.forEach(day => {
+                        if (schedule[week]?.[day]) {
+                            Object.keys(schedule[week][day]).forEach(hour => {
+                                if (schedule[week][day][hour] === subject) {
+                                    schedule[week][day][hour] = "";
+                                }
+                            });
+                        }
+                    });
+                });
+                localStorage.setItem("schoolSchedule", JSON.stringify(schedule));
+
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}");
+                Object.keys(grades).forEach(week => {
+                    if (grades[week]?.[subject]) {
+                        delete grades[week][subject];
+                    }
+                });
+                localStorage.setItem("schoolGrades", JSON.stringify(grades));
+
+                closeDeleteSubject();
+                generateCalendar();
+            } catch (error) {
+                console.error("Errore in deleteSubject:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up di eliminazione materia
+        function closeDeleteSubject() {
+            try {
+                document.getElementById("delete-subject-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeDeleteSubject:", error);
+            }
+        }
+
+        // Funzione per aprire il pop-up dei voti
+        function openGrades() {
+            try {
+                const modal = document.getElementById("grades-modal");
+                const gradesList = document.getElementById("grades-list");
+                const subjects = getUniqueSubjects();
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}")[currentWeekStart.toISOString()] || {};
+
+                gradesList.innerHTML = "";
+                subjects.forEach(subject => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `<h3>${subject}</h3><strong>${translations[currentLang].oralGrades}</strong>`;
+                    const oralContainer = document.createElement("div");
+                    oralContainer.classList.add("grade-container");
+                    for (let i = 0; i < 10; i++) {
+                        const oralInput = document.createElement("input");
+                        oralInput.type = "text";
+                        oralInput.classList.add("grade-input");
+                        oralInput.placeholder = `${i + 1}`;
+                        oralInput.value = grades[subject]?.oral?.[i] || "";
+                        oralInput.dataset.subject = subject;
+                        oralInput.dataset.type = "oral";
+                        oralInput.dataset.index = i;
+                        oralContainer.appendChild(oralInput);
+                    }
+                    div.appendChild(oralContainer);
+                    div.innerHTML += `<strong>${translations[currentLang].writtenGrades}</strong>`;
+                    const writtenContainer = document.createElement("div");
+                    writtenContainer.classList.add("grade-container");
+                    for (let i = 0; i < 10; i++) {
+                        const writtenInput = document.createElement("input");
+                        writtenInput.type = "text";
+                        writtenInput.classList.add("grade-input");
+                        writtenInput.placeholder = `${i + 1}`;
+                        writtenInput.value = grades[subject]?.written?.[i] || "";
+                        writtenInput.dataset.subject = subject;
+                        writtenInput.dataset.type = "written";
+                        writtenInput.dataset.index = i;
+                        writtenContainer.appendChild(writtenInput);
+                    }
+                    div.appendChild(writtenContainer);
+                    gradesList.appendChild(div);
+                });
+
+                if (subjects.length === 0) {
+                    gradesList.innerHTML = `<p>${translations[currentLang].noSubjects}</p>`;
+                }
+
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in openGrades:", error);
+            }
+        }
+
+        // Funzione per salvare i voti
+        function saveGrades() {
+            try {
+                const gradesList = document.getElementById("grades-list");
+                const inputs = gradesList.querySelectorAll("input");
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}");
+                const week = currentWeekStart.toISOString();
+                if (!grades[week]) grades[week] = {};
+
+                inputs.forEach(input => {
+                    const subject = input.dataset.subject;
+                    const type = input.dataset.type;
+                    const index = parseInt(input.dataset.index);
+                    if (!grades[week][subject]) {
+                        grades[week][subject] = {
+                            oral: Array(10).fill(""),
+                            written: Array(10).fill("")
+                        };
+                    }
+                    grades[week][subject][type][index] = input.value.trim();
+                });
+
+                localStorage.setItem("schoolGrades", JSON.stringify(grades));
+                closeGrades();
+            } catch (error) {
+                console.error("Errore in saveGrades:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up dei voti
+        function closeGrades() {
+            try {
+                document.getElementById("grades-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeGrades:", error);
+            }
+        }
+
+        // Funzione per calcolare la media dei voti
+        function calculateAverage(gradesArray) {
+            try {
+                const grades = gradesArray.map(g => parseFloat(g.trim())).filter(g => !isNaN(g) && g >= 0 && g <= 10);
+                return grades.length ? (grades.reduce((sum, g) => sum + g, 0) / grades.length).toFixed(2) : "N/A";
+            } catch (error) {
+                console.error("Errore in calculateAverage:", error);
+                return "N/A";
+            }
+        }
+
+        // Funzione per mostrare le statistiche del primo quadrimestre
+        function showFirstTerm() {
+            try {
+                const statsContent = document.getElementById("stats-content");
+                const firstTermWeek = new Date(2024, 8, 1).toISOString();
+                const subjects = getUniqueSubjects();
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}")[firstTermWeek] || {};
+
+                statsContent.innerHTML = `<h3>${translations[currentLang].firstTermPeriod}</h3>`;
+                if (subjects.length === 0) {
+                    statsContent.innerHTML += `<p>${translations[currentLang].noSubjects}</p>`;
+                } else {
+                    subjects.forEach(subject => {
+                        const oralGrades = (grades[subject]?.oral || Array(10).fill("")).filter(g => g.trim());
+                        const writtenGrades = (grades[subject]?.written || Array(10).fill("")).filter(g => g.trim());
+                        const oralAvg = calculateAverage(oralGrades);
+                        const writtenAvg = calculateAverage(writtenGrades);
+                        statsContent.innerHTML += `
+                            <p><strong>${subject}</strong>:<br>
+                            ${translations[currentLang].oralGrades}: ${oralGrades.length ? oralGrades.join(", ") : translations[currentLang].noSubjects} (Media: ${oralAvg})<br>
+                            ${translations[currentLang].writtenGrades}: ${writtenGrades.length ? writtenGrades.join(", ") : translations[currentLang].noSubjects} (Media: ${writtenAvg})</p>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error("Errore in showFirstTerm:", error);
+            }
+        }
+
+        // Funzione per mostrare le statistiche del secondo quadrimestre
+        function showSecondTerm() {
+            try {
+                const statsContent = document.getElementById("stats-content");
+                const secondTermWeek = currentWeekStart.toISOString();
+                const subjects = getUniqueSubjects();
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}")[secondTermWeek] || {};
+
+                statsContent.innerHTML = `<h3>${translations[currentLang].secondTermPeriod}</h3>`;
+                if (subjects.length === 0) {
+                    statsContent.innerHTML += `<p>${translations[currentLang].noSubjects}</p>`;
+                } else {
+                    subjects.forEach(subject => {
+                        const oralGrades = (grades[subject]?.oral || Array(10).fill("")).filter(g => g.trim());
+                        const writtenGrades = (grades[subject]?.written || Array(10).fill("")).filter(g => g.trim());
+                        const oralAvg = calculateAverage(oralGrades);
+                        const writtenAvg = calculateAverage(writtenGrades);
+                        statsContent.innerHTML += `
+                            <p><strong>${subject}</strong>:<br>
+                            ${translations[currentLang].oralGrades}: ${oralGrades.length ? oralGrades.join(", ") : translations[currentLang].noSubjects} (Media: ${oralAvg})<br>
+                            ${translations[currentLang].writtenGrades}: ${writtenGrades.length ? writtenGrades.join(", ") : translations[currentLang].noSubjects} (Media: ${writtenAvg})</p>
+                        `;
+                    });
+                }
+            } catch (error) {
+                console.error("Errore in showSecondTerm:", error);
+            }
+        }
+
+        // Funzione per mostrare i voti finali
+        function showFinalGrades() {
+            try {
+                const finalGradesModal = document.getElementById("final-grades-modal");
+                const finalGradesContent = document.getElementById("final-grades-content");
+                const subjects = getUniqueSubjects();
+                const grades = JSON.parse(localStorage.getItem("schoolGrades") || "{}");
+
+                const firstTermWeek = new Date(2024, 8, 1).toISOString();
+                const secondTermWeek = currentWeekStart.toISOString();
+
+                finalGradesContent.innerHTML = `<h3>${translations[currentLang].finalGradesTitle}</h3>`;
+                if (subjects.length === 0) {
+                    finalGradesContent.innerHTML += `<p>${translations[currentLang].noSubjects}</p>`;
+                } else {
+                    subjects.forEach(subject => {
+                        let allOralGrades = [];
+                        let allWrittenGrades = [];
+
+                        if (grades[firstTermWeek]?.[subject]?.oral) {
+                            allOralGrades = allOralGrades.concat(grades[firstTermWeek][subject].oral.filter(g => g.trim()));
+                        }
+                        if (grades[firstTermWeek]?.[subject]?.written) {
+                            allWrittenGrades = allWrittenGrades.concat(grades[firstTermWeek][subject].written.filter(g => g.trim()));
+                        }
+
+                        if (grades[secondTermWeek]?.[subject]?.oral) {
+                            allOralGrades = allOralGrades.concat(grades[secondTermWeek][subject].oral.filter(g => g.trim()));
+                        }
+                        if (grades[secondTermWeek]?.[subject]?.written) {
+                            allWrittenGrades = allWrittenGrades.concat(grades[secondTermWeek][subject].written.filter(g => g.trim()));
+                        }
+
+                        const oralAvg = calculateAverage(allOralGrades);
+                        const writtenAvg = calculateAverage(allWrittenGrades);
+                        finalGradesContent.innerHTML += `
+                            <p><strong>${subject}</strong>:<br>
+                            ${translations[currentLang].oralGrades}: ${oralAvg}<br>
+                            ${translations[currentLang].writtenGrades}: ${writtenAvg}</p>
+                        `;
+                    });
+                }
+
+                finalGradesModal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in showFinalGrades:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up dei voti finali
+        function closeFinalGrades() {
+            try {
+                document.getElementById("final-grades-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeFinalGrades:", error);
+            }
+        }
+
+        // Funzione per mostrare il pop-up delle statistiche
+        function showStats() {
+            try {
+                const modal = document.getElementById("stats-modal");
+                const statsContent = document.getElementById("stats-content");
+                statsContent.innerHTML = `<p>${translations[currentLang].selectSubject}</p>`;
+                modal.style.display = "flex";
+            } catch (error) {
+                console.error("Errore in showStats:", error);
+            }
+        }
+
+        // Funzione per chiudere il pop-up delle statistiche
+        function closeStats() {
+            try {
+                document.getElementById("stats-modal").style.display = "none";
+            } catch (error) {
+                console.error("Errore in closeStats:", error);
+            }
+        }
+
+        // Inizializza il calendario e la settimana
+        try {
+            updateWeekDisplay();
+        } catch (error) {
+            console.error("Errore durante l'inizializzazione:", error);
+            alert("Errore durante l'inizializzazione del calendario. Prova a resettare i dati.");
+        }
+    </script>
+</body>
+</html>
