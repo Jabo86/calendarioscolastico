@@ -340,10 +340,11 @@
             z-index: 90;
         }
         
-        /* Vista Settimanale - MODIFICHE PER RESPONSIVE */
+        /* Vista Settimanale - MODIFICHE PER MOBILE */
         .weekly-view {
             overflow-x: auto;
             padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
         }
         
         .week-navigation {
@@ -361,16 +362,18 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 0.9rem;
         }
         
         .week-title {
             font-weight: bold;
             text-align: center;
+            font-size: 1rem;
         }
         
         .weekly-calendar {
             display: grid;
-            grid-template-columns: repeat(6, minmax(150px, 1fr));
+            grid-template-columns: repeat(6, minmax(140px, 1fr));
             gap: 0.5rem;
             width: 100%;
             min-width: 100%;
@@ -381,6 +384,8 @@
             border-radius: 8px;
             overflow: hidden;
             min-height: 250px;
+            display: flex;
+            flex-direction: column;
         }
         
         .day-header {
@@ -399,7 +404,8 @@
         
         .day-subjects {
             padding: 0.5rem;
-            min-height: 200px;
+            flex-grow: 1;
+            min-height: 180px;
         }
         
         .weekly-subject {
@@ -600,7 +606,23 @@
             border: none;
         }
         
+        /* MEDIA QUERIES PER MOBILE */
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-title {
+                order: -1;
+                width: 100%;
+            }
+            
+            .header-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
             .weekly-calendar {
                 grid-template-columns: repeat(6, minmax(120px, 1fr));
             }
@@ -615,14 +637,13 @@
                 padding: 0.4rem;
             }
             
-            header {
-                flex-direction: column;
-                gap: 1rem;
+            .week-nav-btn {
+                padding: 0.5rem;
+                font-size: 0.8rem;
             }
             
-            .header-title {
-                order: -1;
-                width: 100%;
+            .week-title {
+                font-size: 0.9rem;
             }
         }
         
@@ -648,6 +669,7 @@
             
             .weekly-calendar {
                 grid-template-columns: repeat(6, minmax(100px, 1fr));
+                gap: 0.3rem;
             }
             
             .day-header {
@@ -658,6 +680,46 @@
             .weekly-subject {
                 font-size: 0.75rem;
                 padding: 0.3rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .day-subjects {
+                padding: 0.3rem;
+                min-height: 160px;
+            }
+            
+            .week-nav-btn {
+                padding: 0.4rem;
+                font-size: 0.75rem;
+            }
+            
+            .week-title {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .weekly-calendar {
+                grid-template-columns: repeat(6, minmax(90px, 1fr));
+            }
+            
+            .day-header {
+                font-size: 0.75rem;
+                padding: 0.3rem;
+            }
+            
+            .weekly-subject {
+                font-size: 0.7rem;
+                padding: 0.25rem;
+            }
+            
+            .week-nav-btn {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.7rem;
+            }
+            
+            .week-title {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -710,9 +772,9 @@
         <div class="tab-content" id="weekly-tab">
             <div class="weekly-view">
                 <div class="week-navigation">
-                    <button class="week-nav-btn" id="prev-week">← Sett. Prec.</button>
+                    <button class="week-nav-btn" id="prev-week">← Prec.</button>
                     <div class="week-title" id="week-title">Settimana 37: 11-16 Set</div>
-                    <button class="week-nav-btn" id="next-week">Sett. Succ. →</button>
+                    <button class="week-nav-btn" id="next-week">Succ. →</button>
                 </div>
                 
                 <div class="weekly-calendar" id="weekly-calendar">
@@ -1043,7 +1105,7 @@
                 statsWritten: "Promedio Escrito",
                 statsOral: "Promedio Oral",
                 statsTotal: "Promedio Total",
-                days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Vendredi", "Sábado"],
+                days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
                 dayNames: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
                 months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
                         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
