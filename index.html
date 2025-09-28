@@ -340,11 +340,11 @@
             z-index: 90;
         }
         
-        /* Vista Settimanale - MODIFICHE PER MOBILE */
+        /* Vista Settimanale */
         .weekly-view {
-            overflow-x: auto;
-            padding-bottom: 1rem;
-            -webkit-overflow-scrolling: touch;
+            padding: 1rem;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .week-navigation {
@@ -373,10 +373,10 @@
         
         .weekly-calendar {
             display: grid;
-            grid-template-columns: repeat(6, minmax(140px, 1fr));
+            grid-template-columns: repeat(6, minmax(0, 1fr));
             gap: 0.5rem;
             width: 100%;
-            min-width: 100%;
+            box-sizing: border-box;
         }
         
         .day-column {
@@ -395,6 +395,7 @@
             text-align: center;
             font-weight: bold;
             position: relative;
+            font-size: 0.9rem;
         }
         
         .today .day-header {
@@ -406,6 +407,8 @@
             padding: 0.5rem;
             flex-grow: 1;
             min-height: 180px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .weekly-subject {
@@ -417,6 +420,9 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             position: relative;
             cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* Vista Statistiche */
@@ -606,7 +612,7 @@
             border: none;
         }
         
-        /* MEDIA QUERIES PER MOBILE */
+        /* Media Queries per Mobile */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -624,17 +630,18 @@
             }
             
             .weekly-calendar {
-                grid-template-columns: repeat(6, minmax(120px, 1fr));
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 0.3rem;
             }
             
             .day-header {
                 padding: 0.5rem;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             
             .weekly-subject {
-                font-size: 0.8rem;
-                padding: 0.4rem;
+                font-size: 0.75rem;
+                padding: 0.3rem;
             }
             
             .week-nav-btn {
@@ -668,24 +675,24 @@
             }
             
             .weekly-calendar {
-                grid-template-columns: repeat(6, minmax(100px, 1fr));
-                gap: 0.3rem;
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 0.2rem;
             }
             
             .day-header {
-                font-size: 0.8rem;
-                padding: 0.4rem;
+                font-size: 0.7rem;
+                padding: 0.3rem;
             }
             
             .weekly-subject {
-                font-size: 0.75rem;
-                padding: 0.3rem;
+                font-size: 0.65rem;
+                padding: 0.2rem;
                 margin-bottom: 0.3rem;
             }
             
             .day-subjects {
-                padding: 0.3rem;
-                min-height: 160px;
+                padding: 0.2rem;
+                min-height: 140px;
             }
             
             .week-nav-btn {
@@ -700,17 +707,23 @@
         
         @media (max-width: 360px) {
             .weekly-calendar {
-                grid-template-columns: repeat(6, minmax(90px, 1fr));
+                grid-template-columns: repeat(6, minmax(0, 1fr));
+                gap: 0.1rem;
             }
             
             .day-header {
-                font-size: 0.75rem;
-                padding: 0.3rem;
+                font-size: 0.65rem;
+                padding: 0.2rem;
             }
             
             .weekly-subject {
-                font-size: 0.7rem;
-                padding: 0.25rem;
+                font-size: 0.6rem;
+                padding: 0.15rem;
+            }
+            
+            .day-subjects {
+                padding: 0.15rem;
+                min-height: 120px;
             }
             
             .week-nav-btn {
@@ -956,7 +969,8 @@
                 days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
                 dayNames: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
                 months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
-                        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"]
+                        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
+                remove: "Rimuovi"
             },
             en: {
                 appTitle: "School Calendar",
@@ -994,7 +1008,8 @@
                 days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                 dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 months: ["January", "February", "March", "April", "May", "June", 
-                        "July", "August", "September", "October", "November", "December"]
+                        "July", "August", "September", "October", "November", "December"],
+                remove: "Remove"
             },
             fr: {
                 appTitle: "Calendrier Scolaire",
@@ -1032,7 +1047,8 @@
                 days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
                 dayNames: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
                 months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", 
-                        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+                        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                remove: "Supprimer"
             },
             de: {
                 appTitle: "Schulkalender",
@@ -1070,7 +1086,8 @@
                 days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
                 dayNames: ["Mo", "Di", "Mi", "Do", "Fr", "Sa"],
                 months: ["Januar", "Februar", "März", "April", "Mai", "Juni", 
-                        "Juli", "August", "September", "Oktober", "November", "Dezember"]
+                        "Juli", "August", "September", "Oktober", "November", "Dezember"],
+                remove: "Entfernen"
             },
             es: {
                 appTitle: "Calendario Escolar",
@@ -1108,7 +1125,8 @@
                 days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
                 dayNames: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
                 months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+                        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                remove: "Eliminar"
             }
         };
         
@@ -1452,8 +1470,10 @@
                         const subjectElement = document.createElement('div');
                         subjectElement.className = 'weekly-subject';
                         
+                        // Abbrevia il nome della materia se troppo lungo
+                        const shortName = subject.name.length > 15 ? subject.name.substring(0, 12) + '...' : subject.name;
                         subjectElement.innerHTML = `
-                            <strong>${subject.name}</strong><br>
+                            <strong>${shortName}</strong><br>
                             ${subject.startTime} - ${subject.endTime}
                             ${subject.room ? `<br><small>${translations[currentLanguage].room.split(' ')[0]}: ${subject.room}</small>` : ''}
                         `;
@@ -1653,7 +1673,7 @@
                     <option value="written" ${grade.type === 'written' ? 'selected' : ''}>${t.written}</option>
                     <option value="oral" ${grade.type === 'oral' ? 'selected' : ''}>${t.oral}</option>
                 </select>
-                <button type="button" class="btn btn-danger remove-grade">${t.save === "Salva Materia" ? "Rimuovi" : "Remove"}</button>
+                <button type="button" class="btn btn-danger remove-grade">${t.remove}</button>
             `;
             gradeList.appendChild(gradeItem);
             
