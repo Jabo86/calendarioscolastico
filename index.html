@@ -110,6 +110,7 @@
             padding: 0.5rem;
             color: white;
             cursor: pointer;
+            max-width: 150px;
         }
 
         .language-select option {
@@ -1003,6 +1004,18 @@
                 <select class="language-select" id="language-select">
                     <option value="it">Italiano</option>
                     <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="es">Español</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="ja">日本語</option>
+                    <option value="uk">Українська</option>
+                    <option value="sv">Svenska</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="th">ไทย</option>
+                    <option value="el">Ελληνικά</option>
                 </select>
             </div>
         </header>
@@ -1150,36 +1163,34 @@
                         <select id="subject-name" class="form-control" required>
                             <option value="">Seleziona materia</option>
                             <option value="Italiano">Italiano</option>
+                            <option value="Matematica">Matematica</option>
                             <option value="Storia">Storia</option>
                             <option value="Geografia">Geografia</option>
-                            <option value="Chimica">Chimica</option>
-                            <option value="Diritto">Diritto</option>
-                            <option value="Fisica">Fisica</option>
-                            <option value="Educazione Fisica">Educazione Fisica</option>
+                            <option value="Scienze">Scienze</option>
                             <option value="Inglese">Inglese</option>
                             <option value="Francese">Francese</option>
                             <option value="Tedesco">Tedesco</option>
                             <option value="Spagnolo">Spagnolo</option>
+                            <option value="Arte e Immagine">Arte e Immagine</option>
                             <option value="Musica">Musica</option>
-                            <option value="Arte">Arte</option>
+                            <option value="Fisica">Fisica</option>
                             <option value="Religione">Religione</option>
-                            <option value="Civica">Civica</option>
+                            <option value="Educazione Fisica">Educazione Fisica</option>
                             <option value="Tecnologia">Tecnologia</option>
-                            <option value="custom">Altra materia (specifica)</option>
+                            <option value="Informatica">Informatica</option>
+                            <option value="Latino">Latino</option>
+                            <option value="Greco">Greco</option>
+                            <option value="Filosofia">Filosofia</option>
+                            <option value="Aritmetica">Aritmetica</option>
+                            <option value="Geometria">Geometria</option>
+                            <option value="Chimica">Chimica</option>
+                            <option value="Educazione Civica">Educazione Civica</option>
+                            <option value="Diritto">Diritto</option>
                         </select>
-                        <input type="text" id="custom-subject" class="form-control" style="display:none; margin-top: 0.5rem;" placeholder="Inserisci nuova materia">
                     </div>
                     <div class="form-group">
-                        <label for="subject-day" id="label-day">Giorno</label>
-                        <select id="subject-day" class="form-control" required>
-                            <option value="">Seleziona giorno</option>
-                            <option value="1" id="day-monday">Lunedì</option>
-                            <option value="2" id="day-tuesday">Martedì</option>
-                            <option value="3" id="day-wednesday">Mercoledì</option>
-                            <option value="4" id="day-thursday">Giovedì</option>
-                            <option value="5" id="day-friday">Venerdì</option>
-                            <option value="6" id="day-saturday">Sabato</option>
-                        </select>
+                        <label for="subject-date" id="label-date">Data</label>
+                        <input type="date" id="subject-date" class="form-control" required>
                     </div>
                     
                     <div class="homework-section">
@@ -1255,7 +1266,7 @@
                 monthly: "Mensile",
                 stats: "Statistiche",
                 subject: "Materia",
-                day: "Giorno",
+                date: "Data",
                 homework: "Compiti",
                 homeworkDesc: "Descrizione compiti",
                 homeworkDeadline: "Scadenza (opzionale)",
@@ -1278,14 +1289,9 @@
                 statsTotal: "Media Annuale",
                 days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
                 dayNames: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
-                months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
-                        "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
+                months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
                 remove: "Rimuovi",
-                priority: {
-                    high: "Alta",
-                    medium: "Media",
-                    low: "Bassa"
-                }
+                priority: { high: "Alta", medium: "Media", low: "Bassa" }
             },
             en: {
                 appTitle: "School Calendar",
@@ -1295,7 +1301,7 @@
                 monthly: "Monthly",
                 stats: "Statistics",
                 subject: "Subject",
-                day: "Day",
+                date: "Date",
                 homework: "Homework",
                 homeworkDesc: "Homework description",
                 homeworkDeadline: "Deadline (optional)",
@@ -1318,14 +1324,9 @@
                 statsTotal: "Annual Average",
                 days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                 dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-                months: ["January", "February", "March", "April", "May", "June", 
-                        "July", "August", "September", "October", "November", "December"],
+                months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 remove: "Remove",
-                priority: {
-                    high: "High",
-                    medium: "Medium",
-                    low: "Low"
-                }
+                priority: { high: "High", medium: "Medium", low: "Low" }
             }
         };
 
@@ -1341,19 +1342,6 @@
             renderMonthlyView();
             renderStatsView();
             updateDashboard();
-            
-            // Gestione dinamica della materia personalizzata
-            const subjectSelect = document.getElementById('subject-name');
-            const customSubjectInput = document.getElementById('custom-subject');
-            subjectSelect.addEventListener('change', function() {
-                if (this.value === 'custom') {
-                    customSubjectInput.style.display = 'block';
-                    customSubjectInput.focus();
-                } else {
-                    customSubjectInput.style.display = 'none';
-                    customSubjectInput.value = '';
-                }
-            });
         });
 
         function initializeApp() {
@@ -1363,7 +1351,7 @@
                     {
                         id: generateId(),
                         name: 'Italiano',
-                        day: 1,
+                        date: getDateString(0),
                         homework: 'Pagina 45 esercizi 1-5',
                         homeworkDeadline: getDateString(3),
                         homeworkPriority: 'high',
@@ -1378,9 +1366,9 @@
                     },
                     {
                         id: generateId(),
-                        name: 'Storia',
-                        day: 1,
-                        homework: 'Analisi del testo pagina 32',
+                        name: 'Matematica',
+                        date: getDateString(0),
+                        homework: 'Esercizi pagina 78',
                         homeworkDeadline: getDateString(2),
                         homeworkPriority: 'medium',
                         homeworkDone: true,
@@ -1392,8 +1380,8 @@
                     },
                     {
                         id: generateId(),
-                        name: 'Geografia',
-                        day: 2,
+                        name: 'Storia',
+                        date: getDateString(1),
                         homework: '',
                         homeworkDone: false,
                         note: 'Studiare capitolo 3',
@@ -1401,8 +1389,8 @@
                     },
                     {
                         id: generateId(),
-                        name: 'Chimica',
-                        day: 3,
+                        name: 'Scienze',
+                        date: getDateString(2),
                         homework: 'Esperimento sui composti',
                         homeworkDeadline: getDateString(7),
                         homeworkPriority: 'medium',
@@ -1567,7 +1555,7 @@
             // Aggiorna i testi del modale
             document.getElementById('modal-title').textContent = t.addSubject;
             document.getElementById('label-subject').textContent = t.subject;
-            document.getElementById('label-day').textContent = t.day;
+            document.getElementById('label-date').textContent = t.date;
             document.getElementById('homework-title').textContent = t.homework;
             document.getElementById('label-homework').textContent = t.homeworkDesc;
             document.getElementById('label-homework-deadline').textContent = t.homeworkDeadline;
@@ -1579,14 +1567,6 @@
             document.getElementById('label-grade-quarter').textContent = t.gradeQuarter;
             document.getElementById('add-grade').textContent = t.addGrade;
             document.getElementById('save-subject').textContent = t.save;
-            
-            // Aggiorna i giorni della settimana
-            document.getElementById('day-monday').textContent = t.days[1];
-            document.getElementById('day-tuesday').textContent = t.days[2];
-            document.getElementById('day-wednesday').textContent = t.days[3];
-            document.getElementById('day-thursday').textContent = t.days[4];
-            document.getElementById('day-friday').textContent = t.days[5];
-            document.getElementById('day-saturday').textContent = t.days[6];
             
             // Aggiorna le opzioni di priorità
             const prioritySelect = document.getElementById('homework-priority');
@@ -1612,10 +1592,10 @@
 
         function updateDashboard() {
             const today = new Date();
-            const todayDay = today.getDay() === 0 ? 6 : today.getDay(); // Converti Domenica in 6
+            const todayDateString = today.toISOString().split('T')[0];
             
             // Calcola le statistiche
-            const todaySubjects = subjects.filter(s => s.day === todayDay).length;
+            const todaySubjects = subjects.filter(s => s.date === todayDateString).length;
             const pendingHomework = subjects.filter(s => s.homework && s.homework.trim() !== '' && !s.homeworkDone).length;
             const upcomingExams = subjects.filter(s => s.homework && s.homework.toLowerCase().includes('verifica')).length;
             const totalHomework = subjects.filter(s => s.homework && s.homework.trim() !== '').length;
@@ -1691,7 +1671,7 @@
             const weeklyGoals = [
                 'Completare tutti i compiti di Italiano',
                 'Studiare per la verifica di Storia',
-                'Ripassare gli argomenti di Chimica'
+                'Ripassare gli argomenti di Scienze'
             ];
             
             weeklyGoals.forEach(goal => {
@@ -1734,6 +1714,7 @@
             for (let i = 0; i < 6; i++) {
                 const dayDate = new Date(startOfWeek);
                 dayDate.setDate(startOfWeek.getDate() + i);
+                const dayDateString = dayDate.toISOString().split('T')[0];
                 
                 const dayColumn = document.createElement('div');
                 dayColumn.className = 'day-column';
@@ -1751,8 +1732,7 @@
                 const daySubjects = document.createElement('div');
                 daySubjects.className = 'day-subjects';
                 
-                const dayOfWeek = i + 1; // 1 = Lunedì, 2 = Martedì, ..., 6 = Sabato
-                const dailySubjects = subjects.filter(subject => subject.day === dayOfWeek);
+                const dailySubjects = subjects.filter(subject => subject.date === dayDateString);
                 
                 if (dailySubjects.length === 0) {
                     const emptyMsg = document.createElement('div');
@@ -1781,8 +1761,8 @@
                 addButton.style.marginTop = '0.5rem';
                 addButton.style.padding = '0.25rem';
                 addButton.addEventListener('click', function() {
-                    console.log('Aggiungi materia per giorno:', dayOfWeek);
-                    openSubjectModal(dayOfWeek);
+                    console.log('Aggiungi materia per data:', dayDateString);
+                    openSubjectModal(dayDateString);
                 });
                 
                 dayColumn.appendChild(daySubjects);
@@ -1792,18 +1772,14 @@
         }
 
         function renderDailyView() {
-            let day = currentDate.getDay();
-            if (day === 0) {
-                currentDate.setDate(currentDate.getDate() + 1);
-                day = 1;
-            }
+            const dateString = currentDate.toISOString().split('T')[0];
             
             const t = translations[currentLanguage];
             const dayNames = t.days;
             const monthNames = t.months;
             
-            const dateString = `${dayNames[day]} ${currentDate.getDate()} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
-            document.getElementById('current-date').textContent = dateString;
+            const displayDateString = `${dayNames[currentDate.getDay()]} ${currentDate.getDate()} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            document.getElementById('current-date').textContent = displayDateString;
             
             const today = new Date();
             const todayIndicator = document.createElement('span');
@@ -1821,7 +1797,7 @@
                 }
             }
             
-            const dailySubjects = subjects.filter(subject => subject.day === day);
+            const dailySubjects = subjects.filter(subject => subject.date === dateString);
             const subjectsContainer = document.getElementById('daily-subjects');
             subjectsContainer.innerHTML = '';
             
@@ -1836,7 +1812,7 @@
                 
                 document.getElementById('add-today-subject').addEventListener('click', function() {
                     console.log('Aggiungi materia per oggi');
-                    openSubjectModal(day);
+                    openSubjectModal(dateString);
                 });
             } else {
                 dailySubjects.forEach(subject => {
@@ -1896,10 +1872,9 @@
                     dayNumberElement.textContent = currentDay;
                     dayElement.appendChild(dayNumberElement);
                     
-                    // Trova materie per questo giorno (converti da Domenica=0 a Lunedì=1)
-                    const dayOfWeek = dayDate.getDay();
-                    const adjustedDayOfWeek = dayOfWeek === 0 ? 6 : dayOfWeek;
-                    const daySubjects = subjects.filter(s => s.day === adjustedDayOfWeek);
+                    // Trova materie per questo giorno
+                    const dayDateString = dayDate.toISOString().split('T')[0];
+                    const daySubjects = subjects.filter(s => s.date === dayDateString);
                     
                     // Crea indicatori per i compiti
                     const homeworkIndicators = document.createElement('div');
@@ -2206,20 +2181,17 @@
             });
         }
 
-        function openSubjectModal(day = null) {
+        function openSubjectModal(date = null) {
             editingSubjectId = null;
             const t = translations[currentLanguage];
             document.getElementById('modal-title').textContent = t.addSubject;
             document.getElementById('subject-form').reset();
             document.getElementById('grade-list').innerHTML = '';
-            const subjectSelect = document.getElementById('subject-name');
-            const customSubjectInput = document.getElementById('custom-subject');
-            subjectSelect.value = '';
-            customSubjectInput.style.display = 'none';
-            customSubjectInput.value = '';
             
-            if (day !== null) {
-                document.getElementById('subject-day').value = day;
+            if (date !== null) {
+                document.getElementById('subject-date').value = date;
+            } else {
+                document.getElementById('subject-date').value = currentDate.toISOString().split('T')[0];
             }
             
             document.getElementById('subject-modal').classList.add('active');
@@ -2238,18 +2210,8 @@
             const t = translations[currentLanguage];
             document.getElementById('modal-title').textContent = t.editSubject;
             document.getElementById('subject-id').value = subject.id;
-            const subjectSelect = document.getElementById('subject-name');
-            const customSubjectInput = document.getElementById('custom-subject');
-            if (['Italiano', 'Storia', 'Geografia', 'Chimica', 'Diritto', 'Fisica', 'Educazione Fisica', 'Inglese', 'Francese', 'Tedesco', 'Spagnolo', 'Musica', 'Arte', 'Religione', 'Civica', 'Tecnologia'].includes(subject.name)) {
-                subjectSelect.value = subject.name;
-                customSubjectInput.style.display = 'none';
-                customSubjectInput.value = '';
-            } else {
-                subjectSelect.value = 'custom';
-                customSubjectInput.style.display = 'block';
-                customSubjectInput.value = subject.name;
-            }
-            document.getElementById('subject-day').value = subject.day;
+            document.getElementById('subject-name').value = subject.name;
+            document.getElementById('subject-date').value = subject.date;
             document.getElementById('homework-desc').value = subject.homework || '';
             document.getElementById('homework-deadline').value = subject.homeworkDeadline || '';
             document.getElementById('homework-priority').value = subject.homeworkPriority || 'medium';
@@ -2266,10 +2228,8 @@
 
         function saveSubject() {
             const id = editingSubjectId || generateId();
-            const subjectSelect = document.getElementById('subject-name');
-            const customSubjectInput = document.getElementById('custom-subject');
-            const name = subjectSelect.value === 'custom' ? customSubjectInput.value : subjectSelect.value;
-            const day = parseInt(document.getElementById('subject-day').value);
+            const name = document.getElementById('subject-name').value;
+            const date = document.getElementById('subject-date').value;
             const homework = document.getElementById('homework-desc').value;
             const homeworkDeadline = document.getElementById('homework-deadline').value;
             const homeworkPriority = document.getElementById('homework-priority').value;
@@ -2282,7 +2242,7 @@
             })).filter(grade => !isNaN(grade.value));
             
             if (!name) {
-                alert('Devi selezionare o inserire una materia!');
+                alert('Devi selezionare una materia!');
                 return;
             }
             
@@ -2290,14 +2250,14 @@
                 const index = subjects.findIndex(s => s.id === editingSubjectId);
                 if (index !== -1) {
                     subjects[index] = { 
-                        id, name, day, 
+                        id, name, date, 
                         homework, homeworkDeadline, homeworkPriority, homeworkDone, 
                         note, grades 
                     };
                 }
             } else {
                 subjects.push({ 
-                    id, name, day, 
+                    id, name, date, 
                     homework, homeworkDeadline, homeworkPriority, homeworkDone, 
                     note, grades 
                 });
