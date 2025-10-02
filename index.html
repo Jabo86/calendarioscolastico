@@ -68,6 +68,185 @@
             background: var(--background);
         }
 
+        /* Schermata Selezione Profilo */
+        .profile-selection {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .profile-selection h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .profile-selection p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .profile-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .profile-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-card p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .profile-limit {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        /* Gestione Profili */
+        .profile-manager {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+            background: var(--background);
+        }
+
+        .profile-manager.active {
+            display: block;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .current-profile {
+            background: var(--light);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .student-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--border);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .add-student-card {
+            background: var(--light);
+            border: 2px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-student-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Header principale */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -75,9 +254,13 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            display: flex;
+            display: none;
             justify-content: space-between;
             align-items: center;
+        }
+
+        header.active {
+            display: flex;
         }
 
         .header-title {
@@ -118,16 +301,45 @@
             color: white;
         }
 
+        .profile-switcher {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
         h1 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
 
         .nav-tabs {
-            display: flex;
+            display: none;
             background: var(--card-bg);
             border-bottom: 1px solid var(--border);
             overflow-x: auto;
+        }
+
+        .nav-tabs.active {
+            display: flex;
         }
 
         .nav-tab {
@@ -828,6 +1040,18 @@
 
         /* Media Queries per Mobile */
         @media (max-width: 768px) {
+            .profile-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-card {
+                padding: 1.5rem;
+            }
+            
+            .profile-icon {
+                font-size: 3rem;
+            }
+            
             header {
                 flex-direction: column;
                 gap: 1rem;
@@ -841,6 +1065,7 @@
             .header-controls {
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             .nav-tabs {
@@ -917,6 +1142,18 @@
         }
 
         @media (max-width: 480px) {
+            .profile-selection {
+                padding: 1rem;
+            }
+            
+            .profile-selection h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-selection p {
+                font-size: 1rem;
+            }
+            
             h1 {
                 font-size: 1.25rem;
             }
@@ -993,8 +1230,58 @@
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <header>
+    <!-- Schermata Selezione Profilo -->
+    <div class="profile-selection" id="profile-selection">
+        <h1>📚 Calendario Scolastico</h1>
+        <p>Scegli il tuo profilo per iniziare</p>
+        
+        <div class="profile-cards">
+            <div class="profile-card" data-profile-type="parent">
+                <div class="profile-icon">👨‍👩‍👧‍👦</div>
+                <h3>Genitore</h3>
+                <p>Segui i compiti di tutti i tuoi figli</p>
+                <div class="profile-limit">Massimo 5 figli</div>
+            </div>
+            
+            <div class="profile-card" data-profile-type="student">
+                <div class="profile-icon">👦</div>
+                <h3>Alunno</h3>
+                <p>Organizza i tuoi compiti e voti</p>
+                <div class="profile-limit">1 profilo personale</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gestione Profili -->
+    <div class="profile-manager" id="profile-manager">
+        <div class="profile-header">
+            <h2 id="manager-title">Gestione Profilo</h2>
+            <p id="manager-subtitle">Gestisci i tuoi figli o il tuo profilo</p>
+        </div>
+        
+        <div class="current-profile">
+            <div class="profile-info">
+                <div class="profile-avatar" id="current-profile-avatar">👨‍👩‍👧‍👦</div>
+                <div>
+                    <h3 id="current-profile-name">Genitore</h3>
+                    <p id="current-profile-type">Profilo Genitore</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="start-app">Inizia App</button>
+        </div>
+        
+        <div class="students-grid" id="students-grid">
+            <!-- Studenti/figli verranno inseriti qui -->
+        </div>
+        
+        <div style="text-align: center;">
+            <button class="btn btn-danger" id="change-profile">Cambia Profilo</button>
+        </div>
+    </div>
+
+    <!-- App Principale -->
+    <div class="app-container" id="main-app" style="display: none;">
+        <header id="main-header">
             <div class="header-title">
                 <h1 id="app-title">Calendario Scolastico</h1>
                 <p id="app-subtitle">Organizza le tue materie, compiti e voti</p>
@@ -1004,23 +1291,18 @@
                 <select class="language-select" id="language-select">
                     <option value="it">Italiano</option>
                     <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="de">Deutsch</option>
-                    <option value="es">Español</option>
-                    <option value="ru">Русский</option>
-                    <option value="zh">中文</option>
-                    <option value="tr">Türkçe</option>
-                    <option value="ja">日本語</option>
-                    <option value="uk">Українська</option>
-                    <option value="sv">Svenska</option>
-                    <option value="nl">Nederlands</option>
-                    <option value="th">ไทย</option>
-                    <option value="el">Ελληνικά</option>
                 </select>
+                <select class="profile-switcher" id="profile-switcher">
+                    <!-- Opzioni profilo verranno inserite qui -->
+                </select>
+                <button class="logout-btn" id="logout-btn">
+                    <span>🚪</span>
+                    Esci
+                </button>
             </div>
         </header>
         
-        <div class="nav-tabs">
+        <div class="nav-tabs" id="nav-tabs">
             <button class="nav-tab active" data-tab="dashboard" id="tab-dashboard">Dashboard</button>
             <button class="nav-tab" data-tab="daily" id="tab-daily">Giorno</button>
             <button class="nav-tab" data-tab="weekly" id="tab-weekly">Settimana</button>
@@ -1239,9 +1521,52 @@
         </div>
     </div>
 
+    <!-- Modale per aggiungere studente/figlio -->
+    <div class="modal" id="student-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="student-modal-title">Aggiungi Figlio</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="student-form">
+                    <div class="form-group">
+                        <label for="student-name">Nome e Cognome</label>
+                        <input type="text" id="student-name" class="form-control" required placeholder="Es. Marco Rossi">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-class">Classe (opzionale)</label>
+                        <input type="text" id="student-class" class="form-control" placeholder="Es. 3A">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="save-student">Salva</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Sistema di Profili
+        const PROFILE_LIMITS = {
+            parent: 5,
+            student: 1
+        };
+
+        const PROFILE_NAMES = {
+            parent: "Genitore", 
+            student: "Alunno"
+        };
+
+        const PROFILE_ICONS = {
+            parent: "👨‍👩‍👧‍👦",
+            student: "👦"
+        };
+
         // Dati dell'applicazione
-        let subjects = JSON.parse(localStorage.getItem('schoolSubjects')) || [];
+        let currentProfileType = null;
+        let currentProfile = null;
+        let profiles = JSON.parse(localStorage.getItem('schoolProfiles')) || {};
         let currentDate = new Date();
         let currentWeek = 0;
         let currentMonth = 0;
@@ -1284,7 +1609,15 @@
                 dayNames: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
                 months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
                 remove: "Rimuovi",
-                priority: { high: "Alta", medium: "Media", low: "Bassa" }
+                priority: { high: "Alta", medium: "Media", low: "Bassa" },
+                profileManagement: {
+                    parent: "Gestione Figli", 
+                    student: "Profilo Personale",
+                    addChild: "Aggiungi Figlio",
+                    noChildren: "Nessun figlio aggiunto",
+                    childName: "Nome Figlio",
+                    className: "Classe"
+                }
             },
             en: {
                 appTitle: "School Calendar",
@@ -1319,26 +1652,409 @@
                 dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 remove: "Remove",
-                priority: { high: "High", medium: "Medium", low: "Low" }
+                priority: { high: "High", medium: "Medium", low: "Low" },
+                profileManagement: {
+                    parent: "Children Management",
+                    student: "Personal Profile",
+                    addChild: "Add Child",
+                    noChildren: "No children added",
+                    childName: "Child Name",
+                    className: "Class"
+                }
             }
         };
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Inizializzazione app...');
-            initializeApp();
+            setupProfileSelection();
             setupEventListeners();
             updateLanguage();
             updateTheme();
+        });
+
+        function setupProfileSelection() {
+            // Se esiste già un profilo attivo, vai direttamente alla gestione
+            const activeProfile = localStorage.getItem('activeProfile');
+            if (activeProfile) {
+                const profileData = JSON.parse(activeProfile);
+                currentProfileType = profileData.type;
+                currentProfile = profileData;
+                showProfileManager();
+            }
+        }
+
+        function setupEventListeners() {
+            // Selezione profilo
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const profileType = this.dataset.profileType;
+                    selectProfile(profileType);
+                });
+            });
+
+            // Cambio profilo
+            document.getElementById('change-profile').addEventListener('click', function() {
+                showProfileSelection();
+            });
+
+            // Inizia app
+            document.getElementById('start-app').addEventListener('click', function() {
+                startMainApp();
+            });
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                logout();
+            });
+
+            // Modale studente
+            document.getElementById('student-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveStudent();
+            });
+
+            // Navigazione tra tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+                    
+                    if (this.dataset.tab === 'dashboard') {
+                        updateDashboard();
+                    } else if (this.dataset.tab === 'daily') {
+                        renderDailyView();
+                    } else if (this.dataset.tab === 'weekly') {
+                        renderWeeklyView();
+                    } else if (this.dataset.tab === 'monthly') {
+                        renderMonthlyView();
+                    } else if (this.dataset.tab === 'stats') {
+                        renderStatsView();
+                    }
+                });
+            });
+            
+            // Navigazione giornaliera
+            document.getElementById('prev-day').addEventListener('click', function() {
+                currentDate.setDate(currentDate.getDate() - 1);
+                renderDailyView();
+            });
+            
+            document.getElementById('next-day').addEventListener('click', function() {
+                currentDate.setDate(currentDate.getDate() + 1);
+                renderDailyView();
+            });
+            
+            // Navigazione settimanale
+            document.getElementById('prev-week').addEventListener('click', function() {
+                currentWeek--;
+                renderWeeklyView();
+            });
+            
+            document.getElementById('next-week').addEventListener('click', function() {
+                currentWeek++;
+                renderWeeklyView();
+            });
+            
+            // Navigazione mensile
+            document.getElementById('prev-month').addEventListener('click', function() {
+                currentMonth--;
+                renderMonthlyView();
+            });
+            
+            document.getElementById('next-month').addEventListener('click', function() {
+                currentMonth++;
+                renderMonthlyView();
+            });
+            
+            // Apri modale per aggiungere materia
+            document.getElementById('add-subject-btn').addEventListener('click', function() {
+                openSubjectModal();
+            });
+            
+            // Chiudi modale
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    closeAllModals();
+                });
+            });
+            
+            // Salva materia
+            document.getElementById('subject-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveSubject();
+            });
+            
+            // Chiudi modale cliccando fuori
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeAllModals();
+                    }
+                });
+            });
+            
+            // Aggiungi voto
+            document.getElementById('add-grade').addEventListener('click', function() {
+                addGradeInput();
+            });
+            
+            // Cambia lingua
+            document.getElementById('language-select').addEventListener('change', function() {
+                currentLanguage = this.value;
+                localStorage.setItem('language', currentLanguage);
+                updateLanguage();
+                if (document.getElementById('main-app').style.display !== 'none') {
+                    renderWeeklyView();
+                    renderDailyView();
+                    renderMonthlyView();
+                    renderStatsView();
+                    updateDashboard();
+                }
+            });
+            
+            // Cambia tema
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                isDarkTheme = !isDarkTheme;
+                localStorage.setItem('darkTheme', isDarkTheme);
+                updateTheme();
+            });
+
+            // Switch profilo
+            document.getElementById('profile-switcher').addEventListener('change', function() {
+                switchStudent(this.value);
+            });
+        }
+
+        function selectProfile(profileType) {
+            currentProfileType = profileType;
+            
+            // Crea o recupera il profilo
+            if (!profiles[profileType]) {
+                profiles[profileType] = {
+                    type: profileType,
+                    students: [],
+                    createdAt: new Date().toISOString()
+                };
+            }
+            
+            currentProfile = profiles[profileType];
+            saveProfiles();
+            showProfileManager();
+        }
+
+        function showProfileSelection() {
+            document.getElementById('profile-selection').style.display = 'flex';
+            document.getElementById('profile-manager').classList.remove('active');
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('main-header').classList.remove('active');
+            document.getElementById('nav-tabs').classList.remove('active');
+        }
+
+        function showProfileManager() {
+            document.getElementById('profile-selection').style.display = 'none';
+            document.getElementById('profile-manager').classList.add('active');
+            document.getElementById('main-app').style.display = 'none';
+            
+            const t = translations[currentLanguage];
+            document.getElementById('manager-title').textContent = t.profileManagement[currentProfileType];
+            document.getElementById('current-profile-name').textContent = PROFILE_NAMES[currentProfileType];
+            document.getElementById('current-profile-type').textContent = `Profilo ${PROFILE_NAMES[currentProfileType]}`;
+            document.getElementById('current-profile-avatar').textContent = PROFILE_ICONS[currentProfileType];
+            
+            renderStudentsGrid();
+        }
+
+        function renderStudentsGrid() {
+            const grid = document.getElementById('students-grid');
+            grid.innerHTML = '';
+            
+            const t = translations[currentLanguage];
+            const profileLimit = PROFILE_LIMITS[currentProfileType];
+            
+            // Card per aggiungere nuovo studente/figlio
+            if (currentProfile.students.length < profileLimit) {
+                const addCard = document.createElement('div');
+                addCard.className = 'student-card add-student-card';
+                addCard.innerHTML = `
+                    <div class="add-icon">+</div>
+                    <h3>${t.profileManagement.addChild}</h3>
+                    <p>${currentProfile.students.length}/${profileLimit}</p>
+                `;
+                addCard.addEventListener('click', function() {
+                    openStudentModal();
+                });
+                grid.appendChild(addCard);
+            }
+            
+            // Studenti esistenti
+            if (currentProfile.students.length === 0) {
+                const emptyCard = document.createElement('div');
+                emptyCard.className = 'student-card';
+                emptyCard.style.gridColumn = '1 / -1';
+                emptyCard.style.textAlign = 'center';
+                emptyCard.style.padding = '3rem';
+                emptyCard.innerHTML = `
+                    <h3>${t.profileManagement.noChildren}</h3>
+                    <p>Clicca su "+" per aggiungere il primo</p>
+                `;
+                grid.appendChild(emptyCard);
+            } else {
+                currentProfile.students.forEach((student, index) => {
+                    const studentCard = document.createElement('div');
+                    studentCard.className = 'student-card';
+                    studentCard.innerHTML = `
+                        <div class="student-avatar">${student.name.charAt(0).toUpperCase()}</div>
+                        <h3>${student.name}</h3>
+                        ${student.class ? `<p>Classe: ${student.class}</p>` : ''}
+                        <button class="btn btn-danger remove-student" data-index="${index}">Rimuovi</button>
+                    `;
+                    
+                    studentCard.querySelector('.remove-student').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        removeStudent(index);
+                    });
+                    
+                    grid.appendChild(studentCard);
+                });
+            }
+        }
+
+        function openStudentModal() {
+            const t = translations[currentLanguage];
+            document.getElementById('student-modal-title').textContent = t.profileManagement.addChild;
+            document.getElementById('student-form').reset();
+            document.getElementById('student-modal').classList.add('active');
+        }
+
+        function saveStudent() {
+            const name = document.getElementById('student-name').value;
+            const studentClass = document.getElementById('student-class').value;
+            
+            if (!name) {
+                alert('Inserisci il nome!');
+                return;
+            }
+            
+            currentProfile.students.push({
+                id: generateId(),
+                name: name,
+                class: studentClass,
+                subjects: [],
+                createdAt: new Date().toISOString()
+            });
+            
+            saveProfiles();
+            renderStudentsGrid();
+            closeAllModals();
+        }
+
+        function removeStudent(index) {
+            if (confirm('Sei sicuro di voler rimuovere questo figlio?')) {
+                currentProfile.students.splice(index, 1);
+                saveProfiles();
+                renderStudentsGrid();
+            }
+        }
+
+        function startMainApp() {
+            // Per profilo studente, crea automaticamente lo studente se non esiste
+            if (currentProfileType === 'student' && currentProfile.students.length === 0) {
+                currentProfile.students.push({
+                    id: generateId(),
+                    name: "Il Mio Profilo",
+                    class: "",
+                    subjects: [],
+                    createdAt: new Date().toISOString()
+                });
+                saveProfiles();
+            }
+            
+            // Imposta lo studente attivo
+            if (currentProfile.students.length > 0) {
+                currentProfile.activeStudentId = currentProfile.students[0].id;
+                saveProfiles();
+                
+                document.getElementById('profile-manager').classList.remove('active');
+                document.getElementById('main-app').style.display = 'block';
+                document.getElementById('main-header').classList.add('active');
+                document.getElementById('nav-tabs').classList.add('active');
+                
+                updateProfileSwitcher();
+                initializeApp();
+                renderWeeklyView();
+                renderDailyView();
+                renderMonthlyView();
+                renderStatsView();
+                updateDashboard();
+            }
+        }
+
+        function updateProfileSwitcher() {
+            const switcher = document.getElementById('profile-switcher');
+            switcher.innerHTML = '';
+            
+            currentProfile.students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = student.name;
+                option.selected = student.id === currentProfile.activeStudentId;
+                switcher.appendChild(option);
+            });
+        }
+
+        function switchStudent(studentId) {
+            currentProfile.activeStudentId = studentId;
+            saveProfiles();
+            
+            // Ricarica le viste
             renderWeeklyView();
             renderDailyView();
             renderMonthlyView();
             renderStatsView();
             updateDashboard();
-        });
+        }
 
+        function logout() {
+            if (confirm('Sei sicuro di voler uscire? Tornerai alla selezione del profilo.')) {
+                // Rimuovi il profilo attivo dalla memoria
+                localStorage.removeItem('activeProfile');
+                
+                // Torna alla selezione profilo
+                showProfileSelection();
+            }
+        }
+
+        function getCurrentStudent() {
+            return currentProfile.students.find(s => s.id === currentProfile.activeStudentId);
+        }
+
+        function getCurrentStudentSubjects() {
+            const student = getCurrentStudent();
+            return student ? student.subjects : [];
+        }
+
+        function setCurrentStudentSubjects(subjects) {
+            const student = getCurrentStudent();
+            if (student) {
+                student.subjects = subjects;
+                saveProfiles();
+            }
+        }
+
+        function saveProfiles() {
+            localStorage.setItem('schoolProfiles', JSON.stringify(profiles));
+            localStorage.setItem('activeProfile', JSON.stringify(currentProfile));
+        }
+
+        // Resto delle funzioni dell'app principale (aggiornate per usare il profilo corrente)
         function initializeApp() {
             console.log('Inizializzazione dati...');
+            let subjects = getCurrentStudentSubjects();
+            
             if (subjects.length === 0) {
                 subjects = [
                     {
@@ -1395,131 +2111,9 @@
                         ]
                     }
                 ];
-                saveSubjects();
+                setCurrentStudentSubjects(subjects);
             }
             console.log('Dati inizializzati:', subjects);
-        }
-
-        function setupEventListeners() {
-            console.log('Setup event listeners...');
-            
-            // Navigazione tra tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    console.log('Cliccato tab:', this.dataset.tab);
-                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
-                    
-                    // Aggiorna la vista quando si cambia tab
-                    if (this.dataset.tab === 'dashboard') {
-                        updateDashboard();
-                    } else if (this.dataset.tab === 'daily') {
-                        renderDailyView();
-                    } else if (this.dataset.tab === 'weekly') {
-                        renderWeeklyView();
-                    } else if (this.dataset.tab === 'monthly') {
-                        renderMonthlyView();
-                    } else if (this.dataset.tab === 'stats') {
-                        renderStatsView();
-                    }
-                });
-            });
-            
-            // Navigazione giornaliera
-            document.getElementById('prev-day').addEventListener('click', function() {
-                console.log('Giorno precedente');
-                currentDate.setDate(currentDate.getDate() - 1);
-                renderDailyView();
-            });
-            
-            document.getElementById('next-day').addEventListener('click', function() {
-                console.log('Giorno successivo');
-                currentDate.setDate(currentDate.getDate() + 1);
-                renderDailyView();
-            });
-            
-            // Navigazione settimanale
-            document.getElementById('prev-week').addEventListener('click', function() {
-                console.log('Settimana precedente');
-                currentWeek--;
-                renderWeeklyView();
-            });
-            
-            document.getElementById('next-week').addEventListener('click', function() {
-                console.log('Settimana successiva');
-                currentWeek++;
-                renderWeeklyView();
-            });
-            
-            // Navigazione mensile
-            document.getElementById('prev-month').addEventListener('click', function() {
-                console.log('Mese precedente');
-                currentMonth--;
-                renderMonthlyView();
-            });
-            
-            document.getElementById('next-month').addEventListener('click', function() {
-                console.log('Mese successivo');
-                currentMonth++;
-                renderMonthlyView();
-            });
-            
-            // Apri modale per aggiungere materia
-            document.getElementById('add-subject-btn').addEventListener('click', function() {
-                console.log('Apri modale aggiungi materia');
-                openSubjectModal();
-            });
-            
-            // Chiudi modale
-            document.querySelector('.close-modal').addEventListener('click', function() {
-                console.log('Chiudi modale');
-                closeSubjectModal();
-            });
-            
-            // Salva materia
-            document.getElementById('subject-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('Salva materia');
-                saveSubject();
-            });
-            
-            // Chiudi modale cliccando fuori
-            document.getElementById('subject-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    console.log('Chiudi modale cliccando fuori');
-                    closeSubjectModal();
-                }
-            });
-            
-            // Aggiungi voto
-            document.getElementById('add-grade').addEventListener('click', function() {
-                console.log('Aggiungi voto');
-                addGradeInput();
-            });
-            
-            // Cambia lingua
-            document.getElementById('language-select').addEventListener('change', function() {
-                console.log('Cambia lingua:', this.value);
-                currentLanguage = this.value;
-                localStorage.setItem('language', currentLanguage);
-                updateLanguage();
-                renderWeeklyView();
-                renderDailyView();
-                renderMonthlyView();
-                renderStatsView();
-                updateDashboard();
-            });
-            
-            // Cambia tema
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                console.log('Cambia tema');
-                isDarkTheme = !isDarkTheme;
-                localStorage.setItem('darkTheme', isDarkTheme);
-                updateTheme();
-            });
         }
 
         function updateLanguage() {
@@ -1580,6 +2174,7 @@
         function updateDashboard() {
             const today = new Date();
             const todayDateString = today.toISOString().split('T')[0];
+            const subjects = getCurrentStudentSubjects();
             
             // Calcola le statistiche
             const todaySubjects = subjects.filter(s => s.date === todayDateString).length;
@@ -1639,7 +2234,6 @@
                     const indicator = item.querySelector('.homework-indicator');
                     indicator.addEventListener('click', function() {
                         toggleHomework(hw.id);
-                        // Ricarica la dashboard
                         updateDashboard();
                     });
                     
@@ -1690,6 +2284,7 @@
             calendarContainer.innerHTML = '';
             
             const dayNames = t.dayNames;
+            const subjects = getCurrentStudentSubjects();
             
             for (let i = 0; i < 6; i++) {
                 const dayDate = new Date(startOfWeek);
@@ -1727,7 +2322,6 @@
                         subjectElement.className = 'weekly-subject';
                         subjectElement.textContent = subject.name;
                         subjectElement.addEventListener('click', function() {
-                            console.log('Cliccato materia:', subject.name);
                             editSubject(subject.id);
                         });
                         daySubjects.appendChild(subjectElement);
@@ -1741,7 +2335,6 @@
                 addButton.style.marginTop = '0.5rem';
                 addButton.style.padding = '0.25rem';
                 addButton.addEventListener('click', function() {
-                    console.log('Aggiungi materia per data:', dayDateString);
                     openSubjectModal(dayDateString);
                 });
                 
@@ -1777,6 +2370,7 @@
                 }
             }
             
+            const subjects = getCurrentStudentSubjects();
             const dailySubjects = subjects.filter(subject => subject.date === dateString);
             const subjectsContainer = document.getElementById('daily-subjects');
             subjectsContainer.innerHTML = '';
@@ -1791,7 +2385,6 @@
                 subjectsContainer.appendChild(emptyState);
                 
                 document.getElementById('add-today-subject').addEventListener('click', function() {
-                    console.log('Aggiungi materia per oggi');
                     openSubjectModal(dateString);
                 });
             } else {
@@ -1826,6 +2419,7 @@
             
             // Calcola il numero di giorni da visualizzare (escludendo domeniche)
             let currentDay = 1;
+            const subjects = getCurrentStudentSubjects();
             
             // Crea una griglia per 6 settimane (36 celle, 6x6)
             for (let i = 0; i < 36; i++) {
@@ -1925,7 +2519,6 @@
                     }
                     
                     dayElement.addEventListener('click', function() {
-                        console.log('Cliccato giorno:', currentDay);
                         // Imposta la data corrente e passa alla vista giornaliera
                         currentDate = dayDate;
                         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1947,6 +2540,8 @@
         function renderStatsView() {
             const tableBody = document.querySelector('#stats-table tbody');
             tableBody.innerHTML = '';
+            
+            const subjects = getCurrentStudentSubjects();
             
             // Raggruppa materie per nome
             const subjectMap = new Map();
@@ -2023,7 +2618,6 @@
                 }
                 homeworkIndicator.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    console.log('Toggle homework per:', subject.name);
                     toggleHomework(subject.id);
                 });
                 indicatorsContainer.appendChild(homeworkIndicator);
@@ -2094,13 +2688,11 @@
                 
                 actions.querySelector('.edit').addEventListener('click', function(e) {
                     e.stopPropagation();
-                    console.log('Modifica materia:', subject.name);
                     editSubject(subject.id);
                 });
                 
                 actions.querySelector('.delete').addEventListener('click', function(e) {
                     e.stopPropagation();
-                    console.log('Elimina materia:', subject.name);
                     deleteSubject(subject.id);
                 });
             }
@@ -2134,10 +2726,11 @@
         }
 
         function toggleHomework(subjectId) {
+            const subjects = getCurrentStudentSubjects();
             const subject = subjects.find(s => s.id === subjectId);
             if (subject) {
                 subject.homeworkDone = !subject.homeworkDone;
-                saveSubjects();
+                setCurrentStudentSubjects(subjects);
                 renderDailyView();
                 renderWeeklyView();
                 renderMonthlyView();
@@ -2177,12 +2770,15 @@
             document.getElementById('subject-modal').classList.add('active');
         }
 
-        function closeSubjectModal() {
-            document.getElementById('subject-modal').classList.remove('active');
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
             editingSubjectId = null;
         }
 
         function editSubject(id) {
+            const subjects = getCurrentStudentSubjects();
             const subject = subjects.find(s => s.id === id);
             if (!subject) return;
             
@@ -2226,6 +2822,8 @@
                 return;
             }
             
+            let subjects = getCurrentStudentSubjects();
+            
             if (editingSubjectId) {
                 const index = subjects.findIndex(s => s.id === editingSubjectId);
                 if (index !== -1) {
@@ -2243,8 +2841,8 @@
                 });
             }
             
-            saveSubjects();
-            closeSubjectModal();
+            setCurrentStudentSubjects(subjects);
+            closeAllModals();
             renderWeeklyView();
             renderDailyView();
             renderMonthlyView();
@@ -2254,23 +2852,18 @@
 
         function deleteSubject(id) {
             const t = translations[currentLanguage];
-            const confirmMessage = t.save === "Salva Materia" 
-                ? "Sei sicuro di voler eliminare questa materia?" 
-                : "Are you sure you want to delete this subject?";
+            const confirmMessage = "Sei sicuro di voler eliminare questa materia?";
                 
             if (confirm(confirmMessage)) {
+                let subjects = getCurrentStudentSubjects();
                 subjects = subjects.filter(s => s.id !== id);
-                saveSubjects();
+                setCurrentStudentSubjects(subjects);
                 renderWeeklyView();
                 renderDailyView();
                 renderMonthlyView();
                 renderStatsView();
                 updateDashboard();
             }
-        }
-
-        function saveSubjects() {
-            localStorage.setItem('schoolSubjects', JSON.stringify(subjects));
         }
 
         function generateId() {
