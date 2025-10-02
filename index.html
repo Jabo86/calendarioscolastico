@@ -1055,9 +1055,9 @@
                     </div>
                     
                     <div class="dashboard-card">
-                        <h3>📝 Compiti in Scadenza</h3>
-                        <div id="upcoming-homework">
-                            <!-- Compiti in scadenza verranno inseriti qui -->
+                        <h3>📅 Compiti della Settimana</h3>
+                        <div id="weekly-homework">
+                            <!-- Compiti della settimana verranno inseriti qui -->
                         </div>
                     </div>
                     
@@ -1065,13 +1065,6 @@
                         <h3>📚 Prossime Verifiche</h3>
                         <div id="upcoming-exams-list">
                             <!-- Verifiche in arrivo verranno inserite qui -->
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <h3>🎯 Obiettivi Settimana</h3>
-                        <div id="weekly-goals">
-                            <!-- Obiettivi settimanali verranno inseriti qui -->
                         </div>
                     </div>
                 </div>
@@ -1439,18 +1432,12 @@
             document.getElementById('prev-day').addEventListener('click', function() {
                 console.log('Giorno precedente');
                 currentDate.setDate(currentDate.getDate() - 1);
-                if (currentDate.getDay() === 0) {
-                    currentDate.setDate(currentDate.getDate() - 1);
-                }
                 renderDailyView();
             });
             
             document.getElementById('next-day').addEventListener('click', function() {
                 console.log('Giorno successivo');
                 currentDate.setDate(currentDate.getDate() + 1);
-                if (currentDate.getDay() === 0) {
-                    currentDate.setDate(currentDate.getDate() + 1);
-                }
                 renderDailyView();
             });
             
@@ -1608,33 +1595,55 @@
             document.getElementById('upcoming-exams').textContent = upcomingExams;
             document.getElementById('completed-homework').textContent = `${completionRate}%`;
             
-            // Aggiorna i compiti in scadenza
-            const upcomingHomeworkContainer = document.getElementById('upcoming-homework');
-            upcomingHomeworkContainer.innerHTML = '';
+            // Aggiorna i compiti della settimana
+            const weeklyHomeworkContainer = document.getElementById('weekly-homework');
+            weeklyHomeworkContainer.innerHTML = '';
             
-            const upcomingHomework = subjects
-                .filter(s => s.homework && s.homework.trim() !== '' && !s.homeworkDone && s.homeworkDeadline)
-                .sort((a, b) => new Date(a.homeworkDeadline) - new Date(b.homeworkDeadline))
-                .slice(0, 5);
+            // Calcola inizio e fine settimana (da lunedì a sabato)
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay() + 1);
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 5);
             
-            if (upcomingHomework.length === 0) {
-                upcomingHomeworkContainer.innerHTML = '<p>Nessun compito in scadenza</p>';
+            // Filtra compiti della settimana corrente
+            const weeklyHomework = subjects
+                .filter(s => s.homework && s.homework.trim() !== '' && s.date)
+                .filter(s => {
+                    const homeworkDate = new Date(s.date);
+                    return homeworkDate >= startOfWeek && homeworkDate <= endOfWeek;
+                })
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            if (weeklyHomework.length === 0) {
+                weeklyHomeworkContainer.innerHTML = '<p>Nessun compito per questa settimana</p>';
             } else {
-                upcomingHomework.forEach(hw => {
+                weeklyHomework.forEach(hw => {
                     const item = document.createElement('div');
                     item.className = 'upcoming-item';
                     
-                    const daysLeft = Math.ceil((new Date(hw.homeworkDeadline) - today) / (1000 * 60 * 60 * 24));
+                    const homeworkDate = new Date(hw.date);
+                    const days = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+                    const dayName = days[homeworkDate.getDay()];
                     
                     item.innerHTML = `
                         <div>
                             <strong>${hw.name}</strong>
                             <div>${hw.homework}</div>
+                            <small>${dayName} ${homeworkDate.getDate()}/${homeworkDate.getMonth() + 1}</small>
                         </div>
-                        <div class="countdown">${daysLeft} giorni</div>
+                        <div class="homework-indicator ${hw.homeworkDone ? 'done' : ''}" 
+                             data-id="${hw.id}" style="margin: 0;"></div>
                     `;
                     
-                    upcomingHomeworkContainer.appendChild(item);
+                    // Aggiungi evento click per segnare come completato
+                    const indicator = item.querySelector('.homework-indicator');
+                    indicator.addEventListener('click', function() {
+                        toggleHomework(hw.id);
+                        // Ricarica la dashboard
+                        updateDashboard();
+                    });
+                    
+                    weeklyHomeworkContainer.appendChild(item);
                 });
             }
             
@@ -1663,41 +1672,12 @@
                     upcomingExamsContainer.appendChild(item);
                 });
             }
-            
-            // Aggiorna gli obiettivi settimanali
-            const weeklyGoalsContainer = document.getElementById('weekly-goals');
-            weeklyGoalsContainer.innerHTML = '';
-            
-            const weeklyGoals = [
-                'Completare tutti i compiti di Italiano',
-                'Studiare per la verifica di Storia',
-                'Ripassare gli argomenti di Scienze'
-            ];
-            
-            weeklyGoals.forEach(goal => {
-                const item = document.createElement('div');
-                item.className = 'upcoming-item';
-                
-                item.innerHTML = `
-                    <div>
-                        <div>${goal}</div>
-                    </div>
-                    <div>
-                        <input type="checkbox">
-                    </div>
-                `;
-                
-                weeklyGoalsContainer.appendChild(item);
-            });
         }
 
         function renderWeeklyView() {
             const today = new Date();
             let startOfWeek = new Date(today);
             startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeek * 7));
-            if (startOfWeek.getDay() === 0) {
-                startOfWeek.setDate(startOfWeek.getDate() + 1);
-            }
             
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 5);
