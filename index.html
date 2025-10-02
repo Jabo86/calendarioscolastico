@@ -769,6 +769,35 @@
             border: none;
         }
 
+        /* Indicatori per compiti nel calendario mensile */
+        .homework-indicators {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2px;
+            margin-top: 2px;
+        }
+
+        .homework-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--homework);
+            animation: pulse 2s infinite;
+        }
+
+        .homework-dot.done {
+            background-color: var(--card-bg);
+            border: 1px solid var(--homework);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         /* Media Queries per Mobile */
         @media (max-width: 768px) {
             header {
@@ -847,6 +876,11 @@
             .day-number {
                 font-size: 0.7rem;
             }
+            
+            .homework-dot {
+                width: 6px;
+                height: 6px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -911,21 +945,10 @@
                 display: none;
             }
             
-            .calendar-events {
-                display: none;
+            .homework-dot {
+                width: 5px;
+                height: 5px;
             }
-        }
-
-        /* Indicatore per giorni con eventi */
-        .has-events::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 6px;
-            height: 6px;
-            background-color: var(--primary);
-            border-radius: 50%;
         }
     </style>
 </head>
@@ -1812,21 +1835,36 @@
                     dayNumberElement.textContent = currentDay;
                     dayElement.appendChild(dayNumberElement);
                     
-                    const eventsElement = document.createElement('div');
-                    eventsElement.className = 'calendar-events';
-                    
                     // Trova materie per questo giorno (converti da Domenica=0 a Lunedì=1)
                     const dayOfWeek = dayDate.getDay();
                     const adjustedDayOfWeek = dayOfWeek === 0 ? 6 : dayOfWeek;
                     const daySubjects = subjects.filter(s => s.day === adjustedDayOfWeek);
                     
-                    // Aggiungi indicatore se ci sono eventi
-                    if (daySubjects.length > 0) {
-                        dayElement.classList.add('has-events');
-                    }
+                    // Crea indicatori per i compiti
+                    const homeworkIndicators = document.createElement('div');
+                    homeworkIndicators.className = 'homework-indicators';
                     
-                    // Crea eventi raggruppati per materia (solo su schermi più grandi)
+                    // Filtra solo le materie con compiti
+                    const subjectsWithHomework = daySubjects.filter(s => s.homework && s.homework.trim() !== '');
+                    
+                    // Aggiungi un indicatore per ogni materia con compiti
+                    subjectsWithHomework.forEach(subject => {
+                        const homeworkDot = document.createElement('div');
+                        homeworkDot.className = 'homework-dot';
+                        if (subject.homeworkDone) {
+                            homeworkDot.classList.add('done');
+                        }
+                        homeworkDot.title = `${subject.name}: ${subject.homework}`;
+                        homeworkIndicators.appendChild(homeworkDot);
+                    });
+                    
+                    dayElement.appendChild(homeworkIndicators);
+                    
+                    // Aggiungi eventi per schermi più grandi
                     if (window.innerWidth > 480) {
+                        const eventsElement = document.createElement('div');
+                        eventsElement.className = 'calendar-events';
+                        
                         // Raggruppa per materia
                         const subjectMap = new Map();
                         daySubjects.forEach(subject => {
@@ -1846,9 +1884,10 @@
                             });
                             eventsElement.appendChild(eventElement);
                         });
+                        
+                        dayElement.appendChild(eventsElement);
                     }
                     
-                    dayElement.appendChild(eventsElement);
                     dayElement.addEventListener('click', function() {
                         // Imposta la data corrente e passa alla vista giornaliera
                         currentDate = dayDate;
