@@ -141,6 +141,7 @@
             transition: all 0.3s;
             min-width: 100px;
             white-space: nowrap;
+            cursor: pointer;
         }
 
         .nav-tab.active {
@@ -326,6 +327,7 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
+            cursor: pointer;
         }
 
         .subject-card.has-homework {
@@ -719,6 +721,7 @@
             cursor: pointer;
             color: var(--gray);
             font-size: 1.1rem;
+            padding: 0.25rem;
         }
 
         .action-btn.edit {
@@ -769,7 +772,7 @@
             border: none;
         }
 
-        /* Indicatori per compiti nel calendario mensile */
+        /* Icone libro per i compiti nel calendario mensile */
         .homework-indicators {
             display: flex;
             flex-wrap: wrap;
@@ -778,24 +781,48 @@
             margin-top: 2px;
         }
 
-        .homework-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--homework);
+        .book-icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.1rem;
+        }
+
+        .book-icon.pending {
+            color: var(--homework);
             animation: pulse 2s infinite;
         }
 
-        .homework-dot.done {
-            background-color: var(--card-bg);
-            border: 1px solid var(--homework);
-            animation: none;
+        .book-icon.done {
+            color: var(--grade);
+            filter: grayscale(100%) brightness(150%);
+        }
+
+        .book-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--homework);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .book-icon.done .book-count {
+            background: var(--grade);
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         /* Media Queries per Mobile */
@@ -877,9 +904,14 @@
                 font-size: 0.7rem;
             }
             
-            .homework-dot {
-                width: 6px;
-                height: 6px;
+            .book-icon {
+                font-size: 1rem;
+            }
+            
+            .book-count {
+                width: 14px;
+                height: 14px;
+                font-size: 0.6rem;
             }
         }
 
@@ -945,9 +977,16 @@
                 display: none;
             }
             
-            .homework-dot {
-                width: 5px;
-                height: 5px;
+            .book-icon {
+                font-size: 0.9rem;
+            }
+            
+            .book-count {
+                width: 12px;
+                height: 12px;
+                font-size: 0.5rem;
+                top: -3px;
+                right: -3px;
             }
         }
     </style>
@@ -1292,6 +1331,7 @@
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Inizializzazione app...');
             initializeApp();
             setupEventListeners();
             updateLanguage();
@@ -1317,6 +1357,7 @@
         });
 
         function initializeApp() {
+            console.log('Inizializzazione dati...');
             if (subjects.length === 0) {
                 subjects = [
                     {
@@ -1375,12 +1416,16 @@
                 ];
                 saveSubjects();
             }
+            console.log('Dati inizializzati:', subjects);
         }
 
         function setupEventListeners() {
+            console.log('Setup event listeners...');
+            
             // Navigazione tra tabs
             document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
+                    console.log('Cliccato tab:', this.dataset.tab);
                     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                     
@@ -1404,6 +1449,7 @@
             
             // Navigazione giornaliera
             document.getElementById('prev-day').addEventListener('click', function() {
+                console.log('Giorno precedente');
                 currentDate.setDate(currentDate.getDate() - 1);
                 if (currentDate.getDay() === 0) {
                     currentDate.setDate(currentDate.getDate() - 1);
@@ -1412,6 +1458,7 @@
             });
             
             document.getElementById('next-day').addEventListener('click', function() {
+                console.log('Giorno successivo');
                 currentDate.setDate(currentDate.getDate() + 1);
                 if (currentDate.getDay() === 0) {
                     currentDate.setDate(currentDate.getDate() + 1);
@@ -1421,56 +1468,66 @@
             
             // Navigazione settimanale
             document.getElementById('prev-week').addEventListener('click', function() {
+                console.log('Settimana precedente');
                 currentWeek--;
                 renderWeeklyView();
             });
             
             document.getElementById('next-week').addEventListener('click', function() {
+                console.log('Settimana successiva');
                 currentWeek++;
                 renderWeeklyView();
             });
             
             // Navigazione mensile
             document.getElementById('prev-month').addEventListener('click', function() {
+                console.log('Mese precedente');
                 currentMonth--;
                 renderMonthlyView();
             });
             
             document.getElementById('next-month').addEventListener('click', function() {
+                console.log('Mese successivo');
                 currentMonth++;
                 renderMonthlyView();
             });
             
             // Apri modale per aggiungere materia
             document.getElementById('add-subject-btn').addEventListener('click', function() {
+                console.log('Apri modale aggiungi materia');
                 openSubjectModal();
             });
             
             // Chiudi modale
             document.querySelector('.close-modal').addEventListener('click', function() {
+                console.log('Chiudi modale');
                 closeSubjectModal();
             });
             
             // Salva materia
             document.getElementById('subject-form').addEventListener('submit', function(e) {
                 e.preventDefault();
+                console.log('Salva materia');
                 saveSubject();
             });
             
             // Chiudi modale cliccando fuori
             document.getElementById('subject-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
+                    console.log('Chiudi modale cliccando fuori');
                     closeSubjectModal();
                 }
             });
             
             // Aggiungi voto
             document.getElementById('add-grade').addEventListener('click', function() {
+                console.log('Aggiungi voto');
                 addGradeInput();
             });
             
             // Cambia lingua
             document.getElementById('language-select').addEventListener('change', function() {
+                console.log('Cambia lingua:', this.value);
                 currentLanguage = this.value;
                 localStorage.setItem('language', currentLanguage);
                 updateLanguage();
@@ -1483,6 +1540,7 @@
             
             // Cambia tema
             document.getElementById('theme-toggle').addEventListener('click', function() {
+                console.log('Cambia tema');
                 isDarkTheme = !isDarkTheme;
                 localStorage.setItem('darkTheme', isDarkTheme);
                 updateTheme();
@@ -1709,6 +1767,7 @@
                         subjectElement.className = 'weekly-subject';
                         subjectElement.textContent = subject.name;
                         subjectElement.addEventListener('click', function() {
+                            console.log('Cliccato materia:', subject.name);
                             editSubject(subject.id);
                         });
                         daySubjects.appendChild(subjectElement);
@@ -1722,6 +1781,7 @@
                 addButton.style.marginTop = '0.5rem';
                 addButton.style.padding = '0.25rem';
                 addButton.addEventListener('click', function() {
+                    console.log('Aggiungi materia per giorno:', dayOfWeek);
                     openSubjectModal(dayOfWeek);
                 });
                 
@@ -1775,6 +1835,7 @@
                 subjectsContainer.appendChild(emptyState);
                 
                 document.getElementById('add-today-subject').addEventListener('click', function() {
+                    console.log('Aggiungi materia per oggi');
                     openSubjectModal(day);
                 });
             } else {
@@ -1847,16 +1908,36 @@
                     // Filtra solo le materie con compiti
                     const subjectsWithHomework = daySubjects.filter(s => s.homework && s.homework.trim() !== '');
                     
-                    // Aggiungi un indicatore per ogni materia con compiti
-                    subjectsWithHomework.forEach(subject => {
-                        const homeworkDot = document.createElement('div');
-                        homeworkDot.className = 'homework-dot';
-                        if (subject.homeworkDone) {
-                            homeworkDot.classList.add('done');
+                    // Se ci sono compiti, mostra l'icona libro
+                    if (subjectsWithHomework.length > 0) {
+                        const bookIcon = document.createElement('div');
+                        bookIcon.className = 'book-icon';
+                        
+                        // Calcola quanti compiti sono completati
+                        const completedCount = subjectsWithHomework.filter(s => s.homeworkDone).length;
+                        const totalCount = subjectsWithHomework.length;
+                        
+                        // Imposta la classe in base allo stato dei compiti
+                        if (completedCount === totalCount) {
+                            bookIcon.classList.add('done');
+                            bookIcon.innerHTML = '📘';
+                            bookIcon.title = `Tutti i compiti completati (${totalCount})`;
+                        } else {
+                            bookIcon.classList.add('pending');
+                            bookIcon.innerHTML = '📕';
+                            
+                            // Aggiungi il contatore dei compiti incompleti
+                            const pendingCount = totalCount - completedCount;
+                            const countElement = document.createElement('div');
+                            countElement.className = 'book-count';
+                            countElement.textContent = pendingCount;
+                            bookIcon.appendChild(countElement);
+                            
+                            bookIcon.title = `${pendingCount} compito/i da completare su ${totalCount}`;
                         }
-                        homeworkDot.title = `${subject.name}: ${subject.homework}`;
-                        homeworkIndicators.appendChild(homeworkDot);
-                    });
+                        
+                        homeworkIndicators.appendChild(bookIcon);
+                    }
                     
                     dayElement.appendChild(homeworkIndicators);
                     
@@ -1889,6 +1970,7 @@
                     }
                     
                     dayElement.addEventListener('click', function() {
+                        console.log('Cliccato giorno:', currentDay);
                         // Imposta la data corrente e passa alla vista giornaliera
                         currentDate = dayDate;
                         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1986,6 +2068,7 @@
                 }
                 homeworkIndicator.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Toggle homework per:', subject.name);
                     toggleHomework(subject.id);
                 });
                 indicatorsContainer.appendChild(homeworkIndicator);
@@ -2056,11 +2139,13 @@
                 
                 actions.querySelector('.edit').addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Modifica materia:', subject.name);
                     editSubject(subject.id);
                 });
                 
                 actions.querySelector('.delete').addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Elimina materia:', subject.name);
                     deleteSubject(subject.id);
                 });
             }
