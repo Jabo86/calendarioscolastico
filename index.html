@@ -19,6 +19,7 @@
             --note: #ffd166;
             --grade: #28a745;
             --absence: #ff6b6b;
+            --exam: #9d4edd;
             --background: #ffffff;
             --text: #212529;
             --card-bg: #ffffff;
@@ -41,6 +42,7 @@
             --note: #ffd166;
             --grade: #51cf66;
             --absence: #ff6b6b;
+            --exam: #c77dff;
             --background: #1a202c;
             --text: #f8f9fa;
             --card-bg: #2d3748;
@@ -209,8 +211,8 @@
         }
 
         .profile-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: var(--primary);
             display: flex;
@@ -218,6 +220,16 @@
             justify-content: center;
             font-size: 1.5rem;
             color: white;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--primary);
+        }
+
+        .profile-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .profile-name {
@@ -229,6 +241,40 @@
         .profile-actions {
             display: flex;
             gap: 0.5rem;
+        }
+
+        .avatar-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .avatar-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .avatar-option.selected {
+            border-color: var(--primary);
+        }
+
+        .avatar-upload-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
         }
 
         /* Dashboard View */
@@ -318,6 +364,15 @@
         .priority-low {
             background: var(--priority-low);
             color: white;
+        }
+
+        .exam-badge {
+            background: var(--exam);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
         }
 
         .countdown {
@@ -421,6 +476,10 @@
             border-left-color: var(--absence);
         }
 
+        .subject-card.has-exam {
+            border-left-color: var(--exam);
+        }
+
         .subject-info h3 {
             margin-bottom: 0.25rem;
             font-size: 1rem;
@@ -462,6 +521,10 @@
 
         .container-section.absence {
             background-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .container-section.exam {
+            background-color: rgba(157, 78, 221, 0.3);
         }
 
         .empty-state {
@@ -680,6 +743,10 @@
             background: var(--absence);
         }
 
+        .calendar-event.exam {
+            background: var(--exam);
+        }
+
         /* Vista Statistiche */
         .stats-view {
             padding: 0.5rem;
@@ -824,7 +891,7 @@
             color: #e63946;
         }
 
-        .homework-section, .note-section, .grade-section, .absence-section {
+        .homework-section, .note-section, .grade-section, .absence-section, .exam-section {
             border-top: 1px solid var(--border);
             padding-top: 1rem;
             margin-top: 1rem;
@@ -901,6 +968,10 @@
             color: var(--note);
         }
 
+        .calendar-icon.exam {
+            color: var(--exam);
+        }
+
         .icon-count {
             position: absolute;
             top: -5px;
@@ -928,6 +999,10 @@
         .calendar-icon.note .icon-count {
             background: var(--note);
             color: var(--dark);
+        }
+
+        .calendar-icon.exam .icon-count {
+            background: var(--exam);
         }
 
         @keyframes pulse {
@@ -1129,6 +1204,15 @@
                     <option value="fr">Français</option>
                     <option value="de">Deutsch</option>
                     <option value="es">Español</option>
+                    <option value="ru">Русский</option>
+                    <option value="zh">中文</option>
+                    <option value="tr">Türkçe</option>
+                    <option value="ja">日本語</option>
+                    <option value="uk">Українська</option>
+                    <option value="sv">Svenska</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="th">ไทย</option>
+                    <option value="el">Ελληνικά</option>
                 </select>
                 <select class="profile-select" id="profile-select">
                     <option value="default">Profilo Predefinito</option>
@@ -1207,13 +1291,6 @@
                         <h3>📚 Prossime Verifiche</h3>
                         <div id="upcoming-exams-list">
                             <!-- Verifiche in arrivo verranno inserite qui -->
-                        </div>
-                    </div>
-                    
-                    <div class="dashboard-card">
-                        <h3>🎯 Obiettivi Settimana</h3>
-                        <div id="weekly-goals">
-                            <!-- Obiettivi settimanali verranno inseriti qui -->
                         </div>
                     </div>
                 </div>
@@ -1377,6 +1454,23 @@
                         </div>
                     </div>
                     
+                    <div class="exam-section">
+                        <h4 id="exam-title">Verifica/Compito in Classe</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="subject-exam">
+                            <label for="subject-exam" id="label-subject-exam">Verifica/Compito in classe programmato</label>
+                        </div>
+                        <div class="form-group" id="exam-type-group" style="display: none;">
+                            <label for="exam-type" id="label-exam-type">Tipo di verifica</label>
+                            <select id="exam-type" class="form-control">
+                                <option value="verifica_scritta">Verifica Scritta</option>
+                                <option value="verifica_orale">Verifica Orale</option>
+                                <option value="compito_classe">Compito in Classe</option>
+                                <option value="interrogazione">Interrogazione</option>
+                            </select>
+                        </div>
+                    </div>
+                    
                     <div class="note-section">
                         <h4 id="note-title">Note</h4>
                         <div class="form-group">
@@ -1429,8 +1523,18 @@
                         <input type="text" id="profile-name" class="form-control" placeholder="Es. Mario Rossi" required>
                     </div>
                     <div class="form-group">
-                        <label for="profile-avatar" id="label-profile-avatar">Avatar (emoji)</label>
-                        <input type="text" id="profile-avatar" class="form-control" placeholder="Es. 👦" required>
+                        <label id="label-profile-avatar">Avatar</label>
+                        <div class="avatar-options">
+                            <div class="avatar-option" data-avatar="👦">👦</div>
+                            <div class="avatar-option" data-avatar="👧">👧</div>
+                            <div class="avatar-option" data-avatar="👨‍🎓">👨‍🎓</div>
+                            <div class="avatar-option" data-avatar="👩‍🎓">👩‍🎓</div>
+                            <div class="avatar-option" data-avatar="😊">😊</div>
+                            <div class="avatar-option" data-avatar="😎">😎</div>
+                        </div>
+                        <input type="hidden" id="profile-avatar">
+                        <button type="button" class="avatar-upload-btn" id="avatar-upload-btn">Carica Foto</button>
+                        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" id="save-profile">Salva Profilo</button>
@@ -1447,7 +1551,7 @@
     <script>
         // Dati dell'applicazione
         let profiles = JSON.parse(localStorage.getItem('schoolProfiles')) || [
-            { id: 'default', name: 'Profilo Predefinito', avatar: '👨‍🎓', subjects: [] }
+            { id: 'default', name: 'Profilo Predefinito', avatar: '👨‍🎓', avatarType: 'emoji', subjects: [] }
         ];
         let currentProfileId = localStorage.getItem('currentProfileId') || 'default';
         let subjects = getCurrentProfileSubjects();
@@ -1481,6 +1585,15 @@
                 noteDesc: "Note sulla materia",
                 absence: "Assenze",
                 absenceDesc: "Assente in questa data",
+                exam: "Verifica/Compito",
+                examDesc: "Verifica/Compito in classe programmato",
+                examType: "Tipo di verifica",
+                examTypes: {
+                    verifica_scritta: "Verifica Scritta",
+                    verifica_orale: "Verifica Orale",
+                    compito_classe: "Compito in Classe",
+                    interrogazione: "Interrogazione"
+                },
                 grade: "Voti",
                 gradeQuarter: "Quadrimestre",
                 addGrade: "+ Aggiungi Voto",
@@ -1500,12 +1613,13 @@
                 profilesTitle: "Gestione Profili",
                 profilesSubtitle: "Crea e gestisci profili per ogni membro della famiglia",
                 profileName: "Nome Profilo",
-                profileAvatar: "Avatar (emoji)",
+                profileAvatar: "Avatar",
                 saveProfile: "Salva Profilo",
                 createProfile: "Crea Nuovo Profilo",
                 manageProfiles: "Gestisci Profili",
                 addNewSubject: "Aggiungi Nuova Materia",
                 customSubjectName: "Nome Nuova Materia",
+                uploadPhoto: "Carica Foto",
                 days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
                 dayNames: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
                 months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
@@ -1531,6 +1645,15 @@
                 noteDesc: "Notes about the subject",
                 absence: "Absences",
                 absenceDesc: "Absent on this date",
+                exam: "Test/Exam",
+                examDesc: "Test/Classwork scheduled",
+                examType: "Test type",
+                examTypes: {
+                    verifica_scritta: "Written Test",
+                    verifica_orale: "Oral Test",
+                    compito_classe: "Class Test",
+                    interrogazione: "Oral Exam"
+                },
                 grade: "Grades",
                 gradeQuarter: "Quarter",
                 addGrade: "+ Add Grade",
@@ -1550,17 +1673,738 @@
                 profilesTitle: "Profile Management",
                 profilesSubtitle: "Create and manage profiles for each family member",
                 profileName: "Profile Name",
-                profileAvatar: "Avatar (emoji)",
+                profileAvatar: "Avatar",
                 saveProfile: "Save Profile",
                 createProfile: "Create New Profile",
                 manageProfiles: "Manage Profiles",
                 addNewSubject: "Add New Subject",
                 customSubjectName: "New Subject Name",
+                uploadPhoto: "Upload Photo",
                 days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                 dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 remove: "Remove",
                 priority: { high: "High", medium: "Medium", low: "Low" }
+            },
+            fr: {
+                appTitle: "Calendrier Scolaire",
+                appSubtitle: "Organisez vos matières, devoirs et notes",
+                week: "Semaine",
+                today: "Aujourd'hui",
+                monthly: "Mensuel",
+                stats: "Statistiques",
+                profiles: "Profils",
+                subject: "Matière",
+                date: "Date",
+                homework: "Devoirs",
+                homeworkDesc: "Description des devoirs",
+                homeworkDeadline: "Échéance (optionnelle)",
+                homeworkPriority: "Priorité",
+                homeworkDone: "Devoirs terminés",
+                note: "Notes",
+                noteDesc: "Notes sur la matière",
+                absence: "Absences",
+                absenceDesc: "Absent à cette date",
+                exam: "Test/Examen",
+                examDesc: "Test/Devoir programmé",
+                examType: "Type de test",
+                examTypes: {
+                    verifica_scritta: "Test écrit",
+                    verifica_orale: "Test oral",
+                    compito_classe: "Devoir en classe",
+                    interrogazione: "Interrogation"
+                },
+                grade: "Notes",
+                gradeQuarter: "Trimestre",
+                addGrade: "+ Ajouter une note",
+                save: "Sauvegarder",
+                addSubject: "Ajouter une matière",
+                editSubject: "Modifier la matière",
+                noSubjects: "Aucune matière programmée",
+                addTodaySubject: "Ajouter une matière",
+                statsTitle: "Statistiques des notes",
+                absencesTitle: "Statistiques des absences",
+                statsSubject: "Matière",
+                statsFirst: "Moyenne 1er Trim.",
+                statsSecond: "Moyenne 2ème Trim.",
+                statsTotal: "Moyenne Annuelle",
+                absencesMonth: "Mois",
+                absencesCount: "Nombre d'absences",
+                profilesTitle: "Gestion des profils",
+                profilesSubtitle: "Créez et gérez des profils pour chaque membre de la famille",
+                profileName: "Nom du profil",
+                profileAvatar: "Avatar",
+                saveProfile: "Sauvegarder le profil",
+                createProfile: "Créer un nouveau profil",
+                manageProfiles: "Gérer les profils",
+                addNewSubject: "Ajouter une nouvelle matière",
+                customSubjectName: "Nom de la nouvelle matière",
+                uploadPhoto: "Télécharger une photo",
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                dayNames: ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                remove: "Supprimer",
+                priority: { high: "Haute", medium: "Moyenne", low: "Basse" }
+            },
+            de: {
+                appTitle: "Schulkalender",
+                appSubtitle: "Organisieren Sie Ihre Fächer, Hausaufgaben und Noten",
+                week: "Woche",
+                today: "Heute",
+                monthly: "Monatlich",
+                stats: "Statistiken",
+                profiles: "Profile",
+                subject: "Fach",
+                date: "Datum",
+                homework: "Hausaufgaben",
+                homeworkDesc: "Hausaufgaben Beschreibung",
+                homeworkDeadline: "Frist (optional)",
+                homeworkPriority: "Priorität",
+                homeworkDone: "Hausaufgaben erledigt",
+                note: "Notizen",
+                noteDesc: "Notizen zum Fach",
+                absence: "Abwesenheiten",
+                absenceDesc: "An diesem Datum abwesend",
+                exam: "Test/Klassenarbeit",
+                examDesc: "Test/Klassenarbeit geplant",
+                examType: "Testart",
+                examTypes: {
+                    verifica_scritta: "Schriftlicher Test",
+                    verifica_orale: "Mündlicher Test",
+                    compito_classe: "Klassenarbeit",
+                    interrogazione: "Mündliche Prüfung"
+                },
+                grade: "Noten",
+                gradeQuarter: "Quartal",
+                addGrade: "+ Note hinzufügen",
+                save: "Speichern",
+                addSubject: "Fach hinzufügen",
+                editSubject: "Fach bearbeiten",
+                noSubjects: "Keine Fächer geplant",
+                addTodaySubject: "Fach hinzufügen",
+                statsTitle: "Notenstatistiken",
+                absencesTitle: "Abwesenheitsstatistiken",
+                statsSubject: "Fach",
+                statsFirst: "Durchschnitt 1. Quartal",
+                statsSecond: "Durchschnitt 2. Quartal",
+                statsTotal: "Jahresdurchschnitt",
+                absencesMonth: "Monat",
+                absencesCount: "Anzahl Abwesenheiten",
+                profilesTitle: "Profilverwaltung",
+                profilesSubtitle: "Erstellen und verwalten Sie Profile für jedes Familienmitglied",
+                profileName: "Profilname",
+                profileAvatar: "Avatar",
+                saveProfile: "Profil speichern",
+                createProfile: "Neues Profil erstellen",
+                manageProfiles: "Profile verwalten",
+                addNewSubject: "Neues Fach hinzufügen",
+                customSubjectName: "Name des neuen Fachs",
+                uploadPhoto: "Foto hochladen",
+                days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+                dayNames: ["Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+                months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+                remove: "Entfernen",
+                priority: { high: "Hoch", medium: "Mittel", low: "Niedrig" }
+            },
+            es: {
+                appTitle: "Calendario Escolar",
+                appSubtitle: "Organiza tus materias, tareas y calificaciones",
+                week: "Semana",
+                today: "Hoy",
+                monthly: "Mensual",
+                stats: "Estadísticas",
+                profiles: "Perfiles",
+                subject: "Materia",
+                date: "Fecha",
+                homework: "Tareas",
+                homeworkDesc: "Descripción de tareas",
+                homeworkDeadline: "Fecha límite (opcional)",
+                homeworkPriority: "Prioridad",
+                homeworkDone: "Tareas completadas",
+                note: "Notas",
+                noteDesc: "Notas sobre la materia",
+                absence: "Ausencias",
+                absenceDesc: "Ausente en esta fecha",
+                exam: "Examen/Prueba",
+                examDesc: "Examen/Prueba programado",
+                examType: "Tipo de examen",
+                examTypes: {
+                    verifica_scritta: "Examen escrito",
+                    verifica_orale: "Examen oral",
+                    compito_classe: "Prueba en clase",
+                    interrogazione: "Interrogación"
+                },
+                grade: "Calificaciones",
+                gradeQuarter: "Trimestre",
+                addGrade: "+ Añadir calificación",
+                save: "Guardar",
+                addSubject: "Añadir materia",
+                editSubject: "Editar materia",
+                noSubjects: "No hay materias programadas",
+                addTodaySubject: "Añadir materia",
+                statsTitle: "Estadísticas de calificaciones",
+                absencesTitle: "Estadísticas de ausencias",
+                statsSubject: "Materia",
+                statsFirst: "Promedio 1er Trim.",
+                statsSecond: "Promedio 2do Trim.",
+                statsTotal: "Promedio Anual",
+                absencesMonth: "Mes",
+                absencesCount: "Número de ausencias",
+                profilesTitle: "Gestión de perfiles",
+                profilesSubtitle: "Crea y gestiona perfiles para cada miembro de la familia",
+                profileName: "Nombre del perfil",
+                profileAvatar: "Avatar",
+                saveProfile: "Guardar perfil",
+                createProfile: "Crear nuevo perfil",
+                manageProfiles: "Gestionar perfiles",
+                addNewSubject: "Añadir nueva materia",
+                customSubjectName: "Nombre de la nueva materia",
+                uploadPhoto: "Subir foto",
+                days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+                dayNames: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+                months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                remove: "Eliminar",
+                priority: { high: "Alta", medium: "Media", low: "Baja" }
+            },
+            ru: {
+                appTitle: "Школьный календарь",
+                appSubtitle: "Организуйте свои предметы, домашние задания и оценки",
+                week: "Неделя",
+                today: "Сегодня",
+                monthly: "Месячный",
+                stats: "Статистика",
+                profiles: "Профили",
+                subject: "Предмет",
+                date: "Дата",
+                homework: "Домашние задания",
+                homeworkDesc: "Описание домашнего задания",
+                homeworkDeadline: "Срок (опционально)",
+                homeworkPriority: "Приоритет",
+                homeworkDone: "Домашние задания выполнены",
+                note: "Заметки",
+                noteDesc: "Заметки по предмету",
+                absence: "Отсутствия",
+                absenceDesc: "Отсутствует в эту дату",
+                exam: "Тест/Экзамен",
+                examDesc: "Тест/Работа запланирована",
+                examType: "Тип теста",
+                examTypes: {
+                    verifica_scritta: "Письменный тест",
+                    verifica_orale: "Устный тест",
+                    compito_classe: "Классная работа",
+                    interrogazione: "Устный экзамен"
+                },
+                grade: "Оценки",
+                gradeQuarter: "Четверть",
+                addGrade: "+ Добавить оценку",
+                save: "Сохранить",
+                addSubject: "Добавить предмет",
+                editSubject: "Редактировать предмет",
+                noSubjects: "Нет запланированных предметов",
+                addTodaySubject: "Добавить предмет",
+                statsTitle: "Статистика оценок",
+                absencesTitle: "Статистика отсутствий",
+                statsSubject: "Предмет",
+                statsFirst: "Средняя 1 четв.",
+                statsSecond: "Средняя 2 четв.",
+                statsTotal: "Средняя за год",
+                absencesMonth: "Месяц",
+                absencesCount: "Количество отсутствий",
+                profilesTitle: "Управление профилями",
+                profilesSubtitle: "Создавайте и управляйте профилями для каждого члена семьи",
+                profileName: "Имя профиля",
+                profileAvatar: "Аватар",
+                saveProfile: "Сохранить профиль",
+                createProfile: "Создать новый профиль",
+                manageProfiles: "Управление профилями",
+                addNewSubject: "Добавить новый предмет",
+                customSubjectName: "Название нового предмета",
+                uploadPhoto: "Загрузить фото",
+                days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+                dayNames: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+                months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+                remove: "Удалить",
+                priority: { high: "Высокий", medium: "Средний", low: "Низкий" }
+            },
+            zh: {
+                appTitle: "学校日历",
+                appSubtitle: "组织您的科目、作业和成绩",
+                week: "周",
+                today: "今天",
+                monthly: "月",
+                stats: "统计",
+                profiles: "个人资料",
+                subject: "科目",
+                date: "日期",
+                homework: "作业",
+                homeworkDesc: "作业描述",
+                homeworkDeadline: "截止日期 (可选)",
+                homeworkPriority: "优先级",
+                homeworkDone: "作业已完成",
+                note: "笔记",
+                noteDesc: "科目笔记",
+                absence: "缺席",
+                absenceDesc: "在此日期缺席",
+                exam: "测试/考试",
+                examDesc: "已安排测试/课堂作业",
+                examType: "测试类型",
+                examTypes: {
+                    verifica_scritta: "笔试",
+                    verifica_orale: "口试",
+                    compito_classe: "课堂测试",
+                    interrogazione: "口试"
+                },
+                grade: "成绩",
+                gradeQuarter: "季度",
+                addGrade: "+ 添加成绩",
+                save: "保存",
+                addSubject: "添加科目",
+                editSubject: "编辑科目",
+                noSubjects: "没有安排的科目",
+                addTodaySubject: "添加科目",
+                statsTitle: "成绩统计",
+                absencesTitle: "缺席统计",
+                statsSubject: "科目",
+                statsFirst: "第一季平均",
+                statsSecond: "第二季平均",
+                statsTotal: "年度平均",
+                absencesMonth: "月份",
+                absencesCount: "缺席次数",
+                profilesTitle: "个人资料管理",
+                profilesSubtitle: "为每个家庭成员创建和管理个人资料",
+                profileName: "个人资料名称",
+                profileAvatar: "头像",
+                saveProfile: "保存个人资料",
+                createProfile: "创建新个人资料",
+                manageProfiles: "管理个人资料",
+                addNewSubject: "添加新科目",
+                customSubjectName: "新科目名称",
+                uploadPhoto: "上传照片",
+                days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                dayNames: ["周一", "周二", "周三", "周四", "周五", "周六"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                remove: "删除",
+                priority: { high: "高", medium: "中", low: "低" }
+            },
+            tr: {
+                appTitle: "Okul Takvimi",
+                appSubtitle: "Derslerinizi, ödevlerinizi ve notlarınızı organize edin",
+                week: "Hafta",
+                today: "Bugün",
+                monthly: "Aylık",
+                stats: "İstatistikler",
+                profiles: "Profiller",
+                subject: "Ders",
+                date: "Tarih",
+                homework: "Ödevler",
+                homeworkDesc: "Ödev açıklaması",
+                homeworkDeadline: "Son tarih (isteğe bağlı)",
+                homeworkPriority: "Öncelik",
+                homeworkDone: "Ödevler tamamlandı",
+                note: "Notlar",
+                noteDesc: "Ders notları",
+                absence: "Devamsızlıklar",
+                absenceDesc: "Bu tarihte yok",
+                exam: "Test/Sınav",
+                examDesc: "Test/Sınıf çalışması planlandı",
+                examType: "Test türü",
+                examTypes: {
+                    verifica_scritta: "Yazılı test",
+                    verifica_orale: "Sözlü test",
+                    compito_classe: "Sınıf testi",
+                    interrogazione: "Sözlü sınav"
+                },
+                grade: "Notlar",
+                gradeQuarter: "Çeyrek",
+                addGrade: "+ Not ekle",
+                save: "Kaydet",
+                addSubject: "Ders ekle",
+                editSubject: "Dersi düzenle",
+                noSubjects: "Planlanmış ders yok",
+                addTodaySubject: "Ders ekle",
+                statsTitle: "Not istatistikleri",
+                absencesTitle: "Devamsızlık istatistikleri",
+                statsSubject: "Ders",
+                statsFirst: "1. Çeyrek Ort.",
+                statsSecond: "2. Çeyrek Ort.",
+                statsTotal: "Yıllık Ortalama",
+                absencesMonth: "Ay",
+                absencesCount: "Devamsızlık Sayısı",
+                profilesTitle: "Profil Yönetimi",
+                profilesSubtitle: "Her aile üyesi için profil oluşturun ve yönetin",
+                profileName: "Profil Adı",
+                profileAvatar: "Avatar",
+                saveProfile: "Profili Kaydet",
+                createProfile: "Yeni Profil Oluştur",
+                manageProfiles: "Profilleri Yönet",
+                addNewSubject: "Yeni Ders Ekle",
+                customSubjectName: "Yeni Ders Adı",
+                uploadPhoto: "Fotoğraf Yükle",
+                days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
+                dayNames: ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+                months: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+                remove: "Kaldır",
+                priority: { high: "Yüksek", medium: "Orta", low: "Düşük" }
+            },
+            ja: {
+                appTitle: "学校カレンダー",
+                appSubtitle: "科目、宿題、成績を整理",
+                week: "週",
+                today: "今日",
+                monthly: "月間",
+                stats: "統計",
+                profiles: "プロファイル",
+                subject: "科目",
+                date: "日付",
+                homework: "宿題",
+                homeworkDesc: "宿題の説明",
+                homeworkDeadline: "期限 (任意)",
+                homeworkPriority: "優先度",
+                homeworkDone: "宿題完了",
+                note: "メモ",
+                noteDesc: "科目に関するメモ",
+                absence: "欠席",
+                absenceDesc: "この日に欠席",
+                exam: "テスト/試験",
+                examDesc: "テスト/授業が予定されています",
+                examType: "テストの種類",
+                examTypes: {
+                    verifica_scritta: "筆記テスト",
+                    verifica_orale: "口頭テスト",
+                    compito_classe: "クラステスト",
+                    interrogazione: "口頭試験"
+                },
+                grade: "成績",
+                gradeQuarter: "四半期",
+                addGrade: "+ 成績を追加",
+                save: "保存",
+                addSubject: "科目を追加",
+                editSubject: "科目を編集",
+                noSubjects: "予定された科目はありません",
+                addTodaySubject: "科目を追加",
+                statsTitle: "成績統計",
+                absencesTitle: "欠席統計",
+                statsSubject: "科目",
+                statsFirst: "第1四半期平均",
+                statsSecond: "第2四半期平均",
+                statsTotal: "年間平均",
+                absencesMonth: "月",
+                absencesCount: "欠席数",
+                profilesTitle: "プロファイル管理",
+                profilesSubtitle: "各家族メンバーのプロファイルを作成・管理",
+                profileName: "プロファイル名",
+                profileAvatar: "アバター",
+                saveProfile: "プロファイルを保存",
+                createProfile: "新しいプロファイルを作成",
+                manageProfiles: "プロファイルを管理",
+                addNewSubject: "新しい科目を追加",
+                customSubjectName: "新しい科目名",
+                uploadPhoto: "写真をアップロード",
+                days: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
+                dayNames: ["月", "火", "水", "木", "金", "土"],
+                months: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                remove: "削除",
+                priority: { high: "高", medium: "中", low: "低" }
+            },
+            uk: {
+                appTitle: "Шкільний календар",
+                appSubtitle: "Організуйте свої предмети, домашні завдання та оцінки",
+                week: "Тиждень",
+                today: "Сьогодні",
+                monthly: "Місячний",
+                stats: "Статистика",
+                profiles: "Профілі",
+                subject: "Предмет",
+                date: "Дата",
+                homework: "Домашні завдання",
+                homeworkDesc: "Опис домашнього завдання",
+                homeworkDeadline: "Термін (необов'язково)",
+                homeworkPriority: "Пріоритет",
+                homeworkDone: "Домашні завдання виконані",
+                note: "Нотатки",
+                noteDesc: "Нотатки з предмету",
+                absence: "Відсутності",
+                absenceDesc: "Відсутній у цю дату",
+                exam: "Тест/Іспит",
+                examDesc: "Тест/Робота запланована",
+                examType: "Тип тесту",
+                examTypes: {
+                    verifica_scritta: "Письмовий тест",
+                    verifica_orale: "Усний тест",
+                    compito_classe: "Класна робота",
+                    interrogazione: "Усний іспит"
+                },
+                grade: "Оцінки",
+                gradeQuarter: "Чверть",
+                addGrade: "+ Додати оцінку",
+                save: "Зберегти",
+                addSubject: "Додати предмет",
+                editSubject: "Редагувати предмет",
+                noSubjects: "Немає запланованих предметів",
+                addTodaySubject: "Додати предмет",
+                statsTitle: "Статистика оцінок",
+                absencesTitle: "Статистика відсутностей",
+                statsSubject: "Предмет",
+                statsFirst: "Середня 1 чв.",
+                statsSecond: "Середня 2 чв.",
+                statsTotal: "Річна середня",
+                absencesMonth: "Місяць",
+                absencesCount: "Кількість відсутностей",
+                profilesTitle: "Управління профілями",
+                profilesSubtitle: "Створюйте та керуйте профілями для кожного члена родини",
+                profileName: "Ім'я профілю",
+                profileAvatar: "Аватар",
+                saveProfile: "Зберегти профіль",
+                createProfile: "Створити новий профіль",
+                manageProfiles: "Керувати профілями",
+                addNewSubject: "Додати новий предмет",
+                customSubjectName: "Назва нового предмету",
+                uploadPhoto: "Завантажити фото",
+                days: ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"],
+                dayNames: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+                months: ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"],
+                remove: "Видалити",
+                priority: { high: "Високий", medium: "Середній", low: "Низький" }
+            },
+            sv: {
+                appTitle: "Skolkalender",
+                appSubtitle: "Organisera dina ämnen, läxor och betyg",
+                week: "Vecka",
+                today: "Idag",
+                monthly: "Månadsvis",
+                stats: "Statistik",
+                profiles: "Profiler",
+                subject: "Ämne",
+                date: "Datum",
+                homework: "Läxor",
+                homeworkDesc: "Läxförklaring",
+                homeworkDeadline: "Deadline (valfritt)",
+                homeworkPriority: "Prioritet",
+                homeworkDone: "Läxor klara",
+                note: "Anteckningar",
+                noteDesc: "Anteckningar om ämnet",
+                absence: "Frånvaron",
+                absenceDesc: "Frånvarande detta datum",
+                exam: "Prov/Tenta",
+                examDesc: "Prov/Klassen schemalagd",
+                examType: "Provtyp",
+                examTypes: {
+                    verifica_scritta: "Skriftligt prov",
+                    verifica_orale: "Muntligt prov",
+                    compito_classe: "Klassen",
+                    interrogazione: "Muntlig tentamen"
+                },
+                grade: "Betyg",
+                gradeQuarter: "Kvartal",
+                addGrade: "+ Lägg till betyg",
+                save: "Spara",
+                addSubject: "Lägg till ämne",
+                editSubject: "Redigera ämne",
+                noSubjects: "Inga schemalagda ämnen",
+                addTodaySubject: "Lägg till ämne",
+                statsTitle: "Betygsstatistik",
+                absencesTitle: "Frånvarostatistik",
+                statsSubject: "Ämne",
+                statsFirst: "Medel 1:a kv.",
+                statsSecond: "Medel 2:a kv.",
+                statsTotal: "Årsmedel",
+                absencesMonth: "Månad",
+                absencesCount: "Antal frånvaron",
+                profilesTitle: "Profilhantering",
+                profilesSubtitle: "Skapa och hantera profiler för varje familjemedlem",
+                profileName: "Profilnamn",
+                profileAvatar: "Avatar",
+                saveProfile: "Spara profil",
+                createProfile: "Skapa ny profil",
+                manageProfiles: "Hantera profiler",
+                addNewSubject: "Lägg till nytt ämne",
+                customSubjectName: "Nytt ämnesnamn",
+                uploadPhoto: "Ladda upp foto",
+                days: ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"],
+                dayNames: ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör"],
+                months: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
+                remove: "Ta bort",
+                priority: { high: "Hög", medium: "Medel", low: "Låg" }
+            },
+            nl: {
+                appTitle: "Schoolagenda",
+                appSubtitle: "Organiseer je vakken, huiswerk en cijfers",
+                week: "Week",
+                today: "Vandaag",
+                monthly: "Maandelijks",
+                stats: "Statistieken",
+                profiles: "Profielen",
+                subject: "Vak",
+                date: "Datum",
+                homework: "Huiswerk",
+                homeworkDesc: "Huiswerk beschrijving",
+                homeworkDeadline: "Deadline (optioneel)",
+                homeworkPriority: "Prioriteit",
+                homeworkDone: "Huiswerk voltooid",
+                note: "Notities",
+                noteDesc: "Notities over het vak",
+                absence: "Afwezigheden",
+                absenceDesc: "Afwezig op deze datum",
+                exam: "Toets/Proefwerk",
+                examDesc: "Toets/Klaswerk gepland",
+                examType: "Toetstype",
+                examTypes: {
+                    verifica_scritta: "Schriftelijke toets",
+                    verifica_orale: "Mondelinge toets",
+                    compito_classe: "Klaswerk",
+                    interrogazione: "Mondeling examen"
+                },
+                grade: "Cijfers",
+                gradeQuarter: "Kwartaal",
+                addGrade: "+ Cijfer toevoegen",
+                save: "Opslaan",
+                addSubject: "Vak toevoegen",
+                editSubject: "Vak bewerken",
+                noSubjects: "Geen vakken gepland",
+                addTodaySubject: "Vak toevoegen",
+                statsTitle: "Cijferstatistieken",
+                absencesTitle: "Afwezigheidsstatistieken",
+                statsSubject: "Vak",
+                statsFirst: "Gem. 1e kw.",
+                statsSecond: "Gem. 2e kw.",
+                statsTotal: "Jaargemiddelde",
+                absencesMonth: "Maand",
+                absencesCount: "Aantal afwezigheden",
+                profilesTitle: "Profielbeheer",
+                profilesSubtitle: "Maak en beheer profielen voor elk familielid",
+                profileName: "Profielnaam",
+                profileAvatar: "Avatar",
+                saveProfile: "Profiel opslaan",
+                createProfile: "Nieuw profiel aanmaken",
+                manageProfiles: "Profielen beheren",
+                addNewSubject: "Nieuw vak toevoegen",
+                customSubjectName: "Naam nieuw vak",
+                uploadPhoto: "Foto uploaden",
+                days: ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"],
+                dayNames: ["Ma", "Di", "Wo", "Do", "Vr", "Za"],
+                months: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
+                remove: "Verwijderen",
+                priority: { high: "Hoog", medium: "Middel", low: "Laag" }
+            },
+            th: {
+                appTitle: "ปฎิทินโรงเรียน",
+                appSubtitle: "จัดระเบียบวิชา การบ้าน และเกรด",
+                week: "สัปดาห์",
+                today: "วันนี้",
+                monthly: "รายเดือน",
+                stats: "สถิติ",
+                profiles: "โปรไฟล์",
+                subject: "วิชา",
+                date: "วันที่",
+                homework: "การบ้าน",
+                homeworkDesc: "คำอธิบายการบ้าน",
+                homeworkDeadline: "กำหนดส่ง (ไม่จำเป็น)",
+                homeworkPriority: "ความสำคัญ",
+                homeworkDone: "การบ้านเสร็จแล้ว",
+                note: "บันทึก",
+                noteDesc: "บันทึกเกี่ยวกับวิชา",
+                absence: "การขาดเรียน",
+                absenceDesc: "ขาดเรียนในวันที่นี้",
+                exam: "ทดสอบ/สอบ",
+                examDesc: "กำหนดการทดสอบ/งานในชั้นเรียน",
+                examType: "ประเภทการทดสอบ",
+                examTypes: {
+                    verifica_scritta: "ทดสอบเขียน",
+                    verifica_orale: "ทดสอบปากเปล่า",
+                    compito_classe: "งานในชั้นเรียน",
+                    interrogazione: "สอบปากเปล่า"
+                },
+                grade: "เกรด",
+                gradeQuarter: "ไตรมาส",
+                addGrade: "+ เพิ่มเกรด",
+                save: "บันทึก",
+                addSubject: "เพิ่มวิชา",
+                editSubject: "แก้ไขวิชา",
+                noSubjects: "ไม่มีวิชาที่กำหนด",
+                addTodaySubject: "เพิ่มวิชา",
+                statsTitle: "สถิติเกรด",
+                absencesTitle: "สถิติการขาดเรียน",
+                statsSubject: "วิชา",
+                statsFirst: "คะแนนเฉลี่ย ไตรมาส 1",
+                statsSecond: "คะแนนเฉลี่ย ไตรมาส 2",
+                statsTotal: "คะแนนเฉลี่ยรายปี",
+                absencesMonth: "เดือน",
+                absencesCount: "จำนวนการขาดเรียน",
+                profilesTitle: "การจัดการโปรไฟล์",
+                profilesSubtitle: "สร้างและจัดการโปรไฟล์สำหรับสมาชิกในครอบครัวแต่ละคน",
+                profileName: "ชื่อโปรไฟล์",
+                profileAvatar: "อวาตาร์",
+                saveProfile: "บันทึกโปรไฟล์",
+                createProfile: "สร้างโปรไฟล์ใหม่",
+                manageProfiles: "จัดการโปรไฟล์",
+                addNewSubject: "เพิ่มวิชาใหม่",
+                customSubjectName: "ชื่อวิชาใหม่",
+                uploadPhoto: "อัพโหลดรูปภาพ",
+                days: ["วันอาทิตย์", "วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"],
+                dayNames: ["จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
+                months: ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"],
+                remove: "ลบ",
+                priority: { high: "สูง", medium: "กลาง", low: "ต่ำ" }
+            },
+            el: {
+                appTitle: "Σχολικό Ημερολόγιο",
+                appSubtitle: "Οργανώστε τα μαθήματα, τις εργασίες και τους βαθμούς σας",
+                week: "Εβδομάδα",
+                today: "Σήμερα",
+                monthly: "Μηνιαίο",
+                stats: "Στατιστικά",
+                profiles: "Προφίλ",
+                subject: "Μάθημα",
+                date: "Ημερομηνία",
+                homework: "Εργασίες",
+                homeworkDesc: "Περιγραφή εργασιών",
+                homeworkDeadline: "Προθεσμία (προαιρετικά)",
+                homeworkPriority: "Προτεραιότητα",
+                homeworkDone: "Εργασίες ολοκληρωμένες",
+                note: "Σημειώσεις",
+                noteDesc: "Σημειώσεις για το μάθημα",
+                absence: "Απουσίες",
+                absenceDesc: "Απών σε αυτή την ημερομηνία",
+                exam: "Δοκιμασία/Εξέταση",
+                examDesc: "Προγραμματισμένη δοκιμασία/εργασία",
+                examType: "Τύπος δοκιμασίας",
+                examTypes: {
+                    verifica_scritta: "Γραπτή δοκιμασία",
+                    verifica_orale: "Προφορική δοκιμασία",
+                    compito_classe: "Τάξη",
+                    interrogazione: "Προφορική εξέταση"
+                },
+                grade: "Βαθμοί",
+                gradeQuarter: "Τρίμηνο",
+                addGrade: "+ Προσθήκη βαθμού",
+                save: "Αποθήκευση",
+                addSubject: "Προσθήκη μαθήματος",
+                editSubject: "Επεξεργασία μαθήματος",
+                noSubjects: "Δεν υπάρχουν προγραμματισμένα μαθήματα",
+                addTodaySubject: "Προσθήκη μαθήματος",
+                statsTitle: "Στατιστικά βαθμών",
+                absencesTitle: "Στατιστικά απουσιών",
+                statsSubject: "Μάθημα",
+                statsFirst: "Μέσος 1ου Τριμ.",
+                statsSecond: "Μέσος 2ου Τριμ.",
+                statsTotal: "Ετήσιος μέσος",
+                absencesMonth: "Μήνας",
+                absencesCount: "Αριθμός απουσιών",
+                profilesTitle: "Διαχείριση προφίλ",
+                profilesSubtitle: "Δημιουργήστε και διαχειριστείτε προφίλ για κάθε μέλος της οικογένειας",
+                profileName: "Όνομα προφίλ",
+                profileAvatar: "Αβατάρ",
+                saveProfile: "Αποθήκευση προφίλ",
+                createProfile: "Δημιουργία νέου προφίλ",
+                manageProfiles: "Διαχείριση προφίλ",
+                addNewSubject: "Προσθήκη νέου μαθήματος",
+                customSubjectName: "Όνομα νέου μαθήματος",
+                uploadPhoto: "Ανέβασμα φωτογραφίας",
+                days: ["Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο"],
+                dayNames: ["Δευ", "Τρι", "Τετ", "Πεμ", "Παρ", "Σαβ"],
+                months: ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"],
+                remove: "Αφαίρεση",
+                priority: { high: "Υψηλή", medium: "Μεσαία", low: "Χαμηλή" }
             }
         };
 
@@ -1594,6 +2438,8 @@
                         homeworkDone: false,
                         note: 'Portare il libro di testo',
                         absence: false,
+                        exam: false,
+                        examType: '',
                         grades: [
                             { value: 7.5, quarter: 1 },
                             { value: 8, quarter: 1 },
@@ -1611,6 +2457,8 @@
                         homeworkDone: true,
                         note: '',
                         absence: false,
+                        exam: true,
+                        examType: 'verifica_scritta',
                         grades: [
                             { value: 6.5, quarter: 1 },
                             { value: 7, quarter: 2 }
@@ -1624,6 +2472,8 @@
                         homeworkDone: false,
                         note: 'Studiare capitolo 3',
                         absence: false,
+                        exam: false,
+                        examType: '',
                         grades: []
                     },
                     {
@@ -1636,6 +2486,8 @@
                         homeworkDone: false,
                         note: 'Portare il camice',
                         absence: true,
+                        exam: false,
+                        examType: '',
                         grades: [
                             { value: 9, quarter: 1 },
                             { value: 8.5, quarter: 2 }
@@ -1825,6 +2677,37 @@
                 document.getElementById('custom-subject-group').style.display = 'block';
                 document.getElementById('subject-name').disabled = true;
             });
+            
+            // Selezione avatar
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('profile-avatar').value = this.dataset.avatar;
+                });
+            });
+            
+            // Upload avatar
+            document.getElementById('avatar-upload-btn').addEventListener('click', function() {
+                document.getElementById('avatar-upload').click();
+            });
+            
+            document.getElementById('avatar-upload').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        // Qui potresti salvare l'immagine e impostarla come avatar
+                        // Per semplicità, mostriamo un alert
+                        alert('Funzionalità di upload avatar implementata!');
+                    };
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // Gestione verifica
+            document.getElementById('subject-exam').addEventListener('change', function() {
+                document.getElementById('exam-type-group').style.display = this.checked ? 'block' : 'none';
+            });
         }
 
         function updateLanguage() {
@@ -1853,6 +2736,7 @@
             document.getElementById('manage-profiles-btn').textContent = t.manageProfiles;
             document.getElementById('add-subject-option').textContent = t.addNewSubject;
             document.getElementById('label-custom-subject').textContent = t.customSubjectName;
+            document.getElementById('avatar-upload-btn').textContent = t.uploadPhoto;
             
             // Aggiorna i testi del modale
             document.getElementById('modal-title').textContent = t.addSubject;
@@ -1867,6 +2751,9 @@
             document.getElementById('label-note').textContent = t.noteDesc;
             document.getElementById('absence-title').textContent = t.absence;
             document.getElementById('label-subject-absence').textContent = t.absenceDesc;
+            document.getElementById('exam-title').textContent = t.exam;
+            document.getElementById('label-subject-exam').textContent = t.examDesc;
+            document.getElementById('label-exam-type').textContent = t.examType;
             document.getElementById('grade-title').textContent = t.grade;
             document.getElementById('label-grade-quarter').textContent = t.gradeQuarter;
             document.getElementById('add-grade').textContent = t.addGrade;
@@ -1884,6 +2771,15 @@
                 <option value="low">${t.priority.low}</option>
                 <option value="medium" selected>${t.priority.medium}</option>
                 <option value="high">${t.priority.high}</option>
+            `;
+            
+            // Aggiorna le opzioni del tipo di verifica
+            const examTypeSelect = document.getElementById('exam-type');
+            examTypeSelect.innerHTML = `
+                <option value="verifica_scritta">${t.examTypes.verifica_scritta}</option>
+                <option value="verifica_orale">${t.examTypes.verifica_orale}</option>
+                <option value="compito_classe">${t.examTypes.compito_classe}</option>
+                <option value="interrogazione">${t.examTypes.interrogazione}</option>
             `;
             
             // Imposta la lingua selezionata
@@ -1909,7 +2805,7 @@
             // Calcola le statistiche
             const todaySubjects = subjects.filter(s => s.date === todayDateString).length;
             const pendingHomework = subjects.filter(s => s.homework && s.homework.trim() !== '' && !s.homeworkDone).length;
-            const upcomingExams = subjects.filter(s => s.homework && s.homework.toLowerCase().includes('verifica')).length;
+            const upcomingExams = subjects.filter(s => s.exam).length;
             const totalHomework = subjects.filter(s => s.homework && s.homework.trim() !== '').length;
             const completedHomework = subjects.filter(s => s.homework && s.homework.trim() !== '' && s.homeworkDone).length;
             const completionRate = totalHomework > 0 ? Math.round((completedHomework / totalHomework) * 100) : 0;
@@ -1965,7 +2861,8 @@
             upcomingExamsContainer.innerHTML = '';
             
             const exams = subjects
-                .filter(s => s.homework && s.homework.toLowerCase().includes('verifica'))
+                .filter(s => s.exam)
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
                 .slice(0, 5);
             
             if (exams.length === 0) {
@@ -1975,42 +2872,21 @@
                     const item = document.createElement('div');
                     item.className = 'upcoming-item';
                     
+                    const t = translations[currentLanguage];
+                    const examTypeText = t.examTypes[exam.examType] || exam.examType;
+                    const daysLeft = Math.ceil((new Date(exam.date) - today) / (1000 * 60 * 60 * 24));
+                    
                     item.innerHTML = `
                         <div>
                             <strong>${exam.name}</strong>
-                            <div>${exam.homework}</div>
+                            <div>${examTypeText}</div>
                         </div>
+                        <div class="countdown">${daysLeft} giorni</div>
                     `;
                     
                     upcomingExamsContainer.appendChild(item);
                 });
             }
-            
-            // Aggiorna gli obiettivi settimanali
-            const weeklyGoalsContainer = document.getElementById('weekly-goals');
-            weeklyGoalsContainer.innerHTML = '';
-            
-            const weeklyGoals = [
-                'Completare tutti i compiti di Italiano',
-                'Studiare per la verifica di Storia',
-                'Ripassare gli argomenti di Scienze'
-            ];
-            
-            weeklyGoals.forEach(goal => {
-                const item = document.createElement('div');
-                item.className = 'upcoming-item';
-                
-                item.innerHTML = `
-                    <div>
-                        <div>${goal}</div>
-                    </div>
-                    <div>
-                        <input type="checkbox">
-                    </div>
-                `;
-                
-                weeklyGoalsContainer.appendChild(item);
-            });
         }
 
         function renderWeeklyView() {
@@ -2068,6 +2944,9 @@
                         const subjectElement = document.createElement('div');
                         subjectElement.className = 'weekly-subject';
                         subjectElement.textContent = subject.name;
+                        if (subject.exam) {
+                            subjectElement.innerHTML += ' 📝';
+                        }
                         subjectElement.addEventListener('click', function() {
                             console.log('Cliccato materia:', subject.name);
                             editSubject(subject.id);
@@ -2270,6 +3149,23 @@
                         calendarIndicators.appendChild(absenceIcon);
                     }
                     
+                    // Se ci sono verifiche, mostra l'icona esame
+                    const subjectsWithExams = daySubjects.filter(s => s.exam);
+                    if (subjectsWithExams.length > 0) {
+                        const examIcon = document.createElement('div');
+                        examIcon.className = 'calendar-icon exam';
+                        examIcon.innerHTML = '📝';
+                        
+                        // Aggiungi il contatore delle verifiche
+                        const countElement = document.createElement('div');
+                        countElement.className = 'icon-count';
+                        countElement.textContent = subjectsWithExams.length;
+                        examIcon.appendChild(countElement);
+                        
+                        examIcon.title = `${subjectsWithExams.length} verifica/e`;
+                        calendarIndicators.appendChild(examIcon);
+                    }
+                    
                     dayElement.appendChild(calendarIndicators);
                     
                     dayElement.addEventListener('click', function() {
@@ -2397,8 +3293,13 @@
                     profileCard.classList.add('active');
                 }
                 
+                let avatarContent = profile.avatar;
+                if (profile.avatarType === 'image' && profile.avatarImage) {
+                    avatarContent = `<img src="${profile.avatarImage}" class="profile-avatar-img" alt="${profile.name}">`;
+                }
+                
                 profileCard.innerHTML = `
-                    <div class="profile-avatar">${profile.avatar}</div>
+                    <div class="profile-avatar">${avatarContent}</div>
                     <div class="profile-name">${profile.name}</div>
                     <div class="profile-actions">
                         <button class="action-btn edit" data-id="${profile.id}">✏️</button>
@@ -2456,6 +3357,8 @@
                 card.classList.add('has-grade');
             } else if (subject.absence) {
                 card.classList.add('has-absence');
+            } else if (subject.exam) {
+                card.classList.add('has-exam');
             }
             
             const indicatorsContainer = document.createElement('div');
@@ -2490,6 +3393,14 @@
                 absenceSection.className = 'container-section absence';
                 absenceSection.innerHTML = `<strong>${t.absence}:</strong> ASSENTE`;
                 subjectInfo.appendChild(absenceSection);
+            }
+            
+            if (subject.exam) {
+                const examSection = document.createElement('div');
+                examSection.className = 'container-section exam';
+                const examTypeText = t.examTypes[subject.examType] || subject.examType;
+                examSection.innerHTML = `<strong>${t.exam}:</strong> ${examTypeText}`;
+                subjectInfo.appendChild(examSection);
             }
             
             if (subject.homework && subject.homework.trim() !== '') {
@@ -2599,6 +3510,7 @@
             document.getElementById('grade-list').innerHTML = '';
             document.getElementById('custom-subject-group').style.display = 'none';
             document.getElementById('subject-name').disabled = false;
+            document.getElementById('exam-type-group').style.display = 'none';
             
             // Aggiorna le materie personalizzate nel select
             updateSubjectSelect();
@@ -2622,6 +3534,7 @@
             const t = translations[currentLanguage];
             document.getElementById('profiles-modal-title').textContent = t.profilesTitle;
             document.getElementById('profile-form').reset();
+            document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
             
             // Aggiorna la lista dei profili nel modale
             updateProfilesListModal();
@@ -2682,8 +3595,13 @@
                 profileItem.style.marginBottom = '1rem';
                 profileItem.style.cursor = 'default';
                 
+                let avatarContent = profile.avatar;
+                if (profile.avatarType === 'image' && profile.avatarImage) {
+                    avatarContent = `<img src="${profile.avatarImage}" class="profile-avatar-img" alt="${profile.name}">`;
+                }
+                
                 profileItem.innerHTML = `
-                    <div class="profile-avatar">${profile.avatar}</div>
+                    <div class="profile-avatar">${avatarContent}</div>
                     <div class="profile-name">${profile.name}</div>
                     <div class="profile-actions">
                         <button class="action-btn edit" data-id="${profile.id}">✏️</button>
@@ -2725,6 +3643,9 @@
             document.getElementById('homework-done').checked = subject.homeworkDone || false;
             document.getElementById('subject-note').value = subject.note || '';
             document.getElementById('subject-absence').checked = subject.absence || false;
+            document.getElementById('subject-exam').checked = subject.exam || false;
+            document.getElementById('exam-type-group').style.display = subject.exam ? 'block' : 'none';
+            document.getElementById('exam-type').value = subject.examType || 'verifica_scritta';
             
             document.getElementById('grade-list').innerHTML = '';
             if (subject.grades && subject.grades.length > 0) {
@@ -2741,6 +3662,14 @@
             editingProfileId = id;
             document.getElementById('profile-id').value = profile.id;
             document.getElementById('profile-name').value = profile.name;
+            
+            // Seleziona l'avatar corretto
+            document.querySelectorAll('.avatar-option').forEach(opt => {
+                if (opt.dataset.avatar === profile.avatar) {
+                    opt.classList.add('selected');
+                }
+            });
+            
             document.getElementById('profile-avatar').value = profile.avatar;
         }
 
@@ -2767,6 +3696,8 @@
             const homeworkDone = document.getElementById('homework-done').checked;
             const note = document.getElementById('subject-note').value;
             const absence = document.getElementById('subject-absence').checked;
+            const exam = document.getElementById('subject-exam').checked;
+            const examType = exam ? document.getElementById('exam-type').value : '';
             const gradeQuarter = parseInt(document.getElementById('grade-quarter').value);
             const grades = Array.from(document.querySelectorAll('.grade-item')).map(item => ({
                 value: parseFloat(item.querySelector('.grade-value').value),
@@ -2784,14 +3715,16 @@
                     subjects[index] = { 
                         id, name, date, 
                         homework, homeworkDeadline, homeworkPriority, homeworkDone, 
-                        note, absence, grades 
+                        note, absence, exam, examType,
+                        grades 
                     };
                 }
             } else {
                 subjects.push({ 
                     id, name, date, 
                     homework, homeworkDeadline, homeworkPriority, homeworkDone, 
-                    note, absence, grades 
+                    note, absence, exam, examType,
+                    grades 
                 });
             }
             
@@ -2817,10 +3750,18 @@
             if (editingProfileId) {
                 const index = profiles.findIndex(p => p.id === editingProfileId);
                 if (index !== -1) {
-                    profiles[index] = { id, name, avatar, subjects: profiles[index].subjects || [] };
+                    profiles[index] = { 
+                        id, name, avatar, 
+                        avatarType: 'emoji',
+                        subjects: profiles[index].subjects || [] 
+                    };
                 }
             } else {
-                profiles.push({ id, name, avatar, subjects: [] });
+                profiles.push({ 
+                    id, name, avatar, 
+                    avatarType: 'emoji',
+                    subjects: [] 
+                });
             }
             
             saveProfiles();
