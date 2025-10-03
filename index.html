@@ -18,6 +18,7 @@
             --homework: #e63946;
             --note: #ffd166;
             --grade: #28a745;
+            --absence: #ff6b6b;
             --background: #ffffff;
             --text: #212529;
             --card-bg: #ffffff;
@@ -39,6 +40,7 @@
             --homework: #ff6b6b;
             --note: #ffd166;
             --grade: #51cf66;
+            --absence: #ff6b6b;
             --background: #1a202c;
             --text: #f8f9fa;
             --card-bg: #2d3748;
@@ -68,185 +70,6 @@
             background: var(--background);
         }
 
-        /* Schermata Selezione Profilo */
-        .profile-selection {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .profile-selection h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .profile-selection p {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            opacity: 0.9;
-        }
-
-        .profile-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .profile-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .profile-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .profile-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .profile-card p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
-        }
-
-        .profile-limit {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-        }
-
-        /* Gestione Profili */
-        .profile-manager {
-            display: none;
-            min-height: 100vh;
-            padding: 2rem;
-            background: var(--background);
-        }
-
-        .profile-manager.active {
-            display: block;
-        }
-
-        .profile-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .profile-header h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .current-profile {
-            background: var(--light);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .profile-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .profile-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .students-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .student-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 2px solid var(--border);
-        }
-
-        .student-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 0 auto 1rem;
-        }
-
-        .add-student-card {
-            background: var(--light);
-            border: 2px dashed var(--border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .add-student-card:hover {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            color: white;
-        }
-
-        .add-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Header principale */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -254,13 +77,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            display: none;
+            display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        header.active {
-            display: flex;
         }
 
         .header-title {
@@ -270,8 +89,10 @@
 
         .header-controls {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .theme-toggle {
@@ -286,44 +107,31 @@
             justify-content: center;
         }
 
-        .language-select {
+        .language-select, .profile-select {
             background: rgba(255,255,255,0.2);
             border: none;
             border-radius: 4px;
             padding: 0.5rem;
             color: white;
             cursor: pointer;
-            max-width: 150px;
+            max-width: 120px;
+            font-size: 0.8rem;
         }
 
-        .language-select option {
+        .language-select option, .profile-select option {
             background: var(--primary);
             color: white;
         }
 
-        .profile-switcher {
+        .manage-profiles-btn {
             background: rgba(255,255,255,0.2);
             border: none;
             border-radius: 4px;
             padding: 0.5rem;
             color: white;
             cursor: pointer;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 4px;
-            padding: 0.5rem 1rem;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
+            font-size: 0.7rem;
+            white-space: nowrap;
         }
 
         h1 {
@@ -332,19 +140,16 @@
         }
 
         .nav-tabs {
-            display: none;
+            display: flex;
             background: var(--card-bg);
             border-bottom: 1px solid var(--border);
             overflow-x: auto;
-        }
-
-        .nav-tabs.active {
-            display: flex;
+            -webkit-overflow-scrolling: touch;
         }
 
         .nav-tab {
             flex: 1;
-            padding: 1rem;
+            padding: 0.75rem 0.5rem;
             text-align: center;
             background: none;
             border: none;
@@ -352,9 +157,10 @@
             color: var(--gray);
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
-            min-width: 100px;
+            min-width: 80px;
             white-space: nowrap;
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .nav-tab.active {
@@ -372,6 +178,59 @@
             display: block;
         }
 
+        /* Vista Profili */
+        .profiles-view {
+            padding: 0.5rem;
+        }
+
+        .profiles-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .profile-card.active {
+            border-color: var(--primary);
+        }
+
+        .profile-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .profile-name {
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
         /* Dashboard View */
         .dashboard-view {
             padding: 0.5rem;
@@ -379,7 +238,7 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1rem;
             margin-bottom: 1rem;
         }
@@ -397,6 +256,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 1rem;
         }
 
         .stats-grid {
@@ -431,6 +291,7 @@
             align-items: center;
             padding: 0.75rem 0;
             border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
         }
 
         .upcoming-item:last-child {
@@ -510,9 +371,10 @@
 
         .current-date {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
+            text-align: center;
         }
 
         .today-highlight {
@@ -555,8 +417,13 @@
             border-left-color: var(--grade);
         }
 
+        .subject-card.has-absence {
+            border-left-color: var(--absence);
+        }
+
         .subject-info h3 {
             margin-bottom: 0.25rem;
+            font-size: 1rem;
         }
 
         .homework-indicator {
@@ -578,6 +445,7 @@
             margin-top: 0.5rem;
             padding: 0.5rem;
             border-radius: 4px;
+            font-size: 0.9rem;
         }
 
         .container-section.homework {
@@ -590,6 +458,10 @@
 
         .container-section.grade {
             background-color: rgba(40, 167, 69, 0.3);
+        }
+
+        .container-section.absence {
+            background-color: rgba(255, 107, 107, 0.3);
         }
 
         .empty-state {
@@ -620,7 +492,7 @@
 
         /* Vista Settimanale */
         .weekly-view {
-            padding: 1rem;
+            padding: 0.5rem;
             width: 100%;
             box-sizing: border-box;
         }
@@ -637,22 +509,22 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .week-title {
             font-weight: bold;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .weekly-calendar {
             display: grid;
             grid-template-columns: repeat(6, minmax(0, 1fr));
-            gap: 0.5rem;
+            gap: 0.3rem;
             width: 100%;
             box-sizing: border-box;
         }
@@ -661,7 +533,7 @@
             background: var(--light);
             border-radius: 8px;
             overflow: hidden;
-            min-height: 200px;
+            min-height: 150px;
             display: flex;
             flex-direction: column;
         }
@@ -669,11 +541,11 @@
         .day-header {
             background: var(--primary);
             color: white;
-            padding: 0.75rem;
+            padding: 0.5rem;
             text-align: center;
             font-weight: bold;
             position: relative;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .today .day-header {
@@ -682,19 +554,19 @@
         }
 
         .day-subjects {
-            padding: 0.5rem;
+            padding: 0.3rem;
             flex-grow: 1;
-            min-height: 150px;
+            min-height: 100px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
 
         .weekly-subject {
             background: var(--card-bg);
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 0.3rem;
+            margin-bottom: 0.3rem;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             position: relative;
             cursor: pointer;
@@ -705,7 +577,7 @@
 
         /* Vista Mensile */
         .monthly-view {
-            padding: 1rem;
+            padding: 0.5rem;
         }
 
         .month-navigation {
@@ -722,11 +594,12 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 0.8rem;
         }
 
         .month-title {
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1rem;
             text-align: center;
         }
 
@@ -734,7 +607,7 @@
         .month-calendar {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            gap: 0.25rem;
+            gap: 0.2rem;
             margin-top: 1rem;
             width: 100%;
         }
@@ -742,8 +615,8 @@
         .calendar-day {
             background: var(--light);
             border-radius: 6px;
-            padding: 0.25rem;
-            min-height: 80px;
+            padding: 0.2rem;
+            min-height: 70px;
             display: flex;
             flex-direction: column;
             cursor: pointer;
@@ -753,9 +626,9 @@
 
         .day-number {
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-align: center;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
             padding: 0.1rem;
         }
 
@@ -768,7 +641,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 0.25rem;
+            margin: 0 auto 0.2rem;
         }
 
         .calendar-events {
@@ -803,9 +676,13 @@
             background: var(--grade);
         }
 
+        .calendar-event.absence {
+            background: var(--absence);
+        }
+
         /* Vista Statistiche */
         .stats-view {
-            padding: 1rem;
+            padding: 0.5rem;
         }
 
         .stats-table {
@@ -813,10 +690,11 @@
             border-collapse: collapse;
             margin-top: 1rem;
             background: var(--card-bg);
+            font-size: 0.9rem;
         }
 
         .stats-table th, .stats-table td {
-            padding: 0.75rem;
+            padding: 0.5rem;
             border: 1px solid var(--border);
             text-align: left;
         }
@@ -824,6 +702,7 @@
         .stats-table th {
             background-color: var(--primary);
             color: white;
+            font-size: 0.8rem;
         }
 
         /* Modal */
@@ -945,7 +824,7 @@
             color: #e63946;
         }
 
-        .homework-section, .note-section, .grade-section {
+        .homework-section, .note-section, .grade-section, .absence-section {
             border-top: 1px solid var(--border);
             padding-top: 1rem;
             margin-top: 1rem;
@@ -985,8 +864,8 @@
             border: none;
         }
 
-        /* Icone libro per i compiti nel calendario mensile */
-        .homework-indicators {
+        /* Icone per il calendario mensile */
+        .calendar-indicators {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -994,42 +873,61 @@
             margin-top: 2px;
         }
 
-        .book-icon {
-            font-size: 1.2rem;
+        .calendar-icon {
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
             padding: 0.1rem;
         }
 
-        .book-icon.pending {
+        .calendar-icon.pending {
             color: var(--homework);
             animation: pulse 2s infinite;
         }
 
-        .book-icon.done {
+        .calendar-icon.done {
             color: var(--grade);
             filter: grayscale(100%) brightness(150%);
         }
 
-        .book-count {
+        .calendar-icon.absence {
+            color: var(--absence);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .calendar-icon.note {
+            color: var(--note);
+        }
+
+        .icon-count {
             position: absolute;
             top: -5px;
             right: -5px;
             background: var(--homework);
             color: white;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 0.7rem;
+            width: 14px;
+            height: 14px;
+            font-size: 0.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
         }
 
-        .book-icon.done .book-count {
+        .calendar-icon.done .icon-count {
             background: var(--grade);
+        }
+
+        .calendar-icon.absence .icon-count {
+            background: var(--absence);
+        }
+
+        .calendar-icon.note .icon-count {
+            background: var(--note);
+            color: var(--dark);
         }
 
         @keyframes pulse {
@@ -1038,20 +936,20 @@
             100% { transform: scale(1); }
         }
 
+        /* Aggiungi materia nel modale */
+        .add-subject-option {
+            background-color: var(--light);
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
         /* Media Queries per Mobile */
         @media (max-width: 768px) {
-            .profile-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-card {
-                padding: 1.5rem;
-            }
-            
-            .profile-icon {
-                font-size: 3rem;
-            }
-            
             header {
                 flex-direction: column;
                 gap: 1rem;
@@ -1065,7 +963,6 @@
             .header-controls {
                 width: 100%;
                 justify-content: center;
-                flex-wrap: wrap;
             }
             
             .nav-tabs {
@@ -1130,11 +1027,11 @@
                 font-size: 0.7rem;
             }
             
-            .book-icon {
+            .calendar-icon {
                 font-size: 1rem;
             }
             
-            .book-count {
+            .icon-count {
                 width: 14px;
                 height: 14px;
                 font-size: 0.6rem;
@@ -1142,18 +1039,6 @@
         }
 
         @media (max-width: 480px) {
-            .profile-selection {
-                padding: 1rem;
-            }
-            
-            .profile-selection h1 {
-                font-size: 2rem;
-            }
-            
-            .profile-selection p {
-                font-size: 1rem;
-            }
-            
             h1 {
                 font-size: 1.25rem;
             }
@@ -1215,11 +1100,11 @@
                 display: none;
             }
             
-            .book-icon {
+            .calendar-icon {
                 font-size: 0.9rem;
             }
             
-            .book-count {
+            .icon-count {
                 width: 12px;
                 height: 12px;
                 font-size: 0.5rem;
@@ -1230,58 +1115,8 @@
     </style>
 </head>
 <body>
-    <!-- Schermata Selezione Profilo -->
-    <div class="profile-selection" id="profile-selection">
-        <h1>📚 Calendario Scolastico</h1>
-        <p>Scegli il tuo profilo per iniziare</p>
-        
-        <div class="profile-cards">
-            <div class="profile-card" data-profile-type="parent">
-                <div class="profile-icon">👨‍👩‍👧‍👦</div>
-                <h3>Genitore</h3>
-                <p>Segui i compiti di tutti i tuoi figli</p>
-                <div class="profile-limit">Massimo 5 figli</div>
-            </div>
-            
-            <div class="profile-card" data-profile-type="student">
-                <div class="profile-icon">👦</div>
-                <h3>Alunno</h3>
-                <p>Organizza i tuoi compiti e voti</p>
-                <div class="profile-limit">1 profilo personale</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Gestione Profili -->
-    <div class="profile-manager" id="profile-manager">
-        <div class="profile-header">
-            <h2 id="manager-title">Gestione Profilo</h2>
-            <p id="manager-subtitle">Gestisci i tuoi figli o il tuo profilo</p>
-        </div>
-        
-        <div class="current-profile">
-            <div class="profile-info">
-                <div class="profile-avatar" id="current-profile-avatar">👨‍👩‍👧‍👦</div>
-                <div>
-                    <h3 id="current-profile-name">Genitore</h3>
-                    <p id="current-profile-type">Profilo Genitore</p>
-                </div>
-            </div>
-            <button class="btn btn-primary" id="start-app">Inizia App</button>
-        </div>
-        
-        <div class="students-grid" id="students-grid">
-            <!-- Studenti/figli verranno inseriti qui -->
-        </div>
-        
-        <div style="text-align: center;">
-            <button class="btn btn-danger" id="change-profile">Cambia Profilo</button>
-        </div>
-    </div>
-
-    <!-- App Principale -->
-    <div class="app-container" id="main-app" style="display: none;">
-        <header id="main-header">
+    <div class="app-container">
+        <header>
             <div class="header-title">
                 <h1 id="app-title">Calendario Scolastico</h1>
                 <p id="app-subtitle">Organizza le tue materie, compiti e voti</p>
@@ -1291,23 +1126,40 @@
                 <select class="language-select" id="language-select">
                     <option value="it">Italiano</option>
                     <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="es">Español</option>
                 </select>
-                <select class="profile-switcher" id="profile-switcher">
-                    <!-- Opzioni profilo verranno inserite qui -->
+                <select class="profile-select" id="profile-select">
+                    <option value="default">Profilo Predefinito</option>
                 </select>
-                <button class="logout-btn" id="logout-btn">
-                    <span>🚪</span>
-                    Esci
-                </button>
+                <button class="manage-profiles-btn" id="manage-profiles-btn">Gestisci Profili</button>
             </div>
         </header>
         
-        <div class="nav-tabs" id="nav-tabs">
+        <div class="nav-tabs">
+            <button class="nav-tab" data-tab="profiles" id="tab-profiles">Profili</button>
             <button class="nav-tab active" data-tab="dashboard" id="tab-dashboard">Dashboard</button>
             <button class="nav-tab" data-tab="daily" id="tab-daily">Giorno</button>
             <button class="nav-tab" data-tab="weekly" id="tab-weekly">Settimana</button>
             <button class="nav-tab" data-tab="monthly" id="tab-monthly">Mensile</button>
             <button class="nav-tab" data-tab="stats" id="tab-stats">Statistiche</button>
+        </div>
+        
+        <!-- Vista Profili -->
+        <div class="tab-content" id="profiles-tab">
+            <div class="profiles-view">
+                <h2 id="profiles-title">Gestione Profili</h2>
+                <p id="profiles-subtitle">Crea e gestisci profili per ogni membro della famiglia</p>
+                
+                <div class="profiles-list" id="profiles-list">
+                    <!-- I profili verranno inseriti qui -->
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-primary" id="add-profile-btn">+ Crea Nuovo Profilo</button>
+                </div>
+            </div>
         </div>
         
         <!-- Dashboard -->
@@ -1333,13 +1185,21 @@
                                 <div class="stat-value" id="completed-homework">0%</div>
                                 <div class="stat-label">Compiti Completati</div>
                             </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-absences">0</div>
+                                <div class="stat-label">Assenze Totali</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="month-absences">0</div>
+                                <div class="stat-label">Assenze Mese</div>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="dashboard-card">
-                        <h3>📅 Compiti della Settimana</h3>
-                        <div id="weekly-homework">
-                            <!-- Compiti della settimana verranno inseriti qui -->
+                        <h3>📝 Compiti in Scadenza</h3>
+                        <div id="upcoming-homework">
+                            <!-- Compiti in scadenza verranno inseriti qui -->
                         </div>
                     </div>
                     
@@ -1347,6 +1207,13 @@
                         <h3>📚 Prossime Verifiche</h3>
                         <div id="upcoming-exams-list">
                             <!-- Verifiche in arrivo verranno inserite qui -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>🎯 Obiettivi Settimana</h3>
+                        <div id="weekly-goals">
+                            <!-- Obiettivi settimanali verranno inseriti qui -->
                         </div>
                     </div>
                 </div>
@@ -1417,6 +1284,17 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                
+                <h2 style="margin-top: 2rem;" id="absences-title">Statistiche Assenze</h2>
+                <table class="stats-table" id="absences-table">
+                    <thead>
+                        <tr>
+                            <th id="absences-month">Mese</th>
+                            <th id="absences-count">Numero Assenze</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
         
@@ -1462,6 +1340,13 @@
                             <option value="Educazione Civica">Educazione Civica</option>
                             <option value="Diritto">Diritto</option>
                         </select>
+                        <div class="add-subject-option" id="add-subject-option">
+                            + Aggiungi Nuova Materia
+                        </div>
+                    </div>
+                    <div class="form-group" id="custom-subject-group" style="display: none;">
+                        <label for="custom-subject-name" id="label-custom-subject">Nome Nuova Materia</label>
+                        <input type="text" id="custom-subject-name" class="form-control" placeholder="Inserisci il nome della nuova materia">
                     </div>
                     <div class="form-group">
                         <label for="subject-date" id="label-date">Data</label>
@@ -1500,6 +1385,14 @@
                         </div>
                     </div>
                     
+                    <div class="absence-section">
+                        <h4 id="absence-title">Assenze</h4>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="subject-absence">
+                            <label for="subject-absence" id="label-subject-absence">Assente in questa data</label>
+                        </div>
+                    </div>
+                    
                     <div class="grade-section">
                         <h4 id="grade-title">Voti</h4>
                         <div class="form-group">
@@ -1521,56 +1414,49 @@
         </div>
     </div>
 
-    <!-- Modale per aggiungere studente/figlio -->
-    <div class="modal" id="student-modal">
+    <!-- Modale per gestire i profili -->
+    <div class="modal" id="profiles-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="student-modal-title">Aggiungi Figlio</h3>
+                <h3 class="modal-title" id="profiles-modal-title">Gestione Profili</h3>
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="student-form">
+                <form id="profile-form">
+                    <input type="hidden" id="profile-id">
                     <div class="form-group">
-                        <label for="student-name">Nome e Cognome</label>
-                        <input type="text" id="student-name" class="form-control" required placeholder="Es. Marco Rossi">
+                        <label for="profile-name" id="label-profile-name">Nome Profilo</label>
+                        <input type="text" id="profile-name" class="form-control" placeholder="Es. Mario Rossi" required>
                     </div>
                     <div class="form-group">
-                        <label for="student-class">Classe (opzionale)</label>
-                        <input type="text" id="student-class" class="form-control" placeholder="Es. 3A">
+                        <label for="profile-avatar" id="label-profile-avatar">Avatar (emoji)</label>
+                        <input type="text" id="profile-avatar" class="form-control" placeholder="Es. 👦" required>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" id="save-student">Salva</button>
+                        <button type="submit" class="btn btn-primary" id="save-profile">Salva Profilo</button>
                     </div>
                 </form>
+                
+                <div id="profiles-list-modal">
+                    <!-- Lista dei profili nel modale -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Sistema di Profili
-        const PROFILE_LIMITS = {
-            parent: 5,
-            student: 1
-        };
-
-        const PROFILE_NAMES = {
-            parent: "Genitore", 
-            student: "Alunno"
-        };
-
-        const PROFILE_ICONS = {
-            parent: "👨‍👩‍👧‍👦",
-            student: "👦"
-        };
-
         // Dati dell'applicazione
-        let currentProfileType = null;
-        let currentProfile = null;
-        let profiles = JSON.parse(localStorage.getItem('schoolProfiles')) || {};
+        let profiles = JSON.parse(localStorage.getItem('schoolProfiles')) || [
+            { id: 'default', name: 'Profilo Predefinito', avatar: '👨‍🎓', subjects: [] }
+        ];
+        let currentProfileId = localStorage.getItem('currentProfileId') || 'default';
+        let subjects = getCurrentProfileSubjects();
+        let customSubjects = JSON.parse(localStorage.getItem('customSubjects')) || [];
         let currentDate = new Date();
         let currentWeek = 0;
         let currentMonth = 0;
         let editingSubjectId = null;
+        let editingProfileId = null;
         let currentLanguage = localStorage.getItem('language') || 'it';
         let isDarkTheme = localStorage.getItem('darkTheme') === 'true';
 
@@ -1583,6 +1469,7 @@
                 today: "Oggi",
                 monthly: "Mensile",
                 stats: "Statistiche",
+                profiles: "Profili",
                 subject: "Materia",
                 date: "Data",
                 homework: "Compiti",
@@ -1592,6 +1479,8 @@
                 homeworkDone: "Compiti completati",
                 note: "Note",
                 noteDesc: "Note sulla materia",
+                absence: "Assenze",
+                absenceDesc: "Assente in questa data",
                 grade: "Voti",
                 gradeQuarter: "Quadrimestre",
                 addGrade: "+ Aggiungi Voto",
@@ -1601,23 +1490,27 @@
                 noSubjects: "Nessuna materia programmata",
                 addTodaySubject: "Aggiungi Materia",
                 statsTitle: "Statistiche Voti",
+                absencesTitle: "Statistiche Assenze",
                 statsSubject: "Materia",
                 statsFirst: "Media 1° Quad.",
                 statsSecond: "Media 2° Quad.",
                 statsTotal: "Media Annuale",
+                absencesMonth: "Mese",
+                absencesCount: "Numero Assenze",
+                profilesTitle: "Gestione Profili",
+                profilesSubtitle: "Crea e gestisci profili per ogni membro della famiglia",
+                profileName: "Nome Profilo",
+                profileAvatar: "Avatar (emoji)",
+                saveProfile: "Salva Profilo",
+                createProfile: "Crea Nuovo Profilo",
+                manageProfiles: "Gestisci Profili",
+                addNewSubject: "Aggiungi Nuova Materia",
+                customSubjectName: "Nome Nuova Materia",
                 days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
                 dayNames: ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
                 months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
                 remove: "Rimuovi",
-                priority: { high: "Alta", medium: "Media", low: "Bassa" },
-                profileManagement: {
-                    parent: "Gestione Figli", 
-                    student: "Profilo Personale",
-                    addChild: "Aggiungi Figlio",
-                    noChildren: "Nessun figlio aggiunto",
-                    childName: "Nome Figlio",
-                    className: "Classe"
-                }
+                priority: { high: "Alta", medium: "Media", low: "Bassa" }
             },
             en: {
                 appTitle: "School Calendar",
@@ -1626,6 +1519,7 @@
                 today: "Today",
                 monthly: "Monthly",
                 stats: "Statistics",
+                profiles: "Profiles",
                 subject: "Subject",
                 date: "Date",
                 homework: "Homework",
@@ -1635,6 +1529,8 @@
                 homeworkDone: "Homework completed",
                 note: "Notes",
                 noteDesc: "Notes about the subject",
+                absence: "Absences",
+                absenceDesc: "Absent on this date",
                 grade: "Grades",
                 gradeQuarter: "Quarter",
                 addGrade: "+ Add Grade",
@@ -1644,417 +1540,48 @@
                 noSubjects: "No subjects scheduled",
                 addTodaySubject: "Add Subject",
                 statsTitle: "Grade Statistics",
+                absencesTitle: "Absence Statistics",
                 statsSubject: "Subject",
                 statsFirst: "1st Quarter Avg.",
                 statsSecond: "2nd Quarter Avg.",
                 statsTotal: "Annual Average",
+                absencesMonth: "Month",
+                absencesCount: "Number of Absences",
+                profilesTitle: "Profile Management",
+                profilesSubtitle: "Create and manage profiles for each family member",
+                profileName: "Profile Name",
+                profileAvatar: "Avatar (emoji)",
+                saveProfile: "Save Profile",
+                createProfile: "Create New Profile",
+                manageProfiles: "Manage Profiles",
+                addNewSubject: "Add New Subject",
+                customSubjectName: "New Subject Name",
                 days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                 dayNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
                 months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 remove: "Remove",
-                priority: { high: "High", medium: "Medium", low: "Low" },
-                profileManagement: {
-                    parent: "Children Management",
-                    student: "Personal Profile",
-                    addChild: "Add Child",
-                    noChildren: "No children added",
-                    childName: "Child Name",
-                    className: "Class"
-                }
+                priority: { high: "High", medium: "Medium", low: "Low" }
             }
         };
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Inizializzazione app...');
-            setupProfileSelection();
+            initializeApp();
             setupEventListeners();
             updateLanguage();
             updateTheme();
-        });
-
-        function setupProfileSelection() {
-            // Se esiste già un profilo attivo, vai direttamente alla gestione
-            const activeProfile = localStorage.getItem('activeProfile');
-            if (activeProfile) {
-                const profileData = JSON.parse(activeProfile);
-                currentProfileType = profileData.type;
-                currentProfile = profileData;
-                showProfileManager();
-            }
-        }
-
-        function setupEventListeners() {
-            // Selezione profilo
-            document.querySelectorAll('.profile-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const profileType = this.dataset.profileType;
-                    selectProfile(profileType);
-                });
-            });
-
-            // Cambio profilo
-            document.getElementById('change-profile').addEventListener('click', function() {
-                showProfileSelection();
-            });
-
-            // Inizia app
-            document.getElementById('start-app').addEventListener('click', function() {
-                startMainApp();
-            });
-
-            // Logout
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                logout();
-            });
-
-            // Modale studente
-            document.getElementById('student-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveStudent();
-            });
-
-            // Navigazione tra tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
-                    
-                    if (this.dataset.tab === 'dashboard') {
-                        updateDashboard();
-                    } else if (this.dataset.tab === 'daily') {
-                        renderDailyView();
-                    } else if (this.dataset.tab === 'weekly') {
-                        renderWeeklyView();
-                    } else if (this.dataset.tab === 'monthly') {
-                        renderMonthlyView();
-                    } else if (this.dataset.tab === 'stats') {
-                        renderStatsView();
-                    }
-                });
-            });
-            
-            // Navigazione giornaliera
-            document.getElementById('prev-day').addEventListener('click', function() {
-                currentDate.setDate(currentDate.getDate() - 1);
-                renderDailyView();
-            });
-            
-            document.getElementById('next-day').addEventListener('click', function() {
-                currentDate.setDate(currentDate.getDate() + 1);
-                renderDailyView();
-            });
-            
-            // Navigazione settimanale
-            document.getElementById('prev-week').addEventListener('click', function() {
-                currentWeek--;
-                renderWeeklyView();
-            });
-            
-            document.getElementById('next-week').addEventListener('click', function() {
-                currentWeek++;
-                renderWeeklyView();
-            });
-            
-            // Navigazione mensile
-            document.getElementById('prev-month').addEventListener('click', function() {
-                currentMonth--;
-                renderMonthlyView();
-            });
-            
-            document.getElementById('next-month').addEventListener('click', function() {
-                currentMonth++;
-                renderMonthlyView();
-            });
-            
-            // Apri modale per aggiungere materia
-            document.getElementById('add-subject-btn').addEventListener('click', function() {
-                openSubjectModal();
-            });
-            
-            // Chiudi modale
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    closeAllModals();
-                });
-            });
-            
-            // Salva materia
-            document.getElementById('subject-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                saveSubject();
-            });
-            
-            // Chiudi modale cliccando fuori
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closeAllModals();
-                    }
-                });
-            });
-            
-            // Aggiungi voto
-            document.getElementById('add-grade').addEventListener('click', function() {
-                addGradeInput();
-            });
-            
-            // Cambia lingua
-            document.getElementById('language-select').addEventListener('change', function() {
-                currentLanguage = this.value;
-                localStorage.setItem('language', currentLanguage);
-                updateLanguage();
-                if (document.getElementById('main-app').style.display !== 'none') {
-                    renderWeeklyView();
-                    renderDailyView();
-                    renderMonthlyView();
-                    renderStatsView();
-                    updateDashboard();
-                }
-            });
-            
-            // Cambia tema
-            document.getElementById('theme-toggle').addEventListener('click', function() {
-                isDarkTheme = !isDarkTheme;
-                localStorage.setItem('darkTheme', isDarkTheme);
-                updateTheme();
-            });
-
-            // Switch profilo
-            document.getElementById('profile-switcher').addEventListener('change', function() {
-                switchStudent(this.value);
-            });
-        }
-
-        function selectProfile(profileType) {
-            currentProfileType = profileType;
-            
-            // Crea o recupera il profilo
-            if (!profiles[profileType]) {
-                profiles[profileType] = {
-                    type: profileType,
-                    students: [],
-                    createdAt: new Date().toISOString()
-                };
-            }
-            
-            currentProfile = profiles[profileType];
-            saveProfiles();
-            showProfileManager();
-        }
-
-        function showProfileSelection() {
-            document.getElementById('profile-selection').style.display = 'flex';
-            document.getElementById('profile-manager').classList.remove('active');
-            document.getElementById('main-app').style.display = 'none';
-            document.getElementById('main-header').classList.remove('active');
-            document.getElementById('nav-tabs').classList.remove('active');
-        }
-
-        function showProfileManager() {
-            document.getElementById('profile-selection').style.display = 'none';
-            document.getElementById('profile-manager').classList.add('active');
-            document.getElementById('main-app').style.display = 'none';
-            
-            const t = translations[currentLanguage];
-            document.getElementById('manager-title').textContent = t.profileManagement[currentProfileType];
-            document.getElementById('current-profile-name').textContent = PROFILE_NAMES[currentProfileType];
-            document.getElementById('current-profile-type').textContent = `Profilo ${PROFILE_NAMES[currentProfileType]}`;
-            document.getElementById('current-profile-avatar').textContent = PROFILE_ICONS[currentProfileType];
-            
-            renderStudentsGrid();
-        }
-
-        function renderStudentsGrid() {
-            const grid = document.getElementById('students-grid');
-            grid.innerHTML = '';
-            
-            const t = translations[currentLanguage];
-            const profileLimit = PROFILE_LIMITS[currentProfileType];
-            
-            // Card per aggiungere nuovo studente/figlio
-            if (currentProfile.students.length < profileLimit) {
-                const addCard = document.createElement('div');
-                addCard.className = 'student-card add-student-card';
-                addCard.innerHTML = `
-                    <div class="add-icon">+</div>
-                    <h3>${t.profileManagement.addChild}</h3>
-                    <p>${currentProfile.students.length}/${profileLimit}</p>
-                `;
-                addCard.addEventListener('click', function() {
-                    openStudentModal();
-                });
-                grid.appendChild(addCard);
-            }
-            
-            // Studenti esistenti
-            if (currentProfile.students.length === 0) {
-                const emptyCard = document.createElement('div');
-                emptyCard.className = 'student-card';
-                emptyCard.style.gridColumn = '1 / -1';
-                emptyCard.style.textAlign = 'center';
-                emptyCard.style.padding = '3rem';
-                emptyCard.innerHTML = `
-                    <h3>${t.profileManagement.noChildren}</h3>
-                    <p>Clicca su "+" per aggiungere il primo</p>
-                `;
-                grid.appendChild(emptyCard);
-            } else {
-                currentProfile.students.forEach((student, index) => {
-                    const studentCard = document.createElement('div');
-                    studentCard.className = 'student-card';
-                    studentCard.innerHTML = `
-                        <div class="student-avatar">${student.name.charAt(0).toUpperCase()}</div>
-                        <h3>${student.name}</h3>
-                        ${student.class ? `<p>Classe: ${student.class}</p>` : ''}
-                        <button class="btn btn-danger remove-student" data-index="${index}">Rimuovi</button>
-                    `;
-                    
-                    studentCard.querySelector('.remove-student').addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        removeStudent(index);
-                    });
-                    
-                    grid.appendChild(studentCard);
-                });
-            }
-        }
-
-        function openStudentModal() {
-            const t = translations[currentLanguage];
-            document.getElementById('student-modal-title').textContent = t.profileManagement.addChild;
-            document.getElementById('student-form').reset();
-            document.getElementById('student-modal').classList.add('active');
-        }
-
-        function saveStudent() {
-            const name = document.getElementById('student-name').value;
-            const studentClass = document.getElementById('student-class').value;
-            
-            if (!name) {
-                alert('Inserisci il nome!');
-                return;
-            }
-            
-            currentProfile.students.push({
-                id: generateId(),
-                name: name,
-                class: studentClass,
-                subjects: [],
-                createdAt: new Date().toISOString()
-            });
-            
-            saveProfiles();
-            renderStudentsGrid();
-            closeAllModals();
-        }
-
-        function removeStudent(index) {
-            if (confirm('Sei sicuro di voler rimuovere questo figlio?')) {
-                currentProfile.students.splice(index, 1);
-                saveProfiles();
-                renderStudentsGrid();
-            }
-        }
-
-        function startMainApp() {
-            // Per profilo studente, crea automaticamente lo studente se non esiste
-            if (currentProfileType === 'student' && currentProfile.students.length === 0) {
-                currentProfile.students.push({
-                    id: generateId(),
-                    name: "Il Mio Profilo",
-                    class: "",
-                    subjects: [],
-                    createdAt: new Date().toISOString()
-                });
-                saveProfiles();
-            }
-            
-            // Imposta lo studente attivo
-            if (currentProfile.students.length > 0) {
-                currentProfile.activeStudentId = currentProfile.students[0].id;
-                saveProfiles();
-                
-                document.getElementById('profile-manager').classList.remove('active');
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('main-header').classList.add('active');
-                document.getElementById('nav-tabs').classList.add('active');
-                
-                updateProfileSwitcher();
-                initializeApp();
-                renderWeeklyView();
-                renderDailyView();
-                renderMonthlyView();
-                renderStatsView();
-                updateDashboard();
-            }
-        }
-
-        function updateProfileSwitcher() {
-            const switcher = document.getElementById('profile-switcher');
-            switcher.innerHTML = '';
-            
-            currentProfile.students.forEach(student => {
-                const option = document.createElement('option');
-                option.value = student.id;
-                option.textContent = student.name;
-                option.selected = student.id === currentProfile.activeStudentId;
-                switcher.appendChild(option);
-            });
-        }
-
-        function switchStudent(studentId) {
-            currentProfile.activeStudentId = studentId;
-            saveProfiles();
-            
-            // Ricarica le viste
+            renderProfilesView();
+            updateProfileSelector();
             renderWeeklyView();
             renderDailyView();
             renderMonthlyView();
             renderStatsView();
             updateDashboard();
-        }
+        });
 
-        function logout() {
-            if (confirm('Sei sicuro di voler uscire? Tornerai alla selezione del profilo.')) {
-                // Rimuovi il profilo attivo dalla memoria
-                localStorage.removeItem('activeProfile');
-                
-                // Torna alla selezione profilo
-                showProfileSelection();
-            }
-        }
-
-        function getCurrentStudent() {
-            return currentProfile.students.find(s => s.id === currentProfile.activeStudentId);
-        }
-
-        function getCurrentStudentSubjects() {
-            const student = getCurrentStudent();
-            return student ? student.subjects : [];
-        }
-
-        function setCurrentStudentSubjects(subjects) {
-            const student = getCurrentStudent();
-            if (student) {
-                student.subjects = subjects;
-                saveProfiles();
-            }
-        }
-
-        function saveProfiles() {
-            localStorage.setItem('schoolProfiles', JSON.stringify(profiles));
-            localStorage.setItem('activeProfile', JSON.stringify(currentProfile));
-        }
-
-        // Resto delle funzioni dell'app principale (aggiornate per usare il profilo corrente)
         function initializeApp() {
             console.log('Inizializzazione dati...');
-            let subjects = getCurrentStudentSubjects();
-            
             if (subjects.length === 0) {
                 subjects = [
                     {
@@ -2066,6 +1593,7 @@
                         homeworkPriority: 'high',
                         homeworkDone: false,
                         note: 'Portare il libro di testo',
+                        absence: false,
                         grades: [
                             { value: 7.5, quarter: 1 },
                             { value: 8, quarter: 1 },
@@ -2082,6 +1610,7 @@
                         homeworkPriority: 'medium',
                         homeworkDone: true,
                         note: '',
+                        absence: false,
                         grades: [
                             { value: 6.5, quarter: 1 },
                             { value: 7, quarter: 2 }
@@ -2094,6 +1623,7 @@
                         homework: '',
                         homeworkDone: false,
                         note: 'Studiare capitolo 3',
+                        absence: false,
                         grades: []
                     },
                     {
@@ -2105,15 +1635,196 @@
                         homeworkPriority: 'medium',
                         homeworkDone: false,
                         note: 'Portare il camice',
+                        absence: true,
                         grades: [
                             { value: 9, quarter: 1 },
                             { value: 8.5, quarter: 2 }
                         ]
                     }
                 ];
-                setCurrentStudentSubjects(subjects);
+                saveSubjects();
             }
             console.log('Dati inizializzati:', subjects);
+        }
+
+        function setupEventListeners() {
+            console.log('Setup event listeners...');
+            
+            // Navigazione tra tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    console.log('Cliccato tab:', this.dataset.tab);
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+                    
+                    // Aggiorna la vista quando si cambia tab
+                    if (this.dataset.tab === 'dashboard') {
+                        updateDashboard();
+                    } else if (this.dataset.tab === 'daily') {
+                        renderDailyView();
+                    } else if (this.dataset.tab === 'weekly') {
+                        renderWeeklyView();
+                    } else if (this.dataset.tab === 'monthly') {
+                        renderMonthlyView();
+                    } else if (this.dataset.tab === 'stats') {
+                        renderStatsView();
+                    } else if (this.dataset.tab === 'profiles') {
+                        renderProfilesView();
+                    }
+                });
+            });
+            
+            // Navigazione giornaliera
+            document.getElementById('prev-day').addEventListener('click', function() {
+                console.log('Giorno precedente');
+                currentDate.setDate(currentDate.getDate() - 1);
+                if (currentDate.getDay() === 0) {
+                    currentDate.setDate(currentDate.getDate() - 1);
+                }
+                renderDailyView();
+            });
+            
+            document.getElementById('next-day').addEventListener('click', function() {
+                console.log('Giorno successivo');
+                currentDate.setDate(currentDate.getDate() + 1);
+                if (currentDate.getDay() === 0) {
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+                renderDailyView();
+            });
+            
+            // Navigazione settimanale
+            document.getElementById('prev-week').addEventListener('click', function() {
+                console.log('Settimana precedente');
+                currentWeek--;
+                renderWeeklyView();
+            });
+            
+            document.getElementById('next-week').addEventListener('click', function() {
+                console.log('Settimana successiva');
+                currentWeek++;
+                renderWeeklyView();
+            });
+            
+            // Navigazione mensile
+            document.getElementById('prev-month').addEventListener('click', function() {
+                console.log('Mese precedente');
+                currentMonth--;
+                renderMonthlyView();
+            });
+            
+            document.getElementById('next-month').addEventListener('click', function() {
+                console.log('Mese successivo');
+                currentMonth++;
+                renderMonthlyView();
+            });
+            
+            // Apri modale per aggiungere materia
+            document.getElementById('add-subject-btn').addEventListener('click', function() {
+                console.log('Apri modale aggiungi materia');
+                openSubjectModal();
+            });
+            
+            // Chiudi modale
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    console.log('Chiudi modale');
+                    closeSubjectModal();
+                    closeProfilesModal();
+                });
+            });
+            
+            // Salva materia
+            document.getElementById('subject-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Salva materia');
+                saveSubject();
+            });
+            
+            // Chiudi modale cliccando fuori
+            document.getElementById('subject-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    console.log('Chiudi modale cliccando fuori');
+                    closeSubjectModal();
+                }
+            });
+            
+            document.getElementById('profiles-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    console.log('Chiudi modale profili cliccando fuori');
+                    closeProfilesModal();
+                }
+            });
+            
+            // Aggiungi voto
+            document.getElementById('add-grade').addEventListener('click', function() {
+                console.log('Aggiungi voto');
+                addGradeInput();
+            });
+            
+            // Cambia lingua
+            document.getElementById('language-select').addEventListener('change', function() {
+                console.log('Cambia lingua:', this.value);
+                currentLanguage = this.value;
+                localStorage.setItem('language', currentLanguage);
+                updateLanguage();
+                renderWeeklyView();
+                renderDailyView();
+                renderMonthlyView();
+                renderStatsView();
+                renderProfilesView();
+                updateDashboard();
+            });
+            
+            // Cambia tema
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                console.log('Cambia tema');
+                isDarkTheme = !isDarkTheme;
+                localStorage.setItem('darkTheme', isDarkTheme);
+                updateTheme();
+            });
+            
+            // Cambia profilo
+            document.getElementById('profile-select').addEventListener('change', function() {
+                console.log('Cambia profilo:', this.value);
+                currentProfileId = this.value;
+                localStorage.setItem('currentProfileId', currentProfileId);
+                subjects = getCurrentProfileSubjects();
+                renderWeeklyView();
+                renderDailyView();
+                renderMonthlyView();
+                renderStatsView();
+                updateDashboard();
+            });
+            
+            // Gestisci profili
+            document.getElementById('manage-profiles-btn').addEventListener('click', function() {
+                console.log('Apri gestione profili');
+                openProfilesModal();
+            });
+            
+            // Aggiungi profilo
+            document.getElementById('add-profile-btn').addEventListener('click', function() {
+                console.log('Aggiungi profilo');
+                openProfilesModal();
+            });
+            
+            // Salva profilo
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Salva profilo');
+                saveProfile();
+            });
+            
+            // Aggiungi nuova materia
+            document.getElementById('add-subject-option').addEventListener('click', function() {
+                console.log('Aggiungi nuova materia');
+                document.getElementById('custom-subject-group').style.display = 'block';
+                document.getElementById('subject-name').disabled = true;
+            });
         }
 
         function updateLanguage() {
@@ -2127,11 +1838,21 @@
             document.getElementById('tab-daily').textContent = t.today;
             document.getElementById('tab-monthly').textContent = t.monthly;
             document.getElementById('tab-stats').textContent = t.stats;
+            document.getElementById('tab-profiles').textContent = t.profiles;
             document.getElementById('stats-title').textContent = t.statsTitle;
+            document.getElementById('absences-title').textContent = t.absencesTitle;
             document.getElementById('stats-subject').textContent = t.statsSubject;
             document.getElementById('stats-first').textContent = t.statsFirst;
             document.getElementById('stats-second').textContent = t.statsSecond;
             document.getElementById('stats-total').textContent = t.statsTotal;
+            document.getElementById('absences-month').textContent = t.absencesMonth;
+            document.getElementById('absences-count').textContent = t.absencesCount;
+            document.getElementById('profiles-title').textContent = t.profilesTitle;
+            document.getElementById('profiles-subtitle').textContent = t.profilesSubtitle;
+            document.getElementById('add-profile-btn').textContent = t.createProfile;
+            document.getElementById('manage-profiles-btn').textContent = t.manageProfiles;
+            document.getElementById('add-subject-option').textContent = t.addNewSubject;
+            document.getElementById('label-custom-subject').textContent = t.customSubjectName;
             
             // Aggiorna i testi del modale
             document.getElementById('modal-title').textContent = t.addSubject;
@@ -2144,10 +1865,18 @@
             document.getElementById('label-homework-done').textContent = t.homeworkDone;
             document.getElementById('note-title').textContent = t.note;
             document.getElementById('label-note').textContent = t.noteDesc;
+            document.getElementById('absence-title').textContent = t.absence;
+            document.getElementById('label-subject-absence').textContent = t.absenceDesc;
             document.getElementById('grade-title').textContent = t.grade;
             document.getElementById('label-grade-quarter').textContent = t.gradeQuarter;
             document.getElementById('add-grade').textContent = t.addGrade;
             document.getElementById('save-subject').textContent = t.save;
+            
+            // Aggiorna i testi del modale profili
+            document.getElementById('profiles-modal-title').textContent = t.profilesTitle;
+            document.getElementById('label-profile-name').textContent = t.profileName;
+            document.getElementById('label-profile-avatar').textContent = t.profileAvatar;
+            document.getElementById('save-profile').textContent = t.saveProfile;
             
             // Aggiorna le opzioni di priorità
             const prioritySelect = document.getElementById('homework-priority');
@@ -2174,7 +1903,8 @@
         function updateDashboard() {
             const today = new Date();
             const todayDateString = today.toISOString().split('T')[0];
-            const subjects = getCurrentStudentSubjects();
+            const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+            const currentMonthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
             
             // Calcola le statistiche
             const todaySubjects = subjects.filter(s => s.date === todayDateString).length;
@@ -2184,60 +1914,49 @@
             const completedHomework = subjects.filter(s => s.homework && s.homework.trim() !== '' && s.homeworkDone).length;
             const completionRate = totalHomework > 0 ? Math.round((completedHomework / totalHomework) * 100) : 0;
             
+            // Calcola le assenze
+            const totalAbsences = subjects.filter(s => s.absence).length;
+            const monthAbsences = subjects.filter(s => {
+                if (!s.absence) return false;
+                const subjectDate = new Date(s.date);
+                return subjectDate >= currentMonthStart && subjectDate <= currentMonthEnd;
+            }).length;
+            
             // Aggiorna le statistiche
             document.getElementById('today-subjects').textContent = todaySubjects;
             document.getElementById('pending-homework').textContent = pendingHomework;
             document.getElementById('upcoming-exams').textContent = upcomingExams;
             document.getElementById('completed-homework').textContent = `${completionRate}%`;
+            document.getElementById('total-absences').textContent = totalAbsences;
+            document.getElementById('month-absences').textContent = monthAbsences;
             
-            // Aggiorna i compiti della settimana
-            const weeklyHomeworkContainer = document.getElementById('weekly-homework');
-            weeklyHomeworkContainer.innerHTML = '';
+            // Aggiorna i compiti in scadenza
+            const upcomingHomeworkContainer = document.getElementById('upcoming-homework');
+            upcomingHomeworkContainer.innerHTML = '';
             
-            // Calcola inizio e fine settimana (da lunedì a sabato)
-            const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - today.getDay() + 1);
-            const endOfWeek = new Date(startOfWeek);
-            endOfWeek.setDate(startOfWeek.getDate() + 5);
+            const upcomingHomework = subjects
+                .filter(s => s.homework && s.homework.trim() !== '' && !s.homeworkDone && s.homeworkDeadline)
+                .sort((a, b) => new Date(a.homeworkDeadline) - new Date(b.homeworkDeadline))
+                .slice(0, 5);
             
-            // Filtra compiti della settimana corrente
-            const weeklyHomework = subjects
-                .filter(s => s.homework && s.homework.trim() !== '' && s.date)
-                .filter(s => {
-                    const homeworkDate = new Date(s.date);
-                    return homeworkDate >= startOfWeek && homeworkDate <= endOfWeek;
-                })
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            if (weeklyHomework.length === 0) {
-                weeklyHomeworkContainer.innerHTML = '<p>Nessun compito per questa settimana</p>';
+            if (upcomingHomework.length === 0) {
+                upcomingHomeworkContainer.innerHTML = '<p>Nessun compito in scadenza</p>';
             } else {
-                weeklyHomework.forEach(hw => {
+                upcomingHomework.forEach(hw => {
                     const item = document.createElement('div');
                     item.className = 'upcoming-item';
                     
-                    const homeworkDate = new Date(hw.date);
-                    const days = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-                    const dayName = days[homeworkDate.getDay()];
+                    const daysLeft = Math.ceil((new Date(hw.homeworkDeadline) - today) / (1000 * 60 * 60 * 24));
                     
                     item.innerHTML = `
                         <div>
                             <strong>${hw.name}</strong>
                             <div>${hw.homework}</div>
-                            <small>${dayName} ${homeworkDate.getDate()}/${homeworkDate.getMonth() + 1}</small>
                         </div>
-                        <div class="homework-indicator ${hw.homeworkDone ? 'done' : ''}" 
-                             data-id="${hw.id}" style="margin: 0;"></div>
+                        <div class="countdown">${daysLeft} giorni</div>
                     `;
                     
-                    // Aggiungi evento click per segnare come completato
-                    const indicator = item.querySelector('.homework-indicator');
-                    indicator.addEventListener('click', function() {
-                        toggleHomework(hw.id);
-                        updateDashboard();
-                    });
-                    
-                    weeklyHomeworkContainer.appendChild(item);
+                    upcomingHomeworkContainer.appendChild(item);
                 });
             }
             
@@ -2266,12 +1985,41 @@
                     upcomingExamsContainer.appendChild(item);
                 });
             }
+            
+            // Aggiorna gli obiettivi settimanali
+            const weeklyGoalsContainer = document.getElementById('weekly-goals');
+            weeklyGoalsContainer.innerHTML = '';
+            
+            const weeklyGoals = [
+                'Completare tutti i compiti di Italiano',
+                'Studiare per la verifica di Storia',
+                'Ripassare gli argomenti di Scienze'
+            ];
+            
+            weeklyGoals.forEach(goal => {
+                const item = document.createElement('div');
+                item.className = 'upcoming-item';
+                
+                item.innerHTML = `
+                    <div>
+                        <div>${goal}</div>
+                    </div>
+                    <div>
+                        <input type="checkbox">
+                    </div>
+                `;
+                
+                weeklyGoalsContainer.appendChild(item);
+            });
         }
 
         function renderWeeklyView() {
             const today = new Date();
             let startOfWeek = new Date(today);
             startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeek * 7));
+            if (startOfWeek.getDay() === 0) {
+                startOfWeek.setDate(startOfWeek.getDate() + 1);
+            }
             
             const endOfWeek = new Date(startOfWeek);
             endOfWeek.setDate(startOfWeek.getDate() + 5);
@@ -2284,7 +2032,6 @@
             calendarContainer.innerHTML = '';
             
             const dayNames = t.dayNames;
-            const subjects = getCurrentStudentSubjects();
             
             for (let i = 0; i < 6; i++) {
                 const dayDate = new Date(startOfWeek);
@@ -2322,6 +2069,7 @@
                         subjectElement.className = 'weekly-subject';
                         subjectElement.textContent = subject.name;
                         subjectElement.addEventListener('click', function() {
+                            console.log('Cliccato materia:', subject.name);
                             editSubject(subject.id);
                         });
                         daySubjects.appendChild(subjectElement);
@@ -2335,6 +2083,7 @@
                 addButton.style.marginTop = '0.5rem';
                 addButton.style.padding = '0.25rem';
                 addButton.addEventListener('click', function() {
+                    console.log('Aggiungi materia per data:', dayDateString);
                     openSubjectModal(dayDateString);
                 });
                 
@@ -2370,7 +2119,6 @@
                 }
             }
             
-            const subjects = getCurrentStudentSubjects();
             const dailySubjects = subjects.filter(subject => subject.date === dateString);
             const subjectsContainer = document.getElementById('daily-subjects');
             subjectsContainer.innerHTML = '';
@@ -2385,6 +2133,7 @@
                 subjectsContainer.appendChild(emptyState);
                 
                 document.getElementById('add-today-subject').addEventListener('click', function() {
+                    console.log('Aggiungi materia per oggi');
                     openSubjectModal(dateString);
                 });
             } else {
@@ -2419,7 +2168,6 @@
             
             // Calcola il numero di giorni da visualizzare (escludendo domeniche)
             let currentDay = 1;
-            const subjects = getCurrentStudentSubjects();
             
             // Crea una griglia per 6 settimane (36 celle, 6x6)
             for (let i = 0; i < 36; i++) {
@@ -2450,17 +2198,17 @@
                     const dayDateString = dayDate.toISOString().split('T')[0];
                     const daySubjects = subjects.filter(s => s.date === dayDateString);
                     
-                    // Crea indicatori per i compiti
-                    const homeworkIndicators = document.createElement('div');
-                    homeworkIndicators.className = 'homework-indicators';
+                    // Crea indicatori per il calendario
+                    const calendarIndicators = document.createElement('div');
+                    calendarIndicators.className = 'calendar-indicators';
                     
                     // Filtra solo le materie con compiti
                     const subjectsWithHomework = daySubjects.filter(s => s.homework && s.homework.trim() !== '');
                     
-                    // Se ci sono compiti, mostra l'icona libro
+                    // Se ci sono compiti, mostra l'icona zaino
                     if (subjectsWithHomework.length > 0) {
-                        const bookIcon = document.createElement('div');
-                        bookIcon.className = 'book-icon';
+                        const backpackIcon = document.createElement('div');
+                        backpackIcon.className = 'calendar-icon';
                         
                         // Calcola quanti compiti sono completati
                         const completedCount = subjectsWithHomework.filter(s => s.homeworkDone).length;
@@ -2468,57 +2216,64 @@
                         
                         // Imposta la classe in base allo stato dei compiti
                         if (completedCount === totalCount) {
-                            bookIcon.classList.add('done');
-                            bookIcon.innerHTML = '📘';
-                            bookIcon.title = `Tutti i compiti completati (${totalCount})`;
+                            backpackIcon.classList.add('done');
+                            backpackIcon.innerHTML = '🎒';
+                            backpackIcon.title = `Tutti i compiti completati (${totalCount})`;
                         } else {
-                            bookIcon.classList.add('pending');
-                            bookIcon.innerHTML = '📕';
+                            backpackIcon.classList.add('pending');
+                            backpackIcon.innerHTML = '🎒';
                             
                             // Aggiungi il contatore dei compiti incompleti
                             const pendingCount = totalCount - completedCount;
                             const countElement = document.createElement('div');
-                            countElement.className = 'book-count';
+                            countElement.className = 'icon-count';
                             countElement.textContent = pendingCount;
-                            bookIcon.appendChild(countElement);
+                            backpackIcon.appendChild(countElement);
                             
-                            bookIcon.title = `${pendingCount} compito/i da completare su ${totalCount}`;
+                            backpackIcon.title = `${pendingCount} compito/i da completare su ${totalCount}`;
                         }
                         
-                        homeworkIndicators.appendChild(bookIcon);
+                        calendarIndicators.appendChild(backpackIcon);
                     }
                     
-                    dayElement.appendChild(homeworkIndicators);
-                    
-                    // Aggiungi eventi per schermi più grandi
-                    if (window.innerWidth > 480) {
-                        const eventsElement = document.createElement('div');
-                        eventsElement.className = 'calendar-events';
+                    // Se ci sono note, mostra l'icona lettera
+                    const subjectsWithNotes = daySubjects.filter(s => s.note && s.note.trim() !== '');
+                    if (subjectsWithNotes.length > 0) {
+                        const noteIcon = document.createElement('div');
+                        noteIcon.className = 'calendar-icon note';
+                        noteIcon.innerHTML = '📝';
                         
-                        // Raggruppa per materia
-                        const subjectMap = new Map();
-                        daySubjects.forEach(subject => {
-                            if (!subjectMap.has(subject.name)) {
-                                subjectMap.set(subject.name, []);
-                            }
-                            subjectMap.get(subject.name).push(subject);
-                        });
+                        // Aggiungi il contatore delle note
+                        const countElement = document.createElement('div');
+                        countElement.className = 'icon-count';
+                        countElement.textContent = subjectsWithNotes.length;
+                        noteIcon.appendChild(countElement);
                         
-                        // Crea eventi raggruppati per materia
-                        subjectMap.forEach((subjects, subjectName) => {
-                            const eventElement = document.createElement('div');
-                            eventElement.className = 'calendar-event';
-                            eventElement.textContent = subjectName;
-                            eventElement.addEventListener('click', function() {
-                                showSubjectDetails(subjects);
-                            });
-                            eventsElement.appendChild(eventElement);
-                        });
-                        
-                        dayElement.appendChild(eventsElement);
+                        noteIcon.title = `${subjectsWithNotes.length} nota/e`;
+                        calendarIndicators.appendChild(noteIcon);
                     }
+                    
+                    // Se ci sono assenze, mostra la lettera A
+                    const subjectsWithAbsences = daySubjects.filter(s => s.absence);
+                    if (subjectsWithAbsences.length > 0) {
+                        const absenceIcon = document.createElement('div');
+                        absenceIcon.className = 'calendar-icon absence';
+                        absenceIcon.innerHTML = 'A';
+                        
+                        // Aggiungi il contatore delle assenze
+                        const countElement = document.createElement('div');
+                        countElement.className = 'icon-count';
+                        countElement.textContent = subjectsWithAbsences.length;
+                        absenceIcon.appendChild(countElement);
+                        
+                        absenceIcon.title = `${subjectsWithAbsences.length} assenza/e`;
+                        calendarIndicators.appendChild(absenceIcon);
+                    }
+                    
+                    dayElement.appendChild(calendarIndicators);
                     
                     dayElement.addEventListener('click', function() {
+                        console.log('Cliccato giorno:', currentDay);
                         // Imposta la data corrente e passa alla vista giornaliera
                         currentDate = dayDate;
                         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -2540,8 +2295,6 @@
         function renderStatsView() {
             const tableBody = document.querySelector('#stats-table tbody');
             tableBody.innerHTML = '';
-            
-            const subjects = getCurrentStudentSubjects();
             
             // Raggruppa materie per nome
             const subjectMap = new Map();
@@ -2591,6 +2344,104 @@
                 `;
                 tableBody.appendChild(row);
             });
+            
+            // Calcola statistiche assenze
+            const absencesTableBody = document.querySelector('#absences-table tbody');
+            absencesTableBody.innerHTML = '';
+            
+            // Raggruppa assenze per mese
+            const absenceMap = new Map();
+            subjects.forEach(subject => {
+                if (subject.absence) {
+                    const date = new Date(subject.date);
+                    const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+                    const monthName = translations[currentLanguage].months[date.getMonth()] + ' ' + date.getFullYear();
+                    
+                    if (!absenceMap.has(monthKey)) {
+                        absenceMap.set(monthKey, { name: monthName, count: 0 });
+                    }
+                    absenceMap.get(monthKey).count++;
+                }
+            });
+            
+            // Aggiungi le assenze alla tabella
+            absenceMap.forEach((monthData, monthKey) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${monthData.name}</td>
+                    <td>${monthData.count}</td>
+                `;
+                absencesTableBody.appendChild(row);
+            });
+            
+            // Se non ci sono assenze, mostra un messaggio
+            if (absenceMap.size === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="2" style="text-align: center;">Nessuna assenza registrata</td>
+                `;
+                absencesTableBody.appendChild(row);
+            }
+        }
+
+        function renderProfilesView() {
+            const profilesContainer = document.getElementById('profiles-list');
+            profilesContainer.innerHTML = '';
+            
+            profiles.forEach(profile => {
+                const profileCard = document.createElement('div');
+                profileCard.className = 'profile-card';
+                profileCard.dataset.id = profile.id;
+                
+                if (profile.id === currentProfileId) {
+                    profileCard.classList.add('active');
+                }
+                
+                profileCard.innerHTML = `
+                    <div class="profile-avatar">${profile.avatar}</div>
+                    <div class="profile-name">${profile.name}</div>
+                    <div class="profile-actions">
+                        <button class="action-btn edit" data-id="${profile.id}">✏️</button>
+                        ${profile.id !== 'default' ? `<button class="action-btn delete" data-id="${profile.id}">🗑️</button>` : ''}
+                    </div>
+                `;
+                
+                profileCard.addEventListener('click', function() {
+                    console.log('Seleziona profilo:', profile.name);
+                    currentProfileId = profile.id;
+                    localStorage.setItem('currentProfileId', currentProfileId);
+                    subjects = getCurrentProfileSubjects();
+                    updateProfileSelector();
+                    renderProfilesView();
+                    renderWeeklyView();
+                    renderDailyView();
+                    renderMonthlyView();
+                    renderStatsView();
+                    updateDashboard();
+                    
+                    // Torna alla dashboard
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    document.getElementById('tab-dashboard').classList.add('active');
+                    document.getElementById('dashboard-tab').classList.add('active');
+                });
+                
+                profileCard.querySelector('.edit').addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Modifica profilo:', profile.name);
+                    editProfile(profile.id);
+                });
+                
+                if (profile.id !== 'default') {
+                    profileCard.querySelector('.delete').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Elimina profilo:', profile.name);
+                        deleteProfile(profile.id);
+                    });
+                }
+                
+                profilesContainer.appendChild(profileCard);
+            });
         }
 
         function createSubjectCard(subject, showActions = false) {
@@ -2603,6 +2454,8 @@
                 card.classList.add('has-note');
             } else if (subject.grades && subject.grades.length > 0) {
                 card.classList.add('has-grade');
+            } else if (subject.absence) {
+                card.classList.add('has-absence');
             }
             
             const indicatorsContainer = document.createElement('div');
@@ -2618,6 +2471,7 @@
                 }
                 homeworkIndicator.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Toggle homework per:', subject.name);
                     toggleHomework(subject.id);
                 });
                 indicatorsContainer.appendChild(homeworkIndicator);
@@ -2630,6 +2484,13 @@
             `;
             
             const t = translations[currentLanguage];
+            
+            if (subject.absence) {
+                const absenceSection = document.createElement('div');
+                absenceSection.className = 'container-section absence';
+                absenceSection.innerHTML = `<strong>${t.absence}:</strong> ASSENTE`;
+                subjectInfo.appendChild(absenceSection);
+            }
             
             if (subject.homework && subject.homework.trim() !== '') {
                 const homeworkSection = document.createElement('div');
@@ -2688,11 +2549,13 @@
                 
                 actions.querySelector('.edit').addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Modifica materia:', subject.name);
                     editSubject(subject.id);
                 });
                 
                 actions.querySelector('.delete').addEventListener('click', function(e) {
                     e.stopPropagation();
+                    console.log('Elimina materia:', subject.name);
                     deleteSubject(subject.id);
                 });
             }
@@ -2700,37 +2563,11 @@
             return card;
         }
 
-        function showSubjectDetails(subjects) {
-            const t = translations[currentLanguage];
-            let message = `Dettagli per ${subjects[0].name}:\n\n`;
-            
-            subjects.forEach((subject, index) => {
-                if (index > 0) message += '\n';
-                if (subject.homework && subject.homework.trim() !== '') {
-                    message += `Compiti: ${subject.homework}\n`;
-                    if (subject.homeworkDeadline) {
-                        const deadline = new Date(subject.homeworkDeadline);
-                        message += `Scadenza: ${deadline.toLocaleDateString()}\n`;
-                    }
-                    message += `Completati: ${subject.homeworkDone ? 'Sì' : 'No'}\n`;
-                }
-                if (subject.note && subject.note.trim() !== '') {
-                    message += `Note: ${subject.note}\n`;
-                }
-                if (subject.grades && subject.grades.length > 0) {
-                    message += `Voti: ${subject.grades.map(g => `${g.value} (Q${g.quarter})`).join(', ')}\n`;
-                }
-            });
-            
-            alert(message);
-        }
-
         function toggleHomework(subjectId) {
-            const subjects = getCurrentStudentSubjects();
             const subject = subjects.find(s => s.id === subjectId);
             if (subject) {
                 subject.homeworkDone = !subject.homeworkDone;
-                setCurrentStudentSubjects(subjects);
+                saveSubjects();
                 renderDailyView();
                 renderWeeklyView();
                 renderMonthlyView();
@@ -2760,6 +2597,11 @@
             document.getElementById('modal-title').textContent = t.addSubject;
             document.getElementById('subject-form').reset();
             document.getElementById('grade-list').innerHTML = '';
+            document.getElementById('custom-subject-group').style.display = 'none';
+            document.getElementById('subject-name').disabled = false;
+            
+            // Aggiorna le materie personalizzate nel select
+            updateSubjectSelect();
             
             if (date !== null) {
                 document.getElementById('subject-date').value = date;
@@ -2770,15 +2612,100 @@
             document.getElementById('subject-modal').classList.add('active');
         }
 
-        function closeAllModals() {
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.classList.remove('active');
-            });
+        function closeSubjectModal() {
+            document.getElementById('subject-modal').classList.remove('active');
             editingSubjectId = null;
         }
 
+        function openProfilesModal() {
+            editingProfileId = null;
+            const t = translations[currentLanguage];
+            document.getElementById('profiles-modal-title').textContent = t.profilesTitle;
+            document.getElementById('profile-form').reset();
+            
+            // Aggiorna la lista dei profili nel modale
+            updateProfilesListModal();
+            
+            document.getElementById('profiles-modal').classList.add('active');
+        }
+
+        function closeProfilesModal() {
+            document.getElementById('profiles-modal').classList.remove('active');
+            editingProfileId = null;
+        }
+
+        function updateSubjectSelect() {
+            const subjectSelect = document.getElementById('subject-name');
+            
+            // Salva la selezione corrente
+            const currentValue = subjectSelect.value;
+            
+            // Rimuovi tutte le opzioni tranne la prima
+            while (subjectSelect.options.length > 1) {
+                subjectSelect.remove(1);
+            }
+            
+            // Aggiungi le materie predefinite
+            const defaultSubjects = [
+                'Italiano', 'Matematica', 'Storia', 'Geografia', 'Scienze', 'Inglese',
+                'Francese', 'Tedesco', 'Spagnolo', 'Arte e Immagine', 'Musica', 'Fisica',
+                'Religione', 'Educazione Fisica', 'Tecnologia', 'Informatica', 'Latino',
+                'Greco', 'Filosofia', 'Aritmetica', 'Geometria', 'Chimica', 'Educazione Civica', 'Diritto'
+            ];
+            
+            defaultSubjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+            
+            // Aggiungi le materie personalizzate
+            customSubjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+            
+            // Ripristina la selezione precedente
+            subjectSelect.value = currentValue;
+        }
+
+        function updateProfilesListModal() {
+            const profilesListModal = document.getElementById('profiles-list-modal');
+            profilesListModal.innerHTML = '';
+            
+            profiles.forEach(profile => {
+                const profileItem = document.createElement('div');
+                profileItem.className = 'profile-card';
+                profileItem.style.marginBottom = '1rem';
+                profileItem.style.cursor = 'default';
+                
+                profileItem.innerHTML = `
+                    <div class="profile-avatar">${profile.avatar}</div>
+                    <div class="profile-name">${profile.name}</div>
+                    <div class="profile-actions">
+                        <button class="action-btn edit" data-id="${profile.id}">✏️</button>
+                        ${profile.id !== 'default' ? `<button class="action-btn delete" data-id="${profile.id}">🗑️</button>` : ''}
+                    </div>
+                `;
+                
+                profileItem.querySelector('.edit').addEventListener('click', function() {
+                    editProfile(profile.id);
+                });
+                
+                if (profile.id !== 'default') {
+                    profileItem.querySelector('.delete').addEventListener('click', function() {
+                        deleteProfile(profile.id);
+                    });
+                }
+                
+                profilesListModal.appendChild(profileItem);
+            });
+        }
+
         function editSubject(id) {
-            const subjects = getCurrentStudentSubjects();
             const subject = subjects.find(s => s.id === id);
             if (!subject) return;
             
@@ -2786,6 +2713,10 @@
             const t = translations[currentLanguage];
             document.getElementById('modal-title').textContent = t.editSubject;
             document.getElementById('subject-id').value = subject.id;
+            
+            // Aggiorna le materie personalizzate nel select
+            updateSubjectSelect();
+            
             document.getElementById('subject-name').value = subject.name;
             document.getElementById('subject-date').value = subject.date;
             document.getElementById('homework-desc').value = subject.homework || '';
@@ -2793,6 +2724,7 @@
             document.getElementById('homework-priority').value = subject.homeworkPriority || 'medium';
             document.getElementById('homework-done').checked = subject.homeworkDone || false;
             document.getElementById('subject-note').value = subject.note || '';
+            document.getElementById('subject-absence').checked = subject.absence || false;
             
             document.getElementById('grade-list').innerHTML = '';
             if (subject.grades && subject.grades.length > 0) {
@@ -2802,15 +2734,39 @@
             document.getElementById('subject-modal').classList.add('active');
         }
 
+        function editProfile(id) {
+            const profile = profiles.find(p => p.id === id);
+            if (!profile) return;
+            
+            editingProfileId = id;
+            document.getElementById('profile-id').value = profile.id;
+            document.getElementById('profile-name').value = profile.name;
+            document.getElementById('profile-avatar').value = profile.avatar;
+        }
+
         function saveSubject() {
             const id = editingSubjectId || generateId();
-            const name = document.getElementById('subject-name').value;
+            let name = document.getElementById('subject-name').value;
+            const customName = document.getElementById('custom-subject-name').value;
+            
+            // Se è stata inserita una nuova materia personalizzata
+            if (document.getElementById('custom-subject-group').style.display === 'block' && customName.trim() !== '') {
+                name = customName.trim();
+                
+                // Aggiungi la nuova materia alla lista delle materie personalizzate
+                if (!customSubjects.includes(name)) {
+                    customSubjects.push(name);
+                    localStorage.setItem('customSubjects', JSON.stringify(customSubjects));
+                }
+            }
+            
             const date = document.getElementById('subject-date').value;
             const homework = document.getElementById('homework-desc').value;
             const homeworkDeadline = document.getElementById('homework-deadline').value;
             const homeworkPriority = document.getElementById('homework-priority').value;
             const homeworkDone = document.getElementById('homework-done').checked;
             const note = document.getElementById('subject-note').value;
+            const absence = document.getElementById('subject-absence').checked;
             const gradeQuarter = parseInt(document.getElementById('grade-quarter').value);
             const grades = Array.from(document.querySelectorAll('.grade-item')).map(item => ({
                 value: parseFloat(item.querySelector('.grade-value').value),
@@ -2822,27 +2778,25 @@
                 return;
             }
             
-            let subjects = getCurrentStudentSubjects();
-            
             if (editingSubjectId) {
                 const index = subjects.findIndex(s => s.id === editingSubjectId);
                 if (index !== -1) {
                     subjects[index] = { 
                         id, name, date, 
                         homework, homeworkDeadline, homeworkPriority, homeworkDone, 
-                        note, grades 
+                        note, absence, grades 
                     };
                 }
             } else {
                 subjects.push({ 
                     id, name, date, 
                     homework, homeworkDeadline, homeworkPriority, homeworkDone, 
-                    note, grades 
+                    note, absence, grades 
                 });
             }
             
-            setCurrentStudentSubjects(subjects);
-            closeAllModals();
+            saveSubjects();
+            closeSubjectModal();
             renderWeeklyView();
             renderDailyView();
             renderMonthlyView();
@@ -2850,20 +2804,118 @@
             updateDashboard();
         }
 
+        function saveProfile() {
+            const id = editingProfileId || generateId();
+            const name = document.getElementById('profile-name').value;
+            const avatar = document.getElementById('profile-avatar').value;
+            
+            if (!name || !avatar) {
+                alert('Devi inserire nome e avatar per il profilo!');
+                return;
+            }
+            
+            if (editingProfileId) {
+                const index = profiles.findIndex(p => p.id === editingProfileId);
+                if (index !== -1) {
+                    profiles[index] = { id, name, avatar, subjects: profiles[index].subjects || [] };
+                }
+            } else {
+                profiles.push({ id, name, avatar, subjects: [] });
+            }
+            
+            saveProfiles();
+            updateProfileSelector();
+            renderProfilesView();
+            updateProfilesListModal();
+            
+            // Se è un nuovo profilo, passa a quel profilo
+            if (!editingProfileId) {
+                currentProfileId = id;
+                localStorage.setItem('currentProfileId', currentProfileId);
+                subjects = getCurrentProfileSubjects();
+                updateProfileSelector();
+            }
+            
+            // Pulisci il form
+            document.getElementById('profile-form').reset();
+            editingProfileId = null;
+        }
+
         function deleteSubject(id) {
             const t = translations[currentLanguage];
-            const confirmMessage = "Sei sicuro di voler eliminare questa materia?";
+            const confirmMessage = t.save === "Salva Materia" 
+                ? "Sei sicuro di voler eliminare questa materia?" 
+                : "Are you sure you want to delete this subject?";
                 
             if (confirm(confirmMessage)) {
-                let subjects = getCurrentStudentSubjects();
                 subjects = subjects.filter(s => s.id !== id);
-                setCurrentStudentSubjects(subjects);
+                saveSubjects();
                 renderWeeklyView();
                 renderDailyView();
                 renderMonthlyView();
                 renderStatsView();
                 updateDashboard();
             }
+        }
+
+        function deleteProfile(id) {
+            const t = translations[currentLanguage];
+            const confirmMessage = t.save === "Salva Materia" 
+                ? "Sei sicuro di voler eliminare questo profilo?" 
+                : "Are you sure you want to delete this profile?";
+                
+            if (confirm(confirmMessage)) {
+                profiles = profiles.filter(p => p.id !== id);
+                
+                // Se il profilo corrente è stato eliminato, passa al profilo predefinito
+                if (currentProfileId === id) {
+                    currentProfileId = 'default';
+                    localStorage.setItem('currentProfileId', currentProfileId);
+                    subjects = getCurrentProfileSubjects();
+                }
+                
+                saveProfiles();
+                updateProfileSelector();
+                renderProfilesView();
+                updateProfilesListModal();
+                renderWeeklyView();
+                renderDailyView();
+                renderMonthlyView();
+                renderStatsView();
+                updateDashboard();
+            }
+        }
+
+        function saveSubjects() {
+            const currentProfile = profiles.find(p => p.id === currentProfileId);
+            if (currentProfile) {
+                currentProfile.subjects = subjects;
+                saveProfiles();
+            }
+        }
+
+        function saveProfiles() {
+            localStorage.setItem('schoolProfiles', JSON.stringify(profiles));
+        }
+
+        function getCurrentProfileSubjects() {
+            const currentProfile = profiles.find(p => p.id === currentProfileId);
+            return currentProfile ? currentProfile.subjects || [] : [];
+        }
+
+        function updateProfileSelector() {
+            const profileSelect = document.getElementById('profile-select');
+            profileSelect.innerHTML = '';
+            
+            profiles.forEach(profile => {
+                const option = document.createElement('option');
+                option.value = profile.id;
+                option.textContent = profile.name;
+                if (profile.id === currentProfileId) {
+                    option.selected = true;
+                }
+                profileSelect.appendChild(option);
+            });
         }
 
         function generateId() {
